@@ -1,0 +1,76 @@
+#animation{
+}
+
+#animation {
+    -webkit-animation-name: tada;
+    /* animation: tada 2s ease infinite; */
+    animation: tada 5s alternate infinite;
+}
+#hand{
+    animation: slideOutDown 5s alternate infinite;
+}
+#body{
+    animation: slideOutDown 5s alternate infinite;
+    animation: zoomOutUp 5s alternate infinite;
+    animation-delay: 3s;
+}
+#abducido{
+    animation: fadeOutUp 5s alternate infinite;
+    animation-delay: 1s;
+}
+  
+@keyframes fadeOutUp {
+    from {
+      opacity: 1;
+    }
+  
+    to {
+      opacity: 0;
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0);
+
+    }
+  }
+  @keyframes tada {
+    0% {
+        transform: rotate(
+    0deg
+    );
+    }
+    100% {
+        transform: rotate(-1deg);
+    }
+  }
+  
+  
+  
+  @keyframes slideOutDown {
+    from {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  
+    to {
+      visibility: hidden;
+      -webkit-transform: translate3d(0, 2%, 0);
+      transform: translate3d(0, 2%, 0);
+    }
+  }
+
+  @keyframes zoomOutUp {
+    40% {
+      opacity: 1;
+      -webkit-transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+      transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+      -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+  
+    to {
+      opacity: 0;
+      -webkit-transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);
+      transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);
+      -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+      animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+    }
+  }

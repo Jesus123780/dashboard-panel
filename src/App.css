@@ -1,0 +1,95 @@
+/* Inicio de Hoja de Normalización */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300&display=swap');
+/* Normalizes margin, padding */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote
+{ margin : 0; padding : 0; width: 100%; }
+
+/* Normalizes font-size for headers */
+h1,h2,h3,h4,h5,h6 { font-size : 100%; }
+p,  ul, ol,::selection{
+  background-color: red ;
+  color: #ffff;
+}
+/* Removes list-style from lists */
+ol,ul { list-style : none; }
+button{
+  outline: none;
+  border: none;
+}
+a{
+  text-decoration: none !important;
+}
+
+/* Normalizes font-style and font-weight to normal */
+address, caption, cite, code, dfn, em, strong, th, var
+{ font-style : normal; font-weight : normal; }
+
+/* Removes spacing in tables */
+table { border-collapse : collapse; border-spacing : 0; }
+
+/* Removes border from fieldset and img */
+fieldset,img { border : 0; }
+
+/* Left-aligns text in caption and th */
+caption,th { text-align : left; }
+
+/* Removes quotation marks from q */
+q:before, q:after { content :''; }
+
+/* Fin de Hoja de Normalización */
+
+* {
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@media (max-width: 1024px) {
+  * {
+    font-size: 10px;
+  }
+}
+@media (min-width: 1024px) {
+  h1, span, h2, h3, h4, h5, p, a, svg, strong, div{
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  * {
+    font-size: 9px;
+  }
+}
+@font-face {
+  font-family: PFont-Bold;
+  src: url('./assets/fonts/Poppins-Bold.ttf')
+}
+@font-face {
+  font-family: PFont-Medium;
+  src: url('./assets/fonts/Poppins-Medium.ttf')
+}
+@font-face {
+  font-family: PFont-Regular;
+  src: url('./assets/fonts/Poppins-Regular.ttf')
+}
+@font-face {
+  font-family: PFont-Light;
+  src: url('./assets/fonts/Poppins-Light.ttf')
+}
+
+svg {
+  min-width: 25px;
+}
