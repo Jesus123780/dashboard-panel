@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { BGColor } from '../../assets/colors';
 
 export const Content = styled.div`
     display: flex;
@@ -32,21 +33,21 @@ export const FloatingBox = styled.div`
     position: absolute;
     grid-gap: 0 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
     transition: all 200ms ease-in-out;
-    
+    background-color: ${ BGColor };
+    padding: 10px;
   ${ ({ show }) => show
         ? css`
                   visibility: visible;
                   opacity: 1;
-                  transform: translateX(0);
+                  transform: translateY(0);
               `
         : css`
                 
                   margin: 0;
                   visibility: hidden;
                   opacity: 0;
-                  transform: translateX(-50px);
+                  transform: translateY(-50px);
               ` }
     @media only screen and (min-width: 960px){
     }

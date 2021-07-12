@@ -5,12 +5,15 @@ import InputHooks from '../../../InputHooks/InputHooks'
 import NewSelect from '../../../NewSelectHooks/NewSelect'
 import { LoadEllipsis } from '../../../LoadingButton'
 import { RippleButton } from '../../../Ripple'
-import { Container, Form, Card } from './styled'
 import { validationSubmitHooks } from '../../../../utils'
 import { Context } from '../../../../Context'
 import { GET_DEPARTMENT, UPDATE_DEPARTMENT } from './queries'
 import { GET_COUNTRY } from '../Countries/queries'
-import { Loading } from '../../../Loading'
+import { EditForm } from './EditForm'
+import { PColor } from '../../../../assets/colors'
+// import { InputFiles } from '../../../InputFiles'
+import { IconEdit, IconDost, IconDelete } from '../../../../assets/icons/icons'
+import { Container, Form, Card, ContainerTask, OptionsFunction, Button, ListTask } from './styled'
 
 export const Departments = () => {
     const [createDepartments, { loading }] = useMutation(UPDATE_DEPARTMENT)
@@ -23,7 +26,7 @@ export const Departments = () => {
     }
     // Query para traer a todos los países
     const { data: dataCountries } = useQuery(GET_COUNTRY)
-    const { data, loading: loadingc } = useQuery(GET_DEPARTMENT)
+    const { data } = useQuery(GET_DEPARTMENT)
     const handleRegister = async e => {
         e.preventDefault()
         // Declarando variables
@@ -62,10 +65,24 @@ export const Departments = () => {
             setAlertBox({ message: `${ error }`, duration: 7000 })
         }
     }
+    const [show, setShow] = useState(false)
+    const [edit, setEdit] = useState({
+        id: null,
+        value: ''
+    });
+    const submitUpdate = () => {
+        setEdit({
+            id: null,
+            value: ''
+        });
+    };
+    if (edit.id) {
+        return <EditForm edit={edit} onSubmit={submitUpdate} />;
+    }
     return (<>
         <Container>
             <Form onSubmit={handleRegister}>
-                <NewSelect search disabled={!dataCountries?.countries[0].c_id} options={dataCountries?.countries.filter(x => x?.c_name === x?.c_name) || []} id='c_id' name='c_id' value={values?.c_id || ''} optionName='c_name' title='Ingresa el País' onChange={handleChange} margin='10px' />
+                <NewSelect search disabled={!dataCountries?.countries[0]?.c_id} options={dataCountries?.countries.filter(x => x?.c_name === x?.c_name) || []} id='c_id' name='c_id' value={values?.c_id || ''} optionName='c_name' title='Ingresa el País' onChange={handleChange} margin='10px' />
                 <InputHooks
                     title='Ingresa un departamento'
                     required
@@ -79,46 +96,27 @@ export const Departments = () => {
                 </RippleButton>
             </Form>
             <Card>
-                {loadingc && <Loading />}
-                <Table >
-                    <tbody>
-                        {data?.departments.length && data?.departments.map(x => <tr key={x.d_id}>
-                            <th className="andes-table">Departamento</th>
-                            <td><span>{x.d_name}</span></td>
-                        </tr>
-                        )}
-                    </tbody>
-                </Table>
+                {data?.departments ? data?.departments.map(index => (
+                    <ContainerTask show={show === index} key={index.d_id}>
+                        <OptionsFunction show={show === index}>
+                            <Button><IconDelete size={30} /></Button>
+                            <Button onClick={() => setEdit({ id: index.d_id, value: index.d_name })} ><IconEdit size={30} /></Button>
+                            {/* Todo Success */}
+                        </OptionsFunction>
+                        {/* Tareas */}
+                        <ListTask show={show === index}>
+                            {/* eslint-disable-next-line */}
+                            {index.d_name}
+                        </ListTask>
+                        <div style={{ display: 'contents' }}><Button onClick={() => setShow(index === show ? false : index)}><IconDost size={30} color={show === index ? PColor : '#CCC'} /></Button></div>
+                    </ContainerTask>
+                )) : <i>No hay ningún Departamento en base de datos</i>}
             </Card>
         </Container>
     </>
     )
 }
 
-const Table = styled.table`
-position: relative;
-width: 100%;
-tbody tr:nth-child(2n) .andes-table:first-child,
-tbody tr:nth-child(2n) .andes-table:first-child,
-tbody tr:nth-child(odd),
-tbody tr:nth-child(odd):hover {
-    padding: 13px;
-    background: #f5f5f5;
-    text-align: center;
-}
-
-tbody tr:nth-child(odd) .andes-table:first-child,
-tbody tr:nth-child(odd) .andes-table:first-child {
-    background: #ebebeb;
-    padding: 13px;
-    text-align: center;
-    width: 25%;
-}
-tbody tr {
-    font-family: PFont-Regular;
-    text-align: center;
-}
-`
 export const LabelInput = styled.span`
     position: absolute;
     font-size: ${ ({ value }) => value ? '11px' : '13px' };

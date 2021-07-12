@@ -1,16 +1,17 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import styled, { keyframes } from 'styled-components'
+import { Context } from '../../../../Context'
 import InputHooks from '../../../InputHooks/InputHooks'
 import { LoadEllipsis } from '../../../LoadingButton'
-import { Skeleton } from '../../../Skeleton'
 import { RippleButton } from '../../../Ripple'
-import { SFColor, SFVColor } from '../../../../assets/colors'
+import { PColor, SFColor, SFVColor } from '../../../../assets/colors'
+import { IconEdit, IconDost, IconDelete } from '../../../../assets/icons/icons'
 import { GET_COUNTRY, UPDATE_COUNTRIES } from './queries'
 import { validationSubmitHooks } from '../../../../utils'
-import { Container, Form, Card } from './styled'
 import { icons } from './codeCountries'
-import { Context } from '../../../../Context'
+import { EditForm } from './EditForm'
+import { Container, Form, Card, ContainerTask, OptionsFunction, Button, ListTask } from './styled'
 
 export const Countries = () => {
     const [createCountries, { loading }] = useMutation(UPDATE_COUNTRIES)
@@ -22,7 +23,7 @@ export const Countries = () => {
         setErrors({ ...errors, [e.target.name]: error })
     }
     // Query para traer a todos los países
-    const { data, loading: loadingc } = useQuery(GET_COUNTRY)
+    const { data } = useQuery(GET_COUNTRY)
     // Mutación para subir un país
     const handleRegister = async e => {
         e.preventDefault()
@@ -60,10 +61,30 @@ export const Countries = () => {
             setValues({})
             setErrors({})
             // eslint-disable-next-line
-            setAlertBox({ message: `${ error }`, duration: 7000 })
+            setAlertBox({ message: `${error}`, duration: 7000 })
             setAlertBox({ message: 'se ha producido un error interno', duration: 7000 })
 
         }
+    }
+    const [show, setShow] = useState(false)
+    useEffect(() => {
+        const body = document.body
+        body.addEventListener('keyup', e => e.code === 'Escape' && setShow(false))
+        return () => body.removeEventListener('keyup', () => setShow)
+
+    }, [setShow])
+    const [edit, setEdit] = useState({
+        id: null,
+        value: ''
+    });
+    const submitUpdate = () => {
+        setEdit({
+            id: null,
+            value: ''
+        });
+    };
+    if (edit.id) {
+        return <EditForm edit={edit} onSubmit={submitUpdate} />;
     }
     return (<>
         <Container>
@@ -85,65 +106,69 @@ export const Countries = () => {
                     name='c_calCod'
                 />
                 <RippleButton>
-                    {!loading ? 'Subir' : <LoadEllipsis color='#fff' /> }
+                    {!loading ? 'Subir' : <LoadEllipsis color='#fff' />}
                 </RippleButton>
             </Form>
-
-            {!loadingc ? <Card>
-                <Table >
-                    <tbody loadingc={loadingc ? loadingc : undefined }>
-                        {data?.countries.length ? data?.countries.map(x => <tr key={x.c_id}>
+            <Card>
+                {data?.countries ? data?.countries.map(index => (
+                    <ContainerTask show={show === index} key={index.c_id}>
+                        <OptionsFunction show={show === index}>
+                            <Button><IconDelete size={30} /></Button>
+                            <Button onClick={() => setEdit({ id: index.c_id, value: index.c_name })} ><IconEdit size={30} /></Button>
+                            {/* Todo Success */}
+                        </OptionsFunction>
+                        {/* Tareas */}
+                        <ListTask show={show === index}>
                             {/* eslint-disable-next-line */}
-                            <th className="andes-table"> <Options icon={icons.find(j => j.c_calCod == x.c_calCod)?.icon} name={icons.find(j => j.c_calCod == x.c_calCod)?.c_calCod}></Options></th>
-                            <td><span>{x.c_name}</span></td>
-                        </tr>
-                        ) : <i>No hay ningún país en base de datos</i> }
-                    </tbody>
-                </Table>
-            </Card> : <Skeleton />}
+                            <Options icon={icons.find(j => j.c_calCod == index.c_calCod)?.icon} name={icons.find(j => j.c_calCod == index.c_calCod)?.c_calCod}></Options>
+                            {index.c_name}
+                        </ListTask>
+                        <div style={{ display: 'contents' }}><Button onClick={() => setShow(index === show ? false : index)}><IconDost size={30} color={show === index ? PColor : '#CCC'} /></Button></div>
+                    </ContainerTask>
+                )) : <i>No hay ningún país en base de datos</i>}
+            </Card>
         </Container>
     </>
     )
 }
 
-const Table = styled.table`
-position: relative;
-width: 100%;
-tbody tr:nth-child(2n) .andes-table:first-child,
-tbody tr:nth-child(2n) .andes-table:first-child,
-tbody tr:nth-child(odd),
-tbody tr:nth-child(odd):hover {
-    padding: 13px;
-    background: #f5f5f5;
-    text-align: center;
-}
+// const Table = styled.table`
+// position: relative;
+// width: 100%;
+// tbody tr:nth-child(2n) .andes-table:first-child,
+// tbody tr:nth-child(2n) .andes-table:first-child,
+// tbody tr:nth-child(odd),
+// tbody tr:nth-child(odd):hover {
+//     padding: 13px;
+//     background: #f5f5f5;
+//     text-align: center;
+// }
 
-tbody tr:nth-child(odd) .andes-table:first-child,
-tbody tr:nth-child(odd) .andes-table:first-child {
-    background: #ebebeb;
-    padding: 13px;
-    text-align: center;
-    width: 25%;
-}
-tbody tr {
-    font-family: PFont-Regular;
-    text-align: center;
-}
-`
-const Options = ({ children, icon, name }) => {
+// tbody tr:nth-child(odd) .andes-table:first-child,
+// tbody tr:nth-child(odd) .andes-table:first-child {
+//     background: #ebebeb;
+//     padding: 13px;
+//     text-align: center;
+//     width: 25%;
+// }
+// tbody tr {
+//     font-family: PFont-Regular;
+//     text-align: center;
+// }
+// `
+const Options = ({ icon, name }) => {
 
     return (
-        <>
+        <React.Fragment>
             <div>
                 {icon}
             </div>
             <div>
-                {name ? + `${ name }` : 'COD'}
+                <Text>
+                    {name ? ` + ${ name }` : 'COD'}
+                </Text>
             </div>
-            <div>
-                {children}
-            </div>
-        </>
+        </React.Fragment>
     )
 }
 export const LabelInput = styled.span`
@@ -155,6 +180,10 @@ export const LabelInput = styled.span`
     transition: .3s;
     pointer-events: none;
     font-weight: ${ ({ value }) => value ? 600 : 400 };
+`
+export const Text = styled.span`
+    font-size: 16px !important;
+    font-family: PFont-Light;
 `
 
 export const TextArea = styled.textarea`

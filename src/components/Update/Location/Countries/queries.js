@@ -19,3 +19,26 @@ query  countries{
   }
 }
 `
+
+export const EDIT_COUNTRIES = gql`
+mutation($input: IEditCountries!){
+editCountries(input: $input){
+  c_id
+  c_name
+  c_calCod
+  c_state
+}
+}
+`
+// No se esta usando
+export const GET_ONE_COUNTRIES = gql`
+query getOneCountry($c_calCod: String, $c_id: ID){
+ getOneCountry(c_calCod: $c_calCod, c_id: $c_id ){
+  c_name
+  c_calCod
+  c_state
+  c_id
+  
+}
+}
+`

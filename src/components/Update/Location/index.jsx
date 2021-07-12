@@ -18,7 +18,7 @@ export const Location = () => {
             <ContentButton>
                 <RippleButton active={active === 1} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;País &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' onClick={() => active !== 1 && handleClick(1)} />
                 <RippleButton active={active === 2} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='Departamentos' onClick={() => active !== 2 && handleClick(2)} />
-                <RippleButton active={active === 3} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='Municipios' onClick={() => active !== 3 && handleClick(3)} />
+                <RippleButton active={active === 3} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='Ciudades' onClick={() => active !== 3 && handleClick(3)} />
             </ContentButton>
             {
                 active === 1 ?

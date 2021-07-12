@@ -1,54 +1,53 @@
 import styled, { keyframes } from 'styled-components'
+import { BColor, BGAColor, PColor } from '../../assets/colors'
 
 const bounceInDown = keyframes`
     from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0);
+    top: -50%;
+
   }
 
   to {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
+    top: 0%;
   }
 `
 const bounceOutUp = keyframes`
     20% {
-        -webkit-transform: translate3d(0, -10px, 0) scaleY(0.985);
-        transform: translate3d(0, -10px, 0) scaleY(0.985);
-    }
-
-    40%,
-    45% {
-        opacity: 1;
-        -webkit-transform: translate3d(0, 20px, 0) scaleY(0.9);
-        transform: translate3d(0, 20px, 0) scaleY(0.9);
     }
 
     to {
-        opacity: 0;
-        -webkit-transform: translate3d(0, -2000px, 0) scaleY(3);
-        transform: translate3d(0, -2000px, 0) scaleY(3);
+        top: 0%;
     }
 `
-export const Container = styled.div`
-    animation: ${ ({ error, closed }) => error && (closed ? bounceOutUp : bounceInDown) } 1s forwards;
-    padding: ${ props => props.error ? '15px' : 0 };
-    top: 0;
-    background-color: ${ ({ theme })=> theme.BGAColor };
-    position: fixed;
-    margin: auto;
-    text-align: center;
+export const ContainerText = styled.span`
     width: 100%;
-    font-size: 18px;
-    z-index: 999999999;
-    position: absolute;
-    right: 0;
-    width: 300px;
-    top: 82px;
-    border-radius: 4px;
-    border-left: 5px solid rgb(0, 159, 251);
+    margin: auto;
+    transition: 400ms;
+    font-family: PFont-Light;
+    color: ${ ({ color }) => color === 'success' ? '#FFF' : color === 'error' ? '#dd4b39' : color === 'warning' ? `${ BColor }` : `${ BGAColor }` };
+`
+export const ContainerToast = styled.div`
+    animation: ${ ({ error, closed }) => error && (closed ? bounceOutUp : bounceInDown) } 1s forwards;
+    height: ${ props => props.error ? '89px' : 0 };
+    padding: ${ props => props.error ? '15px' : 0 };
+    background-color: ${ ({ theme })=> theme.BGAColor };
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+    z-index: 10021;
+    transition: 400ms;
     box-shadow: 0px 0px 6px #00000052;
-    color: ${ ({ color }) => color === 'success' ? '#00ff9ffc' : color === 'error' ? '#dd4b39' : color === 'warning' ? '#ebbc26' : '#000' };
+    background-color: ${ ({ color }) => color === 'success' ? '#50a773' : color === 'error' ? `${ PColor };` : color === 'warning' ? '#ebbc26' : 'rgba(0, 0, 0, 0.9)' };
+`
+export const ContentToast = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px !important;
+    margin: auto;
+    padding: 0 30px
 `

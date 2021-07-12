@@ -21,3 +21,11 @@ query getMunicipalities{
   }
 }
 `
+export const EDIT_MUNICIPALITIES = gql`
+mutation($input: IEditMunicipalities!){
+editMunicipalities(input: $input){
+	m_id
+  m_name
+}
+}
+`
