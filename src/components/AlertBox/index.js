@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
-import { BGColor } from '../../assets/colors'
-import { IconInfo } from '../../assets/icons/icons'
-import { ContainerText, ContainerToast, ContentToast } from './styled'
+import { ContainerToast } from './styled'
 
 export const AlertBox = ({ err }) => {
     const [closed, setClosed] = useState(false)
@@ -24,14 +22,7 @@ export const AlertBox = ({ err }) => {
 
     return (
         <React.Fragment>
-            <ContainerToast onClick={setClosed} color={err.color} closed={closed} error={!!err?.message}>
-                {/* <IconEdit size='40px' /> */}
-                <ContentToast>
-                    {err.icon === undefined && <div><IconInfo size='20px' color={BGColor} /></div> }
-                    <ContainerText color={err.color} closed={closed} error={!!err?.message}>{(err.message || '')}</ContainerText>
-                    <div></div>
-                </ContentToast>
-            </ContainerToast>
+            <ContainerToast onClick={setClosed} color={err.color} closed={closed} error={!!err?.message}>{(err.message || '')}</ContainerToast>
         </React.Fragment>
     )
 }

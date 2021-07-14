@@ -42,6 +42,9 @@ export const ContainerToast = styled.div`
     box-shadow: 0px 0px 6px #00000052;
     background-color: ${ ({ color }) => color === 'success' ? '#50a773' : color === 'error' ? `${ PColor };` : color === 'warning' ? '#ebbc26' : 'rgba(0, 0, 0, 0.9)' };
 `
+export const ContentIcon = styled.div`
+    ${ ({ closed }) => closed && (!closed ? 'block' : 'none') };
+`
 export const ContentToast = styled.div`
     display: flex;
     justify-content: space-between;

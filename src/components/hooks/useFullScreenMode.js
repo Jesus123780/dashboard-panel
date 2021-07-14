@@ -56,7 +56,7 @@ const useFullscreenMode = () => {
     };
 
     const ToggleIcon = (
-        <Button onClick={() => (!isFullscreen ? goFullscreen() : exitFullScreen())}>{!isFullscreen ? 'FullScreen' : 'Normal'}</Button>
+        <Button onDoubleClick={() => (!isFullscreen ? goFullscreen() : exitFullScreen())}>{!isFullscreen ? 'FullScreen' : 'Normal'}</Button>
     );
     return [elementRef, ToggleIcon]; //Icon, ref
 };

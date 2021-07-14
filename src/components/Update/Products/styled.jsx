@@ -1,19 +1,23 @@
 import styled from 'styled-components';
+import { BGColor } from '../../../assets/colors';
 
 export const Container = styled.div`
-    /* display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
-    width: 90%;
-    grid-gap: 19px 12px;     */
-    height: 100%;
+    display: flex;
+    border-radius: 4px;
+    background-color: ${ BGColor };
+    `
+export const Card = styled.div` 
+    width: ${ ({ width })=> width ? width : 'auto' };
+    background-color: ${ ({ bgColor })=> bgColor ? bgColor : `${ BGColor }` };
 `
-export const Card = styled.div`
-@media (min-width: 992px){
-    flex: 0 0 33.33333%;
-    max-width: 33.33333%;
-}
-@media (min-width: 768px) {
-    flex: 0 0 50%;
-    max-width: 100%;
+export const FormProducts = styled.form`
+    height: 100%;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+    width: 3px;
+    background-color: #dcdcdc;
+    border-radius: 5px;
 }
 `
