@@ -1,12 +1,18 @@
 // import InputHooks from '../../InputHooks/InputHooks';
-import { Container, FormProducts, Card } from './styled';
 import { InputHook } from './Input';
 import { ViewProducts } from './ViewProducts';
+import { useState } from 'react';
+import { IconArrowRight } from '../../../assets/icons/icons';
+import { Container, FormProducts, Card, Button, CardOne } from './styled';
 
 export const Products = ({ handleChangeName, input }) => {
+    const [state, setstate] = useState(false)
+    const handleClick = () =>{
+        setstate(!state)
+    }
     return (<>
         <Container>
-            <Card width='30%'>
+            <CardOne state={state}>
                 <FormProducts>
                     <InputHook label="Nombre" value={input} onChange={handleChangeName} />
                     <InputHook label="Precio" />
@@ -14,8 +20,11 @@ export const Products = ({ handleChangeName, input }) => {
                     <InputHook label="Cantidad" />
                     <InputHook label="Unidades disponibles" />
                 </FormProducts>
-            </Card>
-            <Card bgColor='#ededed' width='70%'>
+            </CardOne>
+            <i style={{ position: 'relative' }}>
+                <Button onClick={handleClick}><IconArrowRight color='blue' size='20px' /></Button>
+            </i>
+            <Card state={state} bgColor='#ededed'>
                 <ViewProducts value={input} />
             </Card>
         </Container>

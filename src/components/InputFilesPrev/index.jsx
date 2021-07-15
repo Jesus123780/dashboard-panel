@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Fragment } from 'react'
-import { ButtonDelete, DropZone, FileText, Image, ImgCont, InputFile, Label, Preview, Box } from './styled'
+import { ButtonDelete, DropZone, FileText, Image, ImgCont, InputFile, Label, Preview, Box, Tooltip, PreviewLoader } from './styled'
+import { IconDelete } from '../../assets/icons/icons'
+import { Skeleton } from '../Skeleton/SkeletonProducts'
 
 export const InputFilesProductos = ({ onChange, reset }) => {
     const [images, setImages] = useState([])
@@ -12,7 +14,6 @@ export const InputFilesProductos = ({ onChange, reset }) => {
         const { files } = event.target
         setImages([...images, ...files])
         onChange([...images, ...files])
-
         let newFiles = []
         for (let i = 0; i < files.length; i++) newFiles = [...newFiles, files[i]]
 
@@ -27,7 +28,6 @@ export const InputFilesProductos = ({ onChange, reset }) => {
                 }
             ]
         }
-
         setPreviewImg([
             ...previewImg,
             ...newFilesPreview
@@ -35,48 +35,52 @@ export const InputFilesProductos = ({ onChange, reset }) => {
     }
 
     useEffect(() => {
-        if (reset){
+        if (reset) {
             setImages([])
             setPreviewImg([])
         }
-    }, [reset])
+    }, [])
 
     const handleDelete = (e, item, index) => {
         e.stopPropagation()
         const newImages = images.filter((x, i) => (x.name !== item.name && i !== index))
         const previewNewImages = previewImg.filter((x, i) => (x.temPath !== item.temPath && i !== index))
-
         setImages(newImages)
         setPreviewImg(previewNewImages)
     }
-
-    // const onTargetClick = () => {
-    //     fileInputRef.current.click()
-    // }
     return (
         <>
             <Box>
-                <InputFile
-                    onChange={onFileInputChange}
-                    ref={fileInputRef}
-                    id="dropZone"
-                    type="file"
-                    multiple
-                />
-                <DropZone
-                    onClick={e => {
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <PreviewLoader>
+                        {!previewImg?.length && [1, 2, 3].map(x => (
+                            <Skeleton key={x?.id} />
+                        ))}
+                    </PreviewLoader>
+                    {!previewImg?.length && <Skeleton />}
+                </div>
+                <DropZone>
+                    {!previewImg?.length && (<>
+                        <Label>Click para subir Archivos</Label>
+                        <InputFile
+                            id="dropZone"
+                            onChange={onFileInputChange}
+                            ref={fileInputRef}
+                            type="file"
+                            multiple
+                        />
+                    </>
+
+                    )}
+                    <Preview onClick={e => {
                         e.stopPropagation()
                         document.getElementById('dropZone').click()
-                    }}>
-                    {!previewImg?.length && (
-                        <Label>Click para subir Archivos</Label>
-                    )}
-                    <Preview>
+                    }} previewImg={previewImg}>
                         {!!previewImg?.length && previewImg?.map((x, i) => (
-                            <Fragment key={i}>
+                            <div key={i}>
                                 <ImgCont title={x.name}>
                                     <ButtonDelete onClick={e => handleDelete(e, x, i)}>
-                                        <i>Delete</i>
+                                        <Tooltip><IconDelete size='20px' /></Tooltip>
                                     </ButtonDelete>
                                     {(x.ext === '.png' || x.ext === '.svg' || x.ext === '.jpg' || x.ext === '.jpeg') ?
                                         <Image src={x?.temPath} />
@@ -88,9 +92,14 @@ export const InputFilesProductos = ({ onChange, reset }) => {
                                     }
                                     <FileText>{x.name}</FileText>
                                 </ImgCont>
-                            </Fragment>
+                            </div>
                         ))}
                     </Preview>
+                    {!!previewImg?.length && (
+                        <div style={{ marginLeft: '40px' }}>
+                            <Image src={previewImg[0]?.temPath} />
+                        </div>
+                    )}
                 </DropZone>
             </Box>
         </>

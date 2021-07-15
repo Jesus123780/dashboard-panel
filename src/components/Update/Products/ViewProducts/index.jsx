@@ -5,7 +5,7 @@ import { InputFilesProductos } from '../../../InputFilesPrev'
 import { APColor, PVColor } from '../../../../assets/colors'
 
 export const ViewProducts = props => {
-    const unidad = '1'
+    const unidad = '534'
     const { value, discount } = props
     const onchangeFile =() => {
 

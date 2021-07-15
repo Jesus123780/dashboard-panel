@@ -8,17 +8,19 @@ export const Container = styled.div`
     flex-direction: row;
     background-color: ${ BGColor };
     border-radius: 4px;
+    overflow: hidden;
 `
 export const Card = styled.div`
     flex: 0 1 auto;
     display: flex;
     flex-direction: column;
     padding: 24px 16px;
+    margin: 10px;
     border-radius: 8px;
     border: 1px solid rgba(0,0,0,.1);
+    width: 50%;
 `
 export const Title = styled.h1`
-    flex: auto;
     padding: 0;
     margin-right: 15px;
     margin-bottom: 8px;
@@ -52,7 +54,6 @@ ${ props => !props.discount &&css`
 ` }
 `
 export const Price = styled.h2`
-    flex: auto;
     padding: 0;
     margin-right: 15px;
     margin-bottom: 8px;
