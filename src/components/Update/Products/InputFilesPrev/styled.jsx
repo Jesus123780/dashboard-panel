@@ -5,16 +5,15 @@ export const Box = styled.div`
     position: relative;
     box-sizing: border-box;
 `
-export const Label = styled.label`
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    padding: 40px;
-    box-sizing: border-box;
+export const Button = styled.button`
     cursor: pointer;
+    justify-content: center;
+    background-color: transparent;
+    display: flex;
+    margin: auto;
 `
 export const InputFile = styled.input`
-
+    display: none;
 `
 export const DropZone = styled.div`
     min-height: 150px;

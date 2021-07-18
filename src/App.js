@@ -82,6 +82,15 @@ function App() {
                                                     <Route exact path='/update/products' component={Products} />
                                                     <Route exact path='/update/PQR' component={PQR} />
                                                     <Route exact path='/update/location' component={Location} />
+                                                    {/* Delete Sección */}
+                                                    {/* <Route exact path='/update/category' component={Categories} />
+                                                    <Route exact path='/update/kit' component={Kit} />
+                                                    <Route exact path='/update/offers' component={Offers} />
+                                                    <Route exact path='/update/oficialstores' component={OficialStores} />
+                                                    <Route exact path='/update/popularCategories' component={PopularCategories} />
+                                                    <Route exact path='/delete/products' component={Products} />
+                                                    <Route exact path='/update/PQR' component={PQR} />
+                                                    <Route exact path='/update/location' component={Location} /> */}
 
                                                     {/* Chat */}
                                                     <Route exact path='/chat' component={Chat} />

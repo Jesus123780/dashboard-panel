@@ -103,7 +103,15 @@ export const SideBar = () => {
                                     <span>Preguntas Frecuentes</span>
                                 </LinkOption>
                             </Options>
-                            <Options label='Locations' active={active === 7} handleClick={() => handleClick(7)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
+                            <Options label='Productos' active={active === 7} handleClick={() => handleClick(7)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconSearch size='25px' color={PLColor} />}>
+                                <LinkOption to='/update/products'>
+                                    <span>Publicar products</span>
+                                </LinkOption>
+                                <LinkOption to='/delete/products'>
+                                    <span>Publicar products</span>
+                                </LinkOption>
+                            </Options>
+                            <Options label='Locations' active={active === 8} handleClick={() => handleClick(8)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
                                 <LinkOption to='/update/location'>
                                     <span>Update Location</span>
                                 </LinkOption>

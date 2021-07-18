@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Fragment } from 'react'
-import { ButtonDelete, DropZone, FileText, Image, ImgCont, InputFile, Label, Preview, Box, Tooltip, PreviewLoader } from './styled'
-import { IconDelete } from '../../assets/icons/icons'
-import { Skeleton } from '../Skeleton/SkeletonProducts'
+import { ButtonDelete, DropZone, FileText, Image, ImgCont, InputFile, Button, Preview, Box, Tooltip, PreviewLoader } from './styled'
+import { IconDelete } from '../../../../assets/icons/icons'
+import { Skeleton } from '../../../Skeleton/SkeletonProducts'
+import { SvgUpload } from '../svg'
+import { CustomSlider } from '../CustomSlider'
 
 export const InputFilesProductos = ({ onChange, reset }) => {
     const [images, setImages] = useState([])
     const [previewImg, setPreviewImg] = useState([])
+    const [modal, setModal] = useState(false)
     const fileInputRef = useRef(null)
-
     const onFileInputChange = event => {
         const { files } = event.target
         setImages([...images, ...files])
@@ -48,6 +49,41 @@ export const InputFilesProductos = ({ onChange, reset }) => {
         setImages(newImages)
         setPreviewImg(previewNewImages)
     }
+    function reducer(state, action) {
+        switch (action?.type) {
+        case 'NEXT':
+            return {
+                ...state,
+                currentIndex: state?.currentIndex + (1 % state?.data?.length),
+
+            };
+        case 'PREV':
+            return {
+                ...state,
+                currentIndex: state?.currentIndex - (1 % state?.data?.length)
+            };
+        case 'GOTO':
+            return {
+                ...state,
+                currentIndex: action?.index
+            };
+        case 'RESET':
+            return { ...state, currentIndex: 0, currentPosition: 0, };
+
+        default:
+            return { state };
+        }
+    }
+    const [state, dispatch] = useReducer(reducer, {
+        currentIndex: 0,
+        data: [
+            { id: 1, name: 'Slide 5', image: images[0] },
+            { id: 2, name: 'Slide 5', image: 'https://http2.mlstatic.com/storage/splinter-admin/o:f_webp,q_auto:best/1624555002140-home-sliderdesktop2x.jpg' },
+            { id: 3, name: 'Slide 5', image: 'https://http2.mlstatic.com/storage/splinter-admin/o:f_webp,q_auto:best/1624555002140-home-sliderdesktop2x.jpg' },
+            { id: 4, name: 'Slide 5', image: 'https://http2.mlstatic.com/storage/splinter-admin/o:f_webp,q_auto:best/1624555002140-home-sliderdesktop2x.jpg' },
+        ]
+    }
+    );
     return (
         <>
             <Box>
@@ -61,14 +97,12 @@ export const InputFilesProductos = ({ onChange, reset }) => {
                 </div>
                 <DropZone>
                     {!previewImg?.length && (<>
-                        <Label>Click para subir Archivos</Label>
-                        <InputFile
-                            id="dropZone"
-                            onChange={onFileInputChange}
-                            ref={fileInputRef}
-                            type="file"
-                            multiple
-                        />
+                        <Button onClick={e => {
+                            e.stopPropagation()
+                            document.getElementById('dropZone').click()
+                        }} >
+                            <SvgUpload />
+                        </Button>
                     </>
 
                     )}
@@ -100,8 +134,17 @@ export const InputFilesProductos = ({ onChange, reset }) => {
                             <Image src={previewImg[0]?.temPath} />
                         </div>
                     )}
+                    <InputFile
+                        id="dropZone"
+                        onChange={onFileInputChange}
+                        ref={fileInputRef}
+                        type="file"
+                        multiple
+                    />
                 </DropZone>
             </Box>
+            { !!previewImg?.length === null && <CustomSlider state={state} state={previewImg} setModal={setModal} modal={modal} autoPlayTime={4000} duration={'500ms'} dispatch={dispatch} /> }
+
         </>
     )
 }
