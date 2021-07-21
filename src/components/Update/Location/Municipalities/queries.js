@@ -1,31 +1,36 @@
 import { gql } from '@apollo/client';
 
 export const UPDATE_MUNICIPALITIES = gql`
-mutation($input: IMunicipalities){
-  createMunicipalities(input: $input){
-    m_id
-    d_id
-    m_name
-    
+mutation createCity($input: ICity){
+	createCity(input: $input){
+    cId
+    dId
+    cName
+    cState
   }
 }
 `
 
 export const GET_MUNICIPALITIES = gql`
-query getMunicipalities{
-  getMunicipalities{
-    m_id
-    d_id
-    m_name
-    m_state
+query getAllCities{
+  getCities{
+    cId
+    dId
+    cName
+    cState
+    cDatCre
+    cDatMod
   }
+
 }
 `
 export const EDIT_MUNICIPALITIES = gql`
-mutation($input: IEditMunicipalities!){
-editMunicipalities(input: $input){
-	m_id
-  m_name
-}
+mutation ditMutation($input: IEditMunicipalities!){
+	editMunicipalities(input: $input){
+    cId
+    dId
+    cName
+    cState
+  }
 }
 `

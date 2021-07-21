@@ -1,12 +1,12 @@
 import { gql } from '@apollo/client';
 
 export const UPDATE_DEPARTMENT = gql`
-mutation($input: IDepartments!){
+mutation($input: IDepartment!){
   createDepartments(input: $input ){
-    d_id
-    c_id
-    d_name
-    d_name
+    dId
+    cId
+    dName
+    dState
   }
   
 }
@@ -14,11 +14,11 @@ mutation($input: IDepartments!){
 
 export const GET_DEPARTMENT = gql`
 query  departments{
-  departments{
-    d_id
-    c_id
-    d_name
-    d_state
+  department{
+    dId
+    cId
+    dName
+    dState
   }
 }
 `

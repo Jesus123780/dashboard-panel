@@ -24,7 +24,7 @@ export const Departments = () => {
         setValues({ ...values, [e.target.name]: e.target.value })
         setErrors({ ...errors, [e.target.name]: error })
     }
-    // Query para traer a todos los países
+    // Query para traer a todos los departamentos
     const { data: dataCountries } = useQuery(GET_COUNTRY)
     const { data } = useQuery(GET_DEPARTMENT)
     const handleRegister = async e => {
@@ -44,14 +44,13 @@ export const Departments = () => {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
         // eslint-disable-next-line
-        const { d_name, c_id } = values
+        const { dName, cId } = values
         try {
             if (!errorSubmit) {
                 const results = await createDepartments({
                     variables: {
                         input: {
-                            // eslint-disable-next-line
-                            c_id, d_name
+                            cId, dName
                         }
                     }
                 })
@@ -82,31 +81,31 @@ export const Departments = () => {
     return (<>
         <Container>
             <Form onSubmit={handleRegister}>
-                <NewSelect search disabled={!dataCountries?.countries[0]?.c_id} options={dataCountries?.countries.filter(x => x?.c_name === x?.c_name) || []} id='c_id' name='c_id' value={values?.c_id || ''} optionName='c_name' title='Ingresa el País' onChange={handleChange} margin='10px' />
+                <NewSelect search disabled={!dataCountries?.countries[0]?.cId} options={dataCountries?.countries.filter(x => x?.c_name === x?.c_name) || []} id='cId' name='cId' value={values?.cId || ''} optionName='cName' title='Ingresa el País' onChange={handleChange} margin='10px' />
                 <InputHooks
                     title='Ingresa un departamento'
                     required
-                    errors={values?.d_name}
-                    value={values?.d_name}
+                    errors={values?.dName}
+                    value={values?.dName}
                     onChange={handleChange}
-                    name='d_name'
+                    name='dName'
                 />
                 <RippleButton>
                     {!loading ? 'Subir' : <LoadEllipsis color='#fff' /> }
                 </RippleButton>
             </Form>
             <Card>
-                {data?.departments ? data?.departments.map(index => (
+                {data?.department ? data?.department.map(index => (
                     <ContainerTask show={show === index} key={index.d_id}>
                         <OptionsFunction show={show === index}>
                             <Button><IconDelete size={30} /></Button>
-                            <Button onClick={() => setEdit({ id: index.d_id, value: index.d_name })} ><IconEdit size={30} /></Button>
+                            <Button onClick={() => setEdit({ id: index.dId, value: index.dName })} ><IconEdit size={30} /></Button>
                             {/* Todo Success */}
                         </OptionsFunction>
                         {/* Tareas */}
                         <ListTask show={show === index}>
                             {/* eslint-disable-next-line */}
-                            {index.d_name}
+                            {index.dName}
                         </ListTask>
                         <div style={{ display: 'contents' }}><Button onClick={() => setShow(index === show ? false : index)}><IconDost size={30} color={show === index ? PColor : '#CCC'} /></Button></div>
                     </ContainerTask>

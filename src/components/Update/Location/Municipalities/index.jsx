@@ -42,22 +42,20 @@ export const Municipalities = () => {
         if (errorSubmit) {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
-        // eslint-disable-next-line
-        const { m_name, d_id } = values
+        const { cName, dId } = values
         try {
             if (!errorSubmit) {
                 const results = await createMunicipalities({
                     variables: {
                         input: {
-                            // eslint-disable-next-line
-                            d_id, m_name
+                            dId, cName
                         }
                     }
                 })
                 setValues({})
                 setErrors({} || [])
                 // eslint-disable-next-line
-                if (results) setAlertBox({ message: `Cuidad ${ m_name } guardado exitosamente`, duration: 5000 })
+                if (results) setAlertBox({ message: `Cuidad ${ cName } guardado exitosamente`, duration: 5000 })
             }
         } catch (error) {
             setValues({})
@@ -82,31 +80,31 @@ export const Municipalities = () => {
     return (<>
         <Container>
             <Form onSubmit={handleRegister}>
-                <NewSelect search disabled={!data?.departments[0]?.c_id} options={data?.departments.filter(x => x?.d_name === x?.d_name) || []} id='d_id' name='d_id' value={values?.d_id || ''} optionName='d_name' title='Selecciona un departamento' onChange={handleChange} margin='10px' />
+                <NewSelect search disabled={!data?.department[0]?.cId} options={data?.department?.filter(x => x?.dName === x?.dName) || []} id='dId' name='dId' value={values?.dId || ''} optionName='dName' title='Selecciona un departamento' onChange={handleChange} margin='10px' />
                 <InputHooks
                     title='Ingresa una cuidad'
                     required
-                    errors={values?.m_name}
-                    value={values?.m_name}
+                    errors={values?.cName}
+                    value={values?.cName}
                     onChange={handleChange}
-                    name='m_name'
+                    name='cName'
                 />
                 <RippleButton>
                     {!loading ? 'Subir' : <LoadEllipsis color='#fff' /> }
                 </RippleButton>
             </Form>
             <Card>
-                {dataMunicipalities?.getMunicipalities.map ? dataMunicipalities?.getMunicipalities.map(index => (
-                    <ContainerTask show={show === index} key={index.d_id}>
+                {dataMunicipalities?.getCities ? dataMunicipalities?.getCities?.map(index => (
+                    <ContainerTask show={show === index} key={index.cId}>
                         <OptionsFunction show={show === index}>
                             <Button><IconDelete size={30} /></Button>
-                            <Button onClick={() => setEdit({ id: index.m_id, value: index.m_name })} ><IconEdit size={30} /></Button>
+                            <Button onClick={() => setEdit({ id: index.cId, value: index.cName })} ><IconEdit size={30} /></Button>
                             {/* Todo Success */}
                         </OptionsFunction>
                         {/* Tareas */}
                         <ListTask show={show === index}>
                             {/* eslint-disable-next-line */}
-                            {index.m_name}
+                            {index.cName}
                         </ListTask>
                         <div style={{ display: 'contents' }}><Button onClick={() => setShow(index === show ? false : index)}><IconDost size={30} color={show === index ? PColor : '#CCC'} /></Button></div>
                     </ContainerTask>

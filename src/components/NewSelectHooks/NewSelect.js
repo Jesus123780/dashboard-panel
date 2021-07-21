@@ -68,7 +68,7 @@ export default function NewSelect ({ options, disabled, id, idD, name, onChange,
         setTimeout(() => setNewOption(options), 300)
     }
 
-    const val = options.find(x => x[id] === value)
+    const val = options?.find(x => x[id] === value)
 
     return (
         <BoxSelect width={width} padding={padding} margin={margin} ref={v => !!v && changeRef(v)} id={idD}>
@@ -92,7 +92,7 @@ export default function NewSelect ({ options, disabled, id, idD, name, onChange,
                 >
                     {search && <InputText placeholder='Buscar aquí...' value={valueInput || ''} ref={inputSearch} onChange={changeSearch} />}
                     <div style={{ width: '100%' }} >
-                        {newOption.length ?
+                        {newOption?.length ?
                             newOption.map(x => <CustomButtonS option key={x[id]} title={renderVal(x)} type='button' onClick={() => changeValue(x)}>{renderVal(x)}</CustomButtonS>)
                             : <TextNotResult>No hay resultados...</TextNotResult>
                         }

@@ -14,7 +14,7 @@ import { EditForm } from './EditForm'
 import { Container, Form, Card, ContainerTask, OptionsFunction, Button, ListTask } from './styled'
 
 export const Countries = () => {
-    const [createCountries, { loading }] = useMutation(UPDATE_COUNTRIES)
+    const [createCountry, { loading }] = useMutation(UPDATE_COUNTRIES)
     const { setAlertBox } = useContext(Context)
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
@@ -42,27 +42,26 @@ export const Countries = () => {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
         // eslint-disable-next-line
-        const { c_name, c_calCod } = values
+        const { cName, cCalCod } = values
         try {
             if (!errorSubmit) {
-                const results = await createCountries({
+                const results = await createCountry({
                     variables: {
                         input: {
-                            // eslint-disable-next-line
-                            c_name, c_calCod
+                            cName, cCalCod
                         }
                     }
                 })
                 setValues({})
                 setErrors({} || [])
-                if (results) setAlertBox({ message: 'País subido con éxito', duration: 5000 })
+                if (results) setAlertBox({ message: 'País subido con éxito', duration: 5000, color: 'success' })
             }
         } catch (error) {
             setValues({})
             setErrors({})
             // eslint-disable-next-line
             setAlertBox({ message: `${error}`, duration: 7000 })
-            setAlertBox({ message: 'se ha producido un error interno', duration: 7000 })
+            setAlertBox({ message: 'se ha producido un error interno', duration: 7000, color: 'error' })
 
         }
     }
@@ -92,18 +91,18 @@ export const Countries = () => {
                 <InputHooks
                     title='Ingresa un país'
                     required
-                    errors={values?.c_name}
-                    value={values?.c_name}
+                    errors={values?.cName}
+                    value={values?.cName}
                     onChange={handleChange}
-                    name='c_name'
+                    name='cName'
                 />
                 <InputHooks
                     title='Ingresa código del país'
                     required
-                    errors={values?.c_calCod}
-                    value={values?.c_calCod}
+                    errors={values?.cCalCod}
+                    value={values?.cCalCod}
                     onChange={handleChange}
-                    name='c_calCod'
+                    name='cCalCod'
                 />
                 <RippleButton>
                     {!loading ? 'Subir' : <LoadEllipsis color='#fff' />}
@@ -111,17 +110,17 @@ export const Countries = () => {
             </Form>
             <Card>
                 {data?.countries ? data?.countries.map(index => (
-                    <ContainerTask show={show === index} key={index.c_id}>
+                    <ContainerTask show={show === index} key={index.cId}>
                         <OptionsFunction show={show === index}>
                             <Button><IconDelete size={30} /></Button>
-                            <Button onClick={() => setEdit({ id: index.c_id, value: index.c_name })} ><IconEdit size={30} /></Button>
+                            <Button onClick={() => setEdit({ id: index.cId, value: index.cName })} ><IconEdit size={30} /></Button>
                             {/* Todo Success */}
                         </OptionsFunction>
                         {/* Tareas */}
                         <ListTask show={show === index}>
                             {/* eslint-disable-next-line */}
-                            <Options icon={icons.find(j => j.c_calCod == index.c_calCod)?.icon} name={icons.find(j => j.c_calCod == index.c_calCod)?.c_calCod}></Options>
-                            {index.c_name}
+                            <Options icon={icons.find(j => j.cCalCod == index.cCalCod)?.icon} name={icons.find(j => j.cCalCod == index.cCalCod)?.cCalCod}></Options>
+                            {index.cName}
                         </ListTask>
                         <div style={{ display: 'contents' }}><Button onClick={() => setShow(index === show ? false : index)}><IconDost size={30} color={show === index ? PColor : '#CCC'} /></Button></div>
                     </ContainerTask>
@@ -132,30 +131,6 @@ export const Countries = () => {
     )
 }
 
-// const Table = styled.table`
-// position: relative;
-// width: 100%;
-// tbody tr:nth-child(2n) .andes-table:first-child,
-// tbody tr:nth-child(2n) .andes-table:first-child,
-// tbody tr:nth-child(odd),
-// tbody tr:nth-child(odd):hover {
-//     padding: 13px;
-//     background: #f5f5f5;
-//     text-align: center;
-// }
-
-// tbody tr:nth-child(odd) .andes-table:first-child,
-// tbody tr:nth-child(odd) .andes-table:first-child {
-//     background: #ebebeb;
-//     padding: 13px;
-//     text-align: center;
-//     width: 25%;
-// }
-// tbody tr {
-//     font-family: PFont-Regular;
-//     text-align: center;
-// }
-// `
 const Options = ({ icon, name }) => {
 
     return (

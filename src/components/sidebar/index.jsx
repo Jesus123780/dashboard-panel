@@ -115,6 +115,9 @@ export const SideBar = () => {
                                 <LinkOption to='/update/location'>
                                     <span>Update Location</span>
                                 </LinkOption>
+                                <LinkOption to='/location'>
+                                    <span>Location</span>
+                                </LinkOption>
                             </Options>
                             <TextField
                                 id='date'

@@ -14,15 +14,13 @@ export function EditForm(props) {
     useEffect(() => {
         inputRef?.current?.focus();
     });
-
+    console.log(input, props?.edit?.id)
     const handleChange = e => {
         setInput(e.target.value);
     };
     const [editMunicipalities, { loading, error }] = useMutation(EDIT_MUNICIPALITIES)
-    // eslint-disable-next-line
-    const m_name = input
-    // eslint-disable-next-line
-    const m_id = props?.edit?.id
+    const cName = input
+    const cId = props?.edit?.id
     const handleSubmit = async e => {
         e.preventDefault();
         props.onSubmit({
@@ -34,13 +32,12 @@ export function EditForm(props) {
             const results = await editMunicipalities({
                 variables: {
                     input: {
-                        // eslint-disable-next-line
-                        m_name, m_id
+                        cName, cId
                     }
                 }
             })
             // eslint-disable-next-line
-            if (results) setAlertBox({ message: ` Cuidad actualizado a  ${ m_name }`, duration: 5000 })
+            if (results) setAlertBox({ message: ` Cuidad actualizado a  ${ cName }`, duration: 5000 })
         } catch (err) {
             setAlertBox({ message: `${ err }`, duration: 7000 })
         }
