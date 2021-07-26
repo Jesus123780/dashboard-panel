@@ -5,19 +5,14 @@ import { GET_TYPE_PQR } from '../queries'
 import { Container } from './styled'
 import InputHooks from '../../../InputHooks/InputHooks'
 import { RippleButton } from '../../../Ripple'
-import { IconArrowBottom, IconShopping, IconLogout, IconArrowRight } from '../../../../assets/icons/icons'
+import { IconArrowRight } from '../../../../assets/icons/icons'
 import { SFColor, SFVColor } from '../../../../assets/colors'
 import NewSelect from '../../../NewSelectHooks/NewSelect'
 import { validationSubmitHooks } from '../../../../utils'
+import { icons } from '../StorePqr/codeIcon'
 export const Questions = () => {
     const { data, loading, error: errorC } = useQuery(GET_TYPE_PQR)
 
-    const icons = [
-        { index: 1, icon: <IconArrowBottom color='red' size='20px' /> },
-        { index: 2, icon: <IconShopping color='red' size='20px' /> },
-        { index: 3, icon: <IconLogout color='red' size='20px' /> },
-
-    ]
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
     const handleChange = (e, error) => {
@@ -63,9 +58,8 @@ export const Questions = () => {
                 console.log(results)
             }
         } catch (error) {
-            setValues({})
-            setErrors({})
-            alert(error.message)
+            // eslint-disable-next-line
+            console.log(error)
         }
     }
     if (errorC) return <>Ocurrió un error interno</>
@@ -76,7 +70,7 @@ export const Questions = () => {
                 {!loading &&
                     <CardWrapper>
                         <Form onSubmit={handleRegister}>
-                            <NewSelect search disabled={!data?.typepqr} options={data?.typepqr?.filter(x => x?.thpName === x?.thpName) || []} id='thpId' name='thpId' value={values?.thpId || ''} optionName='thpName' title='Categoría Pregunta' onChange={handleChange} margin='10px' />
+                            <NewSelect search disabled={!data?.typopqr} options={data?.typopqr?.filter(x => x?.thpName === x?.thpName) || []} id='thpId' name='thpId' value={values?.thpId || ''} optionName='thpName' title='Categoría Pregunta' onChange={handleChange} margin='10px' />
                             <InputHooks
                                 title='Pregunta'
                                 required
@@ -92,29 +86,15 @@ export const Questions = () => {
                             </div>
                             <RippleButton bgColor='#ebebeb' label='Publicar' />
                         </Form>
-                        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column ', boxShadow: '0 1px 2px 0 rgb(0 0 0 / 12%)' }}>
-                            {/* eslint-disable-next-line */}
-                            {!!data?.typepqr && data.typepqr.map(x => <QuestionsList title={x.thpName} icon={icons.find(j => j.index == x.thpIcon)?.icon} iconArrow={ <IconArrowRight color='red' size='10px' />}/>)}
-                        </div>
                     </CardWrapper>
                 }
-
                 <CardWrapper>
-                    <h1>Categoría Pregunta<i></i></h1>
-                    <Table >
-                        <DataLength>{data?.typepqr.length}</DataLength>
-                        <tbody>
-                            {!!data?.typepqr && data.typepqr.map(x => <tr key={x.thpId}>
-                                <th className="andes-table">Nombre:</th>
-                                <td><span>{x.thpName}</span></td>
-                                <th className="andes-table">Icono</th>
-                                {/* eslint-disable-next-line */}
-                                <td><span> <Options icon={icons.find(j => j.index == x.thpIcon)?.icon}></Options></span></td>
-                            </tr>
-                            )}
-                        </tbody>
-                    </Table>
+                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column ', boxShadow: '0 1px 2px 0 rgb(0 0 0 / 12%)' }}>
+                        {/* eslint-disable-next-line */}
+                        {!!data?.typopqr && data.typopqr.map(x => <QuestionsList title={x.thpName} icon={icons.find(j => j.index == x.thpIcon)?.icon} iconArrow={<IconArrowRight color='red' size='10px' />} />)}
+                    </div>
                 </CardWrapper>
+
             </Content>
         </Container>
     </>
@@ -164,29 +144,6 @@ const ItemFirstColumn = styled.div`
 
 `
 
-// Questions List
-const Table = styled.table`
-position: relative;
-width: 100%;
-tbody tr:nth-child(2n) .andes-table:first-child,
-tbody tr:nth-child(2n) .andes-table:first-child,
-tbody tr:nth-child(odd),
-tbody tr:nth-child(odd):hover {
-    padding: 13px;
-    background: #f5f5f5;
-}
-
-tbody tr:nth-child(odd) .andes-table:first-child,
-tbody tr:nth-child(odd) .andes-table:first-child {
-    background: #ebebeb;
-    padding: 13px;
-    width: 25%;
-}
-tbody tr{
-    font-family: PFont-Regular;
-
-}
-`
 const Content = styled.div`
     width: 100%;
     display: flex;
@@ -196,34 +153,33 @@ const Content = styled.div`
     height: 100%;
 
 `
-const AnimationPulse = keyframes`
-	0% {
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
-	}
+// const AnimationPulse = keyframes`
+// 	0% {
+// 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+// 	}
 
-	70% {
-		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-	}
+// 	70% {
+// 		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+// 	}
 
-	100% {
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-	}
-`
-const DataLength = styled.span`
-    position: absolute;
-    right: 0;
-    margin: auto;
-    top: -35px;
-    font-family: PFont-Regular;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    height: 30px;
-    width: 30px;
-
-    animation: 2s ease infinite ${ AnimationPulse } ;
-`
+// 	100% {
+// 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+// 	}
+// `
+// const DataLength = styled.span`
+//     position: absolute;
+//     right: 0;
+//     margin: auto;
+//     top: -35px;
+//     font-family: PFont-Regular;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     border-radius: 100%;
+//     height: 30px;
+//     width: 30px;
+//     animation: 2s ease infinite ${ AnimationPulse } ;
+// `
 const CardWrapper = styled.div`
     width: 40%;
     display: flex;
@@ -275,19 +231,6 @@ export const TextArea = styled.textarea`
         font-size: 13px;
     }
 `
-const Options = ({ children, icon }) => {
-
-    return (
-        <div type='button'>
-            <div>
-                {icon}
-            </div>
-            <div>
-                {children}
-            </div>
-        </div>
-    )
-}
 export const AnimationRight = keyframes`
 0% {
     transform: translateX(50vw);

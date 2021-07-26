@@ -1,14 +1,11 @@
 import { gql } from '@apollo/client';
 
 export const GET_TYPE_PQR = gql`
-query getTypePqr{
-  typopqr{
+query typepqr{
+  typepqr{
     thpId
     thpName
-    thpState
-    thpIcon
-    thpDatCre
-    thpDatMod
+    thpIcon    
   }
-}
+} 
 `

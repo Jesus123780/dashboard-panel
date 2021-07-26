@@ -36,6 +36,7 @@ export const FloatingBox = styled.div`
     transition: all 200ms ease-in-out;
     background-color: ${ BGColor };
     padding: 10px;
+    z-index: 99999;
   ${ ({ show }) => show
         ? css`
                   visibility: visible;
@@ -53,9 +54,13 @@ export const FloatingBox = styled.div`
     }
 `
 export const FloatingBoxTwo = styled(FloatingBox)`
+    
     margin: 0 0 0 30px;
     left: -240px;
     overflow: hidden;
+    box-shadow: -1px 2px 8px 2px #dcdcdc;
+    border-radius: 5px;
+
     @media only screen and (min-width: 960px){
     }
   
@@ -64,7 +69,6 @@ export const Overline = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 99;
     height: 100vh;
     width: 100%;
     background-color: transparent;

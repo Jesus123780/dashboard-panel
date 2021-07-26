@@ -14,7 +14,6 @@ export function EditForm(props) {
     useEffect(() => {
         inputRef?.current?.focus();
     });
-    console.log(input, props?.edit?.id)
     const handleChange = e => {
         setInput(e.target.value);
     };

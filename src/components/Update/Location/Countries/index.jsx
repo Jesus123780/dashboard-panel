@@ -7,7 +7,7 @@ import { LoadEllipsis } from '../../../LoadingButton'
 import { RippleButton } from '../../../Ripple'
 import { PColor, SFColor, SFVColor } from '../../../../assets/colors'
 import { IconEdit, IconDost, IconDelete } from '../../../../assets/icons/icons'
-import { GET_COUNTRY, UPDATE_COUNTRIES } from './queries'
+import { DELETE_ONE_COUNTRIES, GET_COUNTRY, UPDATE_COUNTRIES } from './queries'
 import { validationSubmitHooks } from '../../../../utils'
 import { icons } from './codeCountries'
 import { EditForm } from './EditForm'
@@ -24,6 +24,8 @@ export const Countries = () => {
     }
     // Query para traer a todos los países
     const { data } = useQuery(GET_COUNTRY)
+    const [deleteCountries] = useMutation(DELETE_ONE_COUNTRIES)
+
     // Mutación para subir un país
     const handleRegister = async e => {
         e.preventDefault()
@@ -85,6 +87,28 @@ export const Countries = () => {
     if (edit.id) {
         return <EditForm edit={edit} onSubmit={submitUpdate} />;
     }
+    // console.log(data?.countries[0].cId)
+    const handleUpdate = async index => {
+        const { cId } = index
+        const results = await deleteCountries({
+            variables: {
+                input: {
+                    cId
+                }, update(cache) {
+                    console.log(index)
+                    cache.modify({
+                        fields: {
+                            clients() {
+                                const newData = data?.countries.filter(x => x.cId !== index.cId) || []
+                                return cache.writeQuery({ query: GET_COUNTRY, data: newData })
+                            }
+                        }
+                    })
+                }
+            }
+        })
+        if (results) setAlertBox({ message: 'País Eliminado con éxito', duration: 5000, color: 'success' })
+    }
     return (<>
         <Container>
             <Form onSubmit={handleRegister}>
@@ -112,8 +136,8 @@ export const Countries = () => {
                 {data?.countries ? data?.countries.map(index => (
                     <ContainerTask show={show === index} key={index.cId}>
                         <OptionsFunction show={show === index}>
-                            <Button><IconDelete size={30} /></Button>
-                            <Button onClick={() => setEdit({ id: index.cId, value: index.cName })} ><IconEdit size={30} /></Button>
+                            <Button onClick={() => handleUpdate({ ...index, cState: 0 })}><IconDelete size={30} /></Button>
+                            <Button onClick={() => setEdit({ id: index, value: index.cName })} ><IconEdit size={30} /></Button>
                             {/* Todo Success */}
                         </OptionsFunction>
                         {/* Tareas */}

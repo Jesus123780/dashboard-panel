@@ -11,7 +11,6 @@ import { GET_DEPARTMENT, UPDATE_DEPARTMENT } from './queries'
 import { GET_COUNTRY } from '../Countries/queries'
 import { EditForm } from './EditForm'
 import { PColor } from '../../../../assets/colors'
-// import { InputFiles } from '../../../InputFiles'
 import { IconEdit, IconDost, IconDelete } from '../../../../assets/icons/icons'
 import { Container, Form, Card, ContainerTask, OptionsFunction, Button, ListTask } from './styled'
 
@@ -43,7 +42,6 @@ export const Departments = () => {
         if (errorSubmit) {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
-        // eslint-disable-next-line
         const { dName, cId } = values
         try {
             if (!errorSubmit) {
@@ -78,6 +76,10 @@ export const Departments = () => {
     if (edit.id) {
         return <EditForm edit={edit} onSubmit={submitUpdate} />;
     }
+    const handleDelete = department => {
+        // eslint-disable-next-line
+        console.log(department?.dId)
+    }
     return (<>
         <Container>
             <Form onSubmit={handleRegister}>
@@ -96,9 +98,9 @@ export const Departments = () => {
             </Form>
             <Card>
                 {data?.department ? data?.department.map(index => (
-                    <ContainerTask show={show === index} key={index.d_id}>
+                    <ContainerTask show={show === index} key={index.dId}>
                         <OptionsFunction show={show === index}>
-                            <Button><IconDelete size={30} /></Button>
+                            <Button onClick={ () => handleDelete({ ...index, dState: 0 }, 'DELETE') }><IconDelete size={30} /></Button>
                             <Button onClick={() => setEdit({ id: index.dId, value: index.dName })} ><IconEdit size={30} /></Button>
                             {/* Todo Success */}
                         </OptionsFunction>

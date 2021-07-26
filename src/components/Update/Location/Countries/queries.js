@@ -46,3 +46,13 @@ query getOneCountry($c_calCod: String, $c_id: ID){
 }
 }
 `
+// No se esta usando
+export const DELETE_ONE_COUNTRIES = gql`
+mutation deleteCountries($input: IDeleteCountries!){
+  deleteCountries(input: $input){
+    cId
+    cName
+    cState
+  }
+}
+`

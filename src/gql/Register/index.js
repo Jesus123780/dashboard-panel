@@ -9,5 +9,5 @@ export const REGISTER = gql`
     email
     createAt
   }
-}
+} 
 `

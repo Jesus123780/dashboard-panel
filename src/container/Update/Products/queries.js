@@ -18,3 +18,14 @@ query getOnePqr($hpqrId: ID, $thpId: ID){
   }
 }
 `
+export const GET_ONE_COLOR = gql`
+query getAllColor{
+  color{
+    colorId
+    Name
+    cState
+    DatCre
+    DatMod
+  }
+}
+`

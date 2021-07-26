@@ -3,9 +3,8 @@ import { BGColor } from '../../../../assets/colors';
 
 export const Container = styled.div`
     display: flex;
-    padding:  40px;
+    padding:  10px;
     display: flex;
-    flex-direction: row;
     background-color: ${ BGColor };
     border-radius: 4px;
     overflow: hidden;
@@ -18,7 +17,13 @@ export const Card = styled.div`
     margin: 10px;
     border-radius: 8px;
     border: 1px solid rgba(0,0,0,.1);
-    width: ${ ({ width }) => width ? width : '30%' };
+    width: ${ ({ width }) => width && css`width: ${ width };` };
+    ${ props => props.sticky && css`
+        position: sticky;
+        z-index: 0;
+        top: 0px;
+        ` };
+
     `
 export const Text = styled.h2`
     font-size: ${ ({ size }) => size ? size : '24px' };
@@ -52,16 +57,25 @@ ${ props => !props.discount &&css`
 &::after{
     position: absolute;
     display: block;
-    top: 48%;
+    top: 43%;
     width: 100%;
     height: 1px;
     border-bottom-width: 1px;
     border-bottom-style: solid;
     content: "";
-    color: #18171799
+    color: #18171773;
     z-index: 999;
 }
 ` }
+`
+export const StickyWrapper = styled.div`
+    display: flex;
+    padding:  0px 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: ${ BGColor };
+    border-radius: 4px;
+    overflow: hidden;
 `
 export const Price = styled.h2`
     padding: 0;
@@ -79,12 +93,12 @@ export const Info = styled.span`
     color:${ ({ color }) => (color ? color : '#3483fa') };
     font-size:${ ({ size }) => (size ? size : '13px') };
     font-family: PFont-Light;
-    margin: 15px 0px
+    margin: ${ ({ margin }) => margin ? margin : '15px 0px' };
 `
 export const Button = styled.button`
  background-color: transparent !important;
  width: fit-content;
-`
+ `
 export const Table = styled.table`
 tbody tr:nth-child(2n) .andes-table:first-child,
 tbody tr:nth-child(2n) .andes-table:first-child,
@@ -100,4 +114,21 @@ tbody tr:nth-child(odd) .andes-table:first-child {
     background: #ebebeb;
     padding: 13px;
 }
+`
+export const Location = styled.div`
+    display: flex;
+    align-items: center;
+    ${ props =>props.direction &&css`
+    margin: 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    ` }
+`
+export const BoxComponent = styled.div`
+    border-top: 1px solid rgba(0,0,0,.1);
+    padding: 24px 0px;
+`
+export const ContentRate = styled.div`
+    display: flex;
+    width: min-content;
 `

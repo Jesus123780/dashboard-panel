@@ -25,10 +25,10 @@ query  departments{
 export const EDIT_DEPARTMENT = gql`
 mutation($input: IEditDepartments!){
 editDepartments(input: $input){
-  c_id
-  d_name
-  d_name
-  d_state
+  dId
+    cId
+    dName
+    dState
 }
 }
 `

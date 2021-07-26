@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ContentIcon } from './styled';
 import { IconRate } from '../../assets/icons/icons'
-export const Rate = ({ count, rating, color, onRating }) => {
+export const Rate = ({ count, rating, color, onRating, size }) => {
     const [hoverRating, setHoverRating] = useState(0);
 
     const getColor = index => {
@@ -26,7 +26,7 @@ export const Rate = ({ count, rating, color, onRating }) => {
                         onClick={() => onRating(idx)}
                         onMouseEnter={() => setHoverRating(idx)}
                         onMouseLeave={() => setHoverRating(0)}
-                    ><IconRate color={getColor(idx)} size={30} />
+                    ><IconRate color={getColor(idx)} size={size} />
                     </div>
                 ))}
         </ContentIcon>
@@ -40,7 +40,7 @@ Rate.defaultProps = {
     count: 5,
     rating: 0,
     color: {
-        filled: '#f5eb3b',
+        filled: '#0eacf5',
         unfilled: '#DCDCDC',
     },
 };

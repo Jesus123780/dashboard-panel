@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components'
-import { BColor, BGAColor, PColor } from '../../assets/colors'
+import { BColor, BGColor, PColor } from '../../assets/colors'
 
 const bounceInDown = keyframes`
     from {
@@ -24,8 +24,8 @@ export const ContainerText = styled.span`
     margin: auto;
     transition: 400ms;
     font-family: PFont-Light;
-    color: ${ ({ color }) => color === 'success' ? '#FFF' : color === 'error' ? '#dd4b39' : color === 'warning' ? `${ BColor }` : `${ BGAColor }` };
-`
+    color: ${ ({ color }) => color === 'success' ? '#FFF' : color === 'error' ? '#dd4b39' : color === 'warning' ? `${ BColor }` : `${ BGColor }` };
+    `
 export const ContainerToast = styled.div`
     animation: ${ ({ error, closed }) => error && (closed ? bounceOutUp : bounceInDown) } 1s forwards;
     height: ${ props => props.error ? '89px' : 0 };
@@ -39,7 +39,9 @@ export const ContainerToast = styled.div`
     margin: auto;
     z-index: 10021;
     transition: 400ms;
+    cursor: pointer;
     box-shadow: 0px 0px 6px #00000052;
+    color: ${ ({ color }) => color === 'success' ? '#FFF' : color === 'error' ? '#dd4b39' : color === 'warning' ? `${ BColor }` : `${ BGColor }` };
     background-color: ${ ({ color }) => color === 'success' ? '#50a773' : color === 'error' ? `${ PColor };` : color === 'warning' ? '#ebbc26' : 'rgba(0, 0, 0, 0.9)' };
 `
 export const ContentIcon = styled.div`

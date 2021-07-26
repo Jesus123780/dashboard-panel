@@ -26,7 +26,6 @@ export default function NewSelect ({ options, disabled, id, idD, name, onChange,
             return valueRender
         } else return data[optionName]
     }
-
     /** Use Effect */
     useEffect(() => {
         setNewOption(options)
@@ -67,7 +66,7 @@ export default function NewSelect ({ options, disabled, id, idD, name, onChange,
         setTimeout(() => setSelect(false), 400)
         setTimeout(() => setNewOption(options), 300)
     }
-
+    // eslint-disable-next-line
     const val = options?.find(x => x[id] === value)
 
     return (

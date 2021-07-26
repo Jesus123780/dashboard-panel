@@ -20,9 +20,9 @@ export function EditForm(props) {
     };
     const [editDepartments, { loading, error }] = useMutation(EDIT_DEPARTMENT)
     // eslint-disable-next-line
-    const d_name = input
+    const dName = input
     // eslint-disable-next-line
-    const d_id = props?.edit?.id
+    const dId = props?.edit?.id
     const handleSubmit = async e => {
         e.preventDefault();
         props.onSubmit({
@@ -35,12 +35,12 @@ export function EditForm(props) {
                 variables: {
                     input: {
                         // eslint-disable-next-line
-                        d_name, d_id
+                        dName, dId
                     }
                 }
             })
             // eslint-disable-next-line
-            if (results) setAlertBox({ message: ` Departamento actualizado a  ${ d_name }`, duration: 5000 })
+            if (results) setAlertBox({ message: ` Departamento actualizado a  ${ dName }`, duration: 5000 })
         } catch (err) {
             setAlertBox({ message: `${ err }`, duration: 7000 })
         }

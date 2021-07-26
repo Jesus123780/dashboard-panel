@@ -23,7 +23,7 @@ import { Products } from './pages/Update/Products';
 import { Chat } from './pages/Chat';
 import { Location } from './pages/Update/location';
 import { history } from './utils';
-import { LocationExampleC } from './container/Location';
+import { Information } from './components/Update/Information';
 
 function App() {
     const [auth, setAuth] = useState(undefined)
@@ -83,7 +83,7 @@ function App() {
                                                     <Route exact path='/update/products' component={Products} />
                                                     <Route exact path='/update/PQR' component={PQR} />
                                                     <Route exact path='/update/location' component={Location} />
-                                                    <Route exact path='/location' component={LocationExampleC} />
+                                                    <Route exact path='/update/information' component={Information} />
                                                     {/* Delete Sección */}
                                                     {/* <Route exact path='/update/category' component={Categories} />
                                                     <Route exact path='/update/kit' component={Kit} />

@@ -4,7 +4,7 @@ import { BGColor } from '../../assets/colors';
 import './styled.css';
 
 export const RippleButton = props => {
-    const { label, onClick, style, family, standard, active } = props;
+    const { label, onClick, style, family, standard, active, type, widthButton } = props;
     const button = useRef(null);
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export const RippleButton = props => {
     }, []);
 
     return (
-        <Button active={active} standard={standard} family={family} padding={ props.padding } color={ props.color } margin={ props.margin } bgColor={ props.bgColor} ref={button} onClick={onClick} className="ripple-button" style={style}>
+        <Button widthButton={widthButton} type={type} active={active} standard={standard} family={family} padding={ props.padding } color={ props.color } margin={ props.margin } bgColor={ props.bgColor} ref={button} onClick={onClick} className="ripple-button" style={style}>
             <span id="ripple-button-label">{label}</span>
             {props.children}
         </Button>
@@ -49,9 +49,12 @@ const Button = styled.button`
     color: #000;
     width: 100%;
     font-size: 11px !important;
-    font-family: PFont-Light !important;
+    font-family: PFont-Light !important;`
 }
-    
- ;` }
- ${ props=> props.active && css`border-bottom: 3px solid red;` }
+ ${ ({ widthButton }) => widthButton && css`
+    width: ${ widthButton };`
+}
+
+${ props=> props.active && css`
+border-bottom: 3px solid red; ` }
 `

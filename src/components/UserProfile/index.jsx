@@ -5,7 +5,6 @@ import useAuth from '../hooks/useAuth'
 import { InputFile } from '../MultiInputs/inputs'
 import styled from 'styled-components'
 import { TagsInput } from '../InputTags'
-import { RippleButton } from '../Ripple'
 
 export const UserProfile = ({ params, data, loading, error, handleFileChange }) => {
 
@@ -57,7 +56,6 @@ export const UserProfile = ({ params, data, loading, error, handleFileChange }) 
             <br />
             <br />
             <br />
-            <RippleButton label='Hola' />
             <Table>
                 <tbody>
                     <tr>

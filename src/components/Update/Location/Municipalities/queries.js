@@ -14,7 +14,7 @@ mutation createCity($input: ICity){
 export const GET_MUNICIPALITIES = gql`
 query getAllCities{
   getCities{
-    cId
+    ctId
     dId
     cName
     cState
@@ -25,7 +25,7 @@ query getAllCities{
 }
 `
 export const EDIT_MUNICIPALITIES = gql`
-mutation ditMutation($input: IEditMunicipalities!){
+mutation cityeditMutation($input: IEditMunicipalities!){
 	editMunicipalities(input: $input){
     cId
     dId

@@ -23,10 +23,21 @@ export const GET_ALL_DEPARTMENTS = gql`
 export const GET_ALL_CITIES = gql`
     query getAllCities($dId: ID!) {
         cities(dId: $dId) {
-            cId
+            ctId
             dId
             cName
             cState
         }
     }
+`
+export const GET_ALL_ROAD = gql`
+query getTypeRoad{
+  road{
+    rId
+    rName
+    rState
+    rDatCre
+    rDatMod
+  }
+}
 `

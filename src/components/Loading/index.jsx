@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
+import './style.css'
 
 export const Loading = () => {
     return (
@@ -9,6 +10,28 @@ export const Loading = () => {
                 <div></div>
             </LsRipple>
         </Container>
+    )
+}
+export const SpinnerColor = () => {
+    return (
+        <Container>
+            <LsRipple>
+                <svg className="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle className="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                </svg>
+            </LsRipple>
+        </Container>
+    )
+}
+export const SpinnerColorJust = () => {
+    return (
+        <>
+            <div>
+                <svg className="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle className="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                </svg>
+            </div>
+        </>
     )
 }
 

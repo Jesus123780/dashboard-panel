@@ -28,12 +28,20 @@ export const Card = styled.div`
     width: ${ props => props.state ? '100%' : '70%' };
     background-color: ${ ({ bgColor }) => bgColor ? bgColor : `${ BGColor }` };
 `
+export const ContainerButton = styled.div` 
+    display: flex;
+    justify-content: space-between;
+`
+
+export const Content = styled.div` 
+    margin: 10px 0px;
+`
 export const TextareaDescription = styled.textarea` 
     position: relative;
     min-width: 100%;
     max-width: 370px;
     min-height: 470px;
-    border: 1px solid #eee;
+    border: 1px solid #5a5a5a;
     outline: none;
     font-size: 19px;
     font-family: PFont-Light;

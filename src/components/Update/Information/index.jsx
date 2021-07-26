@@ -1,12 +1,12 @@
 import { Container } from './styled';
-import { Questions } from '../PQR/questionsPQR';
-import { StorePqr } from '../PQR/StorePqr';
+import { IdentityType } from './IdentityType';
 import { LocationName } from '../../hooks/useLocationName';
 import { useState } from 'react';
 import { RippleButton } from '../../Ripple';
 import styled, { css, keyframes } from 'styled-components';
+import { Colors } from './Color';
 
-export const PQR = () => {
+export const Information = () => {
     const [active, setActive] = useState(1)
     const handleClick = index => {
         setActive(index === active ? true : index)
@@ -15,14 +15,10 @@ export const PQR = () => {
         <Container>
             <LocationName />
             <ContentButton>
-                <RippleButton active={active === 1} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='See Store' onClick={() => active !== 1 && handleClick(1)} />
-                <RippleButton active={active === 2} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='Update' onClick={() => active !== 2 && handleClick(2)} />
-                <RippleButton active={active === 3} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='Update' onClick={() => active !== 3 && handleClick(3)} />
+                <RippleButton active={active === 1} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='Tipo de identidad' onClick={() => active !== 1 && handleClick(1)} />
+                <RippleButton active={active === 2} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='Colores' onClick={() => active !== 2 && handleClick(2)} />
             </ContentButton>
-            {
-                active === 1 ?
-                    <ContainerAnimation><StorePqr /></ContainerAnimation> : active === 2 ? <ContainerAnimationTow><Questions /></ContainerAnimationTow> : active === 2 ? <ContainerAnimationThree>Holsdafsdfasa</ContainerAnimationThree> : null
-            }
+            { active === 1 ? <ContainerAnimation><IdentityType /> </ContainerAnimation> : active === 2 ? <ContainerAnimationTow><Colors /></ContainerAnimationTow> : null }
         </Container>
     )
 }
@@ -53,10 +49,6 @@ ${ props=> props.active === 1 ? css`animation: ${ AnimationRight } 200ms;` : css
 `
 const ContainerAnimationTow = styled.div`
 ${ props=> props.active === 2 ? css`animation: ${ AnimationLeft } 200ms;` : css`animation: ${ AnimationLeft } 200ms;` }
-
-`
-const ContainerAnimationThree = styled.div`
-${ props=> props.active === 3 ? css`animation: ${ AnimationLeft } 200ms;` : css`animation: ${ AnimationLeft } 200ms;` }
 
 `
 const ContentButton = styled.div`

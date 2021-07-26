@@ -9,19 +9,14 @@ export function EditForm(props) {
     const [input, setInput] = useState(props.edit ? props.edit.value : '');
     const inputRef = useRef(null);
     const { setAlertBox } = useContext(Context)
-
-    // {console.log(props.edit?.id, input)}
     useEffect(() => {
         inputRef?.current?.focus();
     });
-
     const handleChange = e => {
         setInput(e.target.value);
     };
     const [editCountries, { loading }] = useMutation(EDIT_COUNTRIES)
-    // eslint-disable-next-line
     const cName = input
-    // eslint-disable-next-line
     const cId = props?.edit?.id
     const handleSubmit = async e => {
         e.preventDefault();
@@ -35,7 +30,6 @@ export function EditForm(props) {
             const results = await editCountries({
                 variables: {
                     input: {
-                        // eslint-disable-next-line
                         cName, cId
                     }
                 }
@@ -46,7 +40,7 @@ export function EditForm(props) {
         }
     };
     return (
-        <form onSubmit={handleSubmit} className='todo-form'>
+        <form onSubmit={handleSubmit}>
             {loading && <i>Cargando</i>}
             {props.edit && (
                 <ContainInput>

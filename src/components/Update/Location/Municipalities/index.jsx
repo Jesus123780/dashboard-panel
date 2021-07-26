@@ -74,7 +74,7 @@ export const Municipalities = () => {
             value: ''
         });
     };
-    if (edit.id) {
+    if (edit?.id) {
         return <EditForm edit={edit} onSubmit={submitUpdate} />;
     }
     return (<>
@@ -95,10 +95,10 @@ export const Municipalities = () => {
             </Form>
             <Card>
                 {dataMunicipalities?.getCities ? dataMunicipalities?.getCities?.map(index => (
-                    <ContainerTask show={show === index} key={index.cId}>
+                    <ContainerTask show={show === index} key={index.ctId}>
                         <OptionsFunction show={show === index}>
                             <Button><IconDelete size={30} /></Button>
-                            <Button onClick={() => setEdit({ id: index.cId, value: index.cName })} ><IconEdit size={30} /></Button>
+                            <Button onClick={() => setEdit({ id: index.ctId, value: index.cName })} ><IconEdit size={30} /></Button>
                             {/* Todo Success */}
                         </OptionsFunction>
                         {/* Tareas */}

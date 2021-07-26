@@ -3,17 +3,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { GET_TYPE_PQR } from '../queries'
 import { Container } from './styled'
-import { IconArrowBottom, IconShopping, IconLogout, IconArrowRight } from '../../../../assets/icons/icons'
+import { IconArrowRight } from '../../../../assets/icons/icons'
 import { SFColor, SFVColor } from '../../../../assets/colors'
+import { icons } from './codeIcon'
 export const StorePqr = () => {
     const { data, loading, error: errorC } = useQuery(GET_TYPE_PQR)
-
-    const icons = [
-        { index: 1, icon: <IconArrowBottom color='red' size='20px' /> },
-        { index: 2, icon: <IconShopping color='red' size='20px' /> },
-        { index: 3, icon: <IconLogout color='red' size='20px' /> },
-
-    ]
 
     if (errorC) return <>Ocurrió un error interno</>
     return (<>
@@ -24,7 +18,7 @@ export const StorePqr = () => {
                     <CardWrapper>
                         <div style={{ position: 'relative', display: 'flex', flexDirection: 'column ', boxShadow: '0 1px 2px 0 rgb(0 0 0 / 12%)' }}>
                             {/* eslint-disable-next-line */}
-                            {!!data?.typepqr && data.typepqr.map(x => <QuestionsList title={x.thpName} icon={icons.find(j => j.index == x.thpIcon)?.icon} iconArrow={ <IconArrowRight color='red' size='10px' />}/>)}
+                            {!!data?.typopqr && data.typopqr.map(x => <QuestionsList title={x.thpName} icon={icons.find(j => j.index == x.thpIcon)?.icon} iconArrow={ <IconArrowRight color='red' size='10px' />}/>)}
                         </div>
                     </CardWrapper>
                 }

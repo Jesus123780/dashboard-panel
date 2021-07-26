@@ -5,8 +5,8 @@ import moment from 'moment'
 moment.locale('es')
 import jwtDecode from 'jwt-decode'
 import mimeType from '../components/common/MimeType/mimeType'
-import createBrowserHistory from 'history/createBrowserHistory';
-
+// import createBrowserHistory from 'history/createBrowserHistory';
+const createBrowserHistory = require('history').createBrowserHistory
 // import AWS from 'aws-sdk'
 
 export const isNull = dato => {
@@ -371,7 +371,6 @@ export const validationSubmitHooks = elements => {
     }
     return errorForm
 }
-
 /**
  *
  * @param {Object} data objeto a filtrar
@@ -394,6 +393,7 @@ export const filterKeyObject = (data, filters, dataFilter) => {
     if (!dataFilter) return values
     if (dataFilter) return { values, valuesFilter }
 }
+
 /**
  *
  * @param {String} url ruta del objeto a convertir
@@ -455,14 +455,14 @@ export const updateCacheMod = async ({ cache, query, nameFun, dataNew, type, id 
         }
     })
 }
-
 /**
  * obtiene el token del usuario lo guarda en el localStorage
  * @returns {null} no hay retorno
  */
 const TOKEN = 'token'
 export function setToken(token) {
-    localStorage.setItem(TOKEN, token)
+    if (token === null) return false
+    else if (token !== null) return localStorage.setItem(TOKEN, token)
 }
 /**
  * obtiene el token del usuario

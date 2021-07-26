@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SliderItem, SliderContainer, SliderWrapper, Navigation, NavigationItem, ControlLeft, ControlRight, Image, Ruta, PortalModal, BtnClose  } from './styled';
+import { SliderItem, SliderContainer, SliderWrapper, Navigation, NavigationItem, ControlLeft, ControlRight, Image, Ruta, PortalModal, BtnClose } from './styled';
 import { IconArrowLeft, IconArrowRight } from '../../../../assets/icons/icons'
 import { PColor } from '../../../../assets/colors';
 import ReactDOM from 'react-dom'

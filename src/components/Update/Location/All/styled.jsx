@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { BGColor, PColor } from '../../assets/colors';
+import { BGColor, PColor } from '../../../../assets/colors';
 
 export const Content = styled.div`
 @media only screen and (min-width: 960px){
@@ -15,13 +15,6 @@ export const Content = styled.div`
 
 `
 export const Form = styled.form`
-    box-shadow: 0px 1px 4px rgb(0 0 0 / 5%), 0px 4px 16px rgb(0 0 0 / 6%);
-    border-radius: 8px;
-    padding: 36px 50px;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    align-self: center;
 `
 export const Iconos = styled.div`
     color: ${ ({ color, theme }) => (color ? color : theme.PLColor) };
@@ -32,11 +25,7 @@ export const Iconos = styled.div`
         ` }
 `
 export const ButtonSubmit = styled.button`
-    background-color: ${ ({ color, theme }) => color === '1'
-        ? ' #4065b4'
-        : color === '2'
-            ? `${ PColor }`
-            : theme.SFAColor };
+    background-color: red;
     outline: none;
     border: none;
     box-shadow: 0px 1px 4px rgb(0 0 0 / 5%), 0px 4px 16px rgb(0 0 0 / 6%);
@@ -45,7 +34,7 @@ export const ButtonSubmit = styled.button`
     padding: 15px;
     display: flex;
     align-items: center;
-    justify-content: ${ ({ content }) => content ? content : 'space-between' };
+    justify-content: center;
     font-size: ${ ({ size }) => (size ? size : '1rem') };
     color: ${ ({ colorFont }) => (colorFont ? colorFont : `${ BGColor }`) };
     line-height: 1.5;
