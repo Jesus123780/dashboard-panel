@@ -2,12 +2,16 @@ import styled, { css } from 'styled-components'
 
 export const Container = styled.div`
     display: flex;
-    width: 100%;
     flex-direction: row;
+    width: 100%;
+    max-width: 1366px !important;
+    margin: auto;
+    @media only screen and (max-width: 960px){
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 100%)
+    }
 `
 export const Form = styled.form`
-    position: sticky;
-    top: 20px;
     width: 50%;
     display: flex;
     display: st;
@@ -77,6 +81,11 @@ export const Button = styled.button`
     outline: none;
     background: transparent;
     cursor: pointer;
+`
+export const ContainerList = styled.div`
+    display: grid;
+    width: 100%;
+    grid-template-columns: 200px repeat(auto-fill, 200px) 200px;
 `
 export const ListTask = styled.div`
     transition: all 200ms ease-in-out;

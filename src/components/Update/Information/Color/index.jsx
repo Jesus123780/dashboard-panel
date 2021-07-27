@@ -3,24 +3,26 @@ import { useContext, useState } from 'react'
 import { PColor } from '../../../../assets/colors'
 import { IconDelete, IconDost, IconEdit } from '../../../../assets/icons/icons'
 import { Context } from '../../../../Context'
-import { GET_ALL_COLOR, UPDATE_COLOR } from '../../../../gql/Color'
+import { GET_ALL_COLOR, UPDATE_COLOR } from '../../../../gql/information/Color'
 import { validationSubmitHooks } from '../../../../utils'
 import InputHooks from '../../../InputHooks/InputHooks'
-import { SpinnerColor } from '../../../Loading'
 import { RippleButton } from '../../../Ripple'
-import { Container, Form, ContainerTask, OptionsFunction, Button, ListTask } from './styled'
+import { Container, Form, ContainerTask, OptionsFunction, Button, ListTask, ContainerList } from './styled'
 
 export const Colors = () => {
-    const { setAlertBox } = useContext(Context)
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
-    const [createColor, { loading }] = useMutation(UPDATE_COLOR)
     const handleChange = (e, error) => {
         setValues({ ...values, [e.target.name]: e.target.value })
         setErrors({ ...errors, [e.target.name]: error })
     }
-    // Mutación para subir un color
+    // const [createColor, { loading }] = useMutation(UPDATE_COLOR)
+    const [createColor] = useMutation(UPDATE_COLOR);
     const { data } = useQuery(GET_ALL_COLOR)
+    const [show, setShow] = useState(false)
+    const { setAlertBox } = useContext(Context)
+
+    // Mutación para subir un país
     const handleRegister = async e => {
         e.preventDefault()
         // Declarando variables
@@ -37,6 +39,7 @@ export const Colors = () => {
         if (errorSubmit) {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
+        // eslint-disable-next-line
         const { colorName } = values
         try {
             if (!errorSubmit) {
@@ -47,38 +50,28 @@ export const Colors = () => {
                         }
                     }
                 })
-                console.log(colorName)
-                setErrors({} || [])
-                if (results) setAlertBox({ message: 'Tipo de identidad subido con éxito', duration: 5000, color: 'success' })
+                if (results) setAlertBox({ message: `Color ${ colorName } Subido con exito`, duration: 5000, color: 'success' })
             }
         } catch (error) {
-            setValues({})
-            setErrors({})
-            // eslint-disable-next-line
-            setAlertBox({ message: `${error}`, duration: 7000 })
-            setAlertBox({ message: 'se ha producido un error interno', duration: 7000, color: 'error' })
+            setAlertBox({ message: `${ error }`, duration: 7000 })
 
         }
     }
-    if (loading) return <SpinnerColor />
-    const [show, setShow] = useState(false)
-
+    // if (loading) return <i>Cargando</i>
     return (<>
         <Container>
             <Form onSubmit={handleRegister}>
                 <InputHooks
+                    name='colorName'
                     title='Ingresa un color'
                     required
                     errors={values?.colorName}
                     value={values?.colorName}
-                    name='colorName'
                     onChange={handleChange}
                 />
-                <RippleButton>
-                    Typo de identidad
-                </RippleButton>
+                <RippleButton label='color' type={'submit'} />
             </Form>
-            <div>
+            <ContainerList>
                 {data?.getAllColor?.map(x => (<div key={x?.colorId}>
                     <ContainerTask show={show === x}>
                         <OptionsFunction show={show === x}>
@@ -93,7 +86,7 @@ export const Colors = () => {
 
                 </div>))}
 
-            </div>
+            </ContainerList>
         </Container>
     </>
     )

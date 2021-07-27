@@ -7,9 +7,12 @@ export const Container = styled.div`
     max-width: 1366px !important;
     margin: auto;
 `
+export const ContainerList = styled.div`
+    display: grid;
+    width: 100%;
+    grid-template-columns: 120px repeat(auto-fill, 120px) 120px;
+`
 export const Form = styled.form`
-    position: sticky;
-    top: 20px;
     width: 50%;
     display: flex;
     display: st;

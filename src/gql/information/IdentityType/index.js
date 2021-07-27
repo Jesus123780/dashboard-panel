@@ -5,10 +5,7 @@ mutation createTypeIdentity($input: ITypeIdentity){
   createTypeIdentity(input: $input){
     tiId
     tiName
-    tiState
-    tiDatCre
-    tiDatMod
-    __typename
+    tiState    
   }
 }
 `

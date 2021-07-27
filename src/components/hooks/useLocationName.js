@@ -31,7 +31,10 @@ const ContainerSearch = styled.div`
     width: 90%;
     margin: 40px 40px 10px auto;
     border-bottom: .0625em solid #e6e6e6;
-    padding-bottom: 10px;;
+    padding-bottom: 10px;
+    @media only screen and (max-width: 960px){
+        display: none;
+    }
 `
 const Link = styled.span`
     font-size: 1.5625rem;

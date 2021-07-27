@@ -3,24 +3,24 @@ import { useContext, useState } from 'react'
 import { PColor } from '../../../../assets/colors'
 import { IconDelete, IconDost, IconEdit } from '../../../../assets/icons/icons'
 import { Context } from '../../../../Context'
-import { GET_IDENTITY, UPDATE_IDENTITY } from '../../../../gql/IdentityType'
+import { GET_ALL_SIZE, UPDATE_SIZE } from '../../../../gql/information/Size/size'
 import { validationSubmitHooks } from '../../../../utils'
 import InputHooks from '../../../InputHooks/InputHooks'
 import { RippleButton } from '../../../Ripple'
-import { Container, Form, ContainerTask, OptionsFunction, Button, ListTask } from './styled'
+import { Container, Form, ContainerTask, OptionsFunction, Button, ListTask, ContainerList } from './styled'
 
-export const IdentityType = () => {
-    const { setAlertBox } = useContext(Context)
+export const Size = () => {
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
-    const [createTypeIdentity] = useMutation(UPDATE_IDENTITY)
     const handleChange = (e, error) => {
         setValues({ ...values, [e.target.name]: e.target.value })
         setErrors({ ...errors, [e.target.name]: error })
     }
-
+    const [createSize] = useMutation(UPDATE_SIZE);
+    const { data } = useQuery(GET_ALL_SIZE)
+    const [show, setShow] = useState(false)
+    const { setAlertBox } = useContext(Context)
     // Mutación para subir un país
-    const { data } = useQuery(GET_IDENTITY)
     const handleRegister = async e => {
         e.preventDefault()
         // Declarando variables
@@ -38,54 +38,54 @@ export const IdentityType = () => {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
         // eslint-disable-next-line
-        const { tiName } = values
+        const { sizeName } = values
         try {
             if (!errorSubmit) {
-                const results = await createTypeIdentity({
+                const results = await createSize({
                     variables: {
                         input: {
-                            tiName
+                            sizeName
                         }
                     }
                 })
-                if (results) setAlertBox({ message: 'Tipo de identidad subido con éxito', duration: 5000, color: 'success' })
+                if (results) setAlertBox({ message: `La talla ${ sizeName } Subido con éxito`, duration: 5000, color: 'success' })
             }
         } catch (error) {
             setAlertBox({ message: `${ error }`, duration: 7000 })
 
         }
     }
-    const [show, setShow] = useState(false)
-
     return (<>
         <Container>
             <Form onSubmit={handleRegister}>
                 <InputHooks
-                    title='Ingresa un tipo de identidad'
+                    name='sizeName'
+                    title='Ingresa una talla'
                     required
-                    errors={values?.tiName}
-                    value={values?.tiName}
+                    range={{ min: 0, max: 7 }}
+                    errors={values?.sizeName}
+                    value={values?.sizeName}
+                    letters
                     onChange={handleChange}
-                    name='tiName'
                 />
-                <RippleButton label='Tipo de identidad' type={'submit'} />
+                <RippleButton label='Subir' type={'submit'} />
             </Form>
-            <div>
-                {data?.typeIdentities?.map(x => (<div key={x?.tiId}>
+            <ContainerList>
+                {data?.getSizes?.map(x => (<div key={x?.sizeId}>
                     <ContainerTask show={show === x}>
                         <OptionsFunction show={show === x}>
                             <Button><IconDelete size={30} color={PColor} /></Button>
                             <Button><IconEdit size={30} /></Button>
                         </OptionsFunction>
                         <ListTask show={show === x}>
-                            {x.tiName}
+                            {x.sizeName}
                         </ListTask>
                         <div style={{ display: 'contents' }}><Button onClick={() => setShow(x === show ? false : x)}><IconDost size={30} color={show === x ? PColor : '#CCC'} /></Button></div>
                     </ContainerTask>
 
                 </div>))}
 
-            </div>
+            </ContainerList>
         </Container>
     </>
     )

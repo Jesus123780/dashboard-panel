@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { RippleButton } from '../../Ripple';
 import styled, { css, keyframes } from 'styled-components';
 import { Colors } from './Color';
+import { Size } from './Size';
 
 export const Information = () => {
     const [active, setActive] = useState(1)
@@ -17,8 +18,12 @@ export const Information = () => {
             <ContentButton>
                 <RippleButton active={active === 1} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='Tipo de identidad' onClick={() => active !== 1 && handleClick(1)} />
                 <RippleButton active={active === 2} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='Colores' onClick={() => active !== 2 && handleClick(2)} />
+                <RippleButton active={active === 3} style={{ borderRadius: '0px' }} margin='0px 5px' color="red" padding="10px" bgColor='#9797971a' label='Tallas' onClick={() => active !== 3 && handleClick(3)} />
             </ContentButton>
-            { active === 1 ? <ContainerAnimation><IdentityType /> </ContainerAnimation> : active === 2 ? <ContainerAnimationTow><Colors /></ContainerAnimationTow> : null }
+            {active === 1 ?
+                <ContainerAnimation><IdentityType /> </ContainerAnimation> : active === 2 ?
+                    <ContainerAnimationTow><Colors /></ContainerAnimationTow> : active === 3 ?
+                        <ContainerAnimationThree><Size /></ContainerAnimationThree> : null}
         </Container>
     )
 }
@@ -44,11 +49,15 @@ export const AnimationLeft = keyframes`
 }
 `
 const ContainerAnimation = styled.div`
-${ props=> props.active === 1 ? css`animation: ${ AnimationRight } 200ms;` : css`animation: ${ AnimationRight } 200ms;` }
+${ props => props.active === 1 ? css`animation: ${ AnimationRight } 200ms;` : css`animation: ${ AnimationRight } 200ms;` }
 
 `
 const ContainerAnimationTow = styled.div`
-${ props=> props.active === 2 ? css`animation: ${ AnimationLeft } 200ms;` : css`animation: ${ AnimationLeft } 200ms;` }
+${ props => props.active === 2 ? css`animation: ${ AnimationLeft } 200ms;` : css`animation: ${ AnimationLeft } 200ms;` }
+
+`
+const ContainerAnimationThree = styled.div`
+${ props => props.active === 3 ? css`animation: ${ AnimationLeft } 200ms;` : css`animation: ${ AnimationLeft } 200ms;` }
 
 `
 const ContentButton = styled.div`
