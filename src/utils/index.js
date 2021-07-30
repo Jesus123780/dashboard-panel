@@ -357,7 +357,7 @@ export const filterKeyObjectOLD = (data, filters) => {
  */
 export const validationSubmitHooks = elements => {
     let errorForm = {}
-    for (let i = 0; i < elements.length; i++){
+    for (let i = 0; i < elements?.length; i++){
         if (elements[i].name) {
             if (elements[i].type === 'text' || elements[i].type === 'password' || elements[i].type === 'email' || elements[i].type === 'number' || elements[i].type === 'hidden'){
                 if (elements[i].dataset.required === 'true') {
@@ -379,6 +379,7 @@ export const validationSubmitHooks = elements => {
  * @return {Object} devuelve un objeto con los datos filtrados
  */
 export const filterKeyObject = (data, filters, dataFilter) => {
+    console.log(dataFilter)
     let values = {}, valuesFilter = {}
     for (const elem in data) {
         let coincidence = false

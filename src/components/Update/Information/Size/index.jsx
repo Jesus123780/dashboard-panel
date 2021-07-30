@@ -20,8 +20,8 @@ export const Size = () => {
     const { data } = useQuery(GET_ALL_SIZE)
     const [show, setShow] = useState(false)
     const { setAlertBox } = useContext(Context)
-    // Mutación para subir un país
-    const handleRegister = async e => {
+    // Mutación para subir unA TALLA
+    const handleSubmit = e => {
         e.preventDefault()
         // Declarando variables
         let errorSubmit = false
@@ -37,27 +37,23 @@ export const Size = () => {
         if (errorSubmit) {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
-        // eslint-disable-next-line
-        const { sizeName } = values
-        try {
-            if (!errorSubmit) {
-                const results = await createSize({
-                    variables: {
-                        input: {
-                            sizeName
+        if (!errorSubmit) {
+            // const cDatCre = moment().format('HH:mm A')
+            // console.log(cDatCre)
+            createSize({ variables: { input : { sizeName: values.sizeName } }, update(cache) {
+                cache.modify({
+                    fields: {
+                        getSizes(dataOld=[]){
+                            return cache.writeQuery({ query: GET_ALL_SIZE, data: dataOld })
                         }
                     }
                 })
-                if (results) setAlertBox({ message: `La talla ${ sizeName } Subido con éxito`, duration: 5000, color: 'success' })
-            }
-        } catch (error) {
-            setAlertBox({ message: `${ error }`, duration: 7000 })
-
+            } }).catch(err=> setAlertBox({ message: `${ err }`, duration: 7000 }))
         }
     }
     return (<>
         <Container>
-            <Form onSubmit={handleRegister}>
+            <Form onSubmit={handleSubmit}>
                 <InputHooks
                     name='sizeName'
                     title='Ingresa una talla'

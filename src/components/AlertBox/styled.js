@@ -37,7 +37,7 @@ export const ContainerToast = styled.div`
     align-items: center;
     width: 100%;
     margin: auto;
-    z-index: 10021;
+    z-index: 9999999999;
     transition: 400ms;
     cursor: pointer;
     box-shadow: 0px 0px 6px #00000052;

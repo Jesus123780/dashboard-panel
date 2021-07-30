@@ -5,7 +5,7 @@ export const Container = styled.div`
     display: flex;
     padding:  10px;
     display: flex;
-    background-color: ${ BGColor };
+    background-color: ${ ({ theme }) => theme.InvColor };
     border-radius: 4px;
     overflow: hidden;
 `
@@ -16,6 +16,7 @@ export const Card = styled.div`
     padding: 24px 16px;
     margin: 10px;
     border-radius: 8px;
+    background-color: ${ ({ theme }) => theme.InvColor };
     border: 1px solid rgba(0,0,0,.1);
     width: ${ ({ width }) => width && css`width: ${ width };` };
     ${ props => props.sticky && css`

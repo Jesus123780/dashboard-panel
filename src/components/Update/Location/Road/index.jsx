@@ -2,20 +2,18 @@ import React, { useContext, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import styled, { keyframes } from 'styled-components'
 import InputHooks from '../../../InputHooks/InputHooks'
-import NewSelect from '../../../NewSelectHooks/NewSelect'
 import { LoadEllipsis } from '../../../LoadingButton'
 import { RippleButton } from '../../../Ripple'
 import { validationSubmitHooks } from '../../../../utils'
 import { Context } from '../../../../Context'
-import { GET_MUNICIPALITIES, UPDATE_MUNICIPALITIES } from './queries'
-import { GET_DEPARTMENT } from '../Departments/queries'
+import { GET_TYPE_ROAD, UPDATE_ROAD } from './queries'
 import { EditForm } from './EditForm'
 import { PColor } from '../../../../assets/colors'
 import { IconEdit, IconDost, IconDelete } from '../../../../assets/icons/icons'
 import { Container, Form, Card, ContainerTask, OptionsFunction, Button, ListTask } from './styled'
 
-export const Municipalities = () => {
-    const [createCity, { loading }] = useMutation(UPDATE_MUNICIPALITIES)
+export const TypeRoad = () => {
+    const [createRoadMutation, { loading }] = useMutation(UPDATE_ROAD)
     const { setAlertBox } = useContext(Context)
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
@@ -24,8 +22,7 @@ export const Municipalities = () => {
         setErrors({ ...errors, [e.target.name]: error })
     }
     // Query para traer a todos los Departamentos
-    const { data } = useQuery(GET_DEPARTMENT)
-    const { data: dataMunicipalities } = useQuery(GET_MUNICIPALITIES)
+    const { data: road } = useQuery(GET_TYPE_ROAD)
     const handleRegister = async e => {
         e.preventDefault()
         // Declarando variables
@@ -42,13 +39,14 @@ export const Municipalities = () => {
         if (errorSubmit) {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
+        console.log(values.rName)
         try {
             if (!errorSubmit) {
-                createCity({ variables: { input : { dId: values.dId, cName: values.cName } }, update(cache) {
+                createRoadMutation({ variables: { input : { rName: values.rName } }, update(cache) {
                     cache.modify({
                         fields: {
-                            getCities(dataOld=[]){
-                                return cache.writeQuery({ query: GET_MUNICIPALITIES, data: dataOld })
+                            road(dataOld=[]){
+                                return cache.writeQuery({ query: GET_TYPE_ROAD, data: dataOld })
                             }
                         }
                     })
@@ -77,31 +75,30 @@ export const Municipalities = () => {
     return (<>
         <Container>
             <Form onSubmit={handleRegister}>
-                <NewSelect search disabled={!data?.department[0]?.cId} options={data?.department?.filter(x => x?.dName === x?.dName) || []} id='dId' name='dId' value={values?.dId || ''} optionName='dName' title='Selecciona un departamento' onChange={handleChange} margin='10px' />
                 <InputHooks
-                    title='Ingresa una cuidad'
+                    title='Ingresa un tipo de via'
                     required
-                    errors={values?.cName}
-                    value={values?.cName}
+                    errors={values?.rName}
+                    value={values?.rName}
                     onChange={handleChange}
-                    name='cName'
+                    name='rName'
                 />
-                <RippleButton>
+                <RippleButton type='submit'>
                     {!loading ? 'Subir' : <LoadEllipsis color='#fff' /> }
                 </RippleButton>
             </Form>
             <Card>
-                {dataMunicipalities?.getCities ? dataMunicipalities?.getCities?.map(index => (
+                {road?.road ? road?.road?.map(index => (
                     <ContainerTask show={show === index} key={index.ctId}>
                         <OptionsFunction show={show === index}>
                             <Button><IconDelete size={30} /></Button>
-                            <Button onClick={() => setEdit({ id: index.ctId, value: index.cName })} ><IconEdit size={30} /></Button>
+                            <Button onClick={() => setEdit({ id: index.rId, value: index.rName })} ><IconEdit size={30} /></Button>
                             {/* Todo Success */}
                         </OptionsFunction>
                         {/* Tareas */}
                         <ListTask show={show === index}>
                             {/* eslint-disable-next-line */}
-                            {index.cName}
+                            {index.rName}
                         </ListTask>
                         <div style={{ display: 'contents' }}><Button onClick={() => setShow(index === show ? false : index)}><IconDost size={30} color={show === index ? PColor : '#CCC'} /></Button></div>
                     </ContainerTask>

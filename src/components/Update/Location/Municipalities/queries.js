@@ -2,17 +2,17 @@ import { gql } from '@apollo/client';
 
 export const UPDATE_MUNICIPALITIES = gql`
 mutation createCity($input: ICity){
-	createCity(input: $input){
-    cId
+  createCity(input: $input){
+    ctId
     dId
     cName
-    cState
+    
   }
 }
 `
 
 export const GET_MUNICIPALITIES = gql`
-query getAllCities{
+query getCities{
   getCities{
     ctId
     dId
@@ -21,7 +21,6 @@ query getAllCities{
     cDatCre
     cDatMod
   }
-
 }
 `
 export const EDIT_MUNICIPALITIES = gql`

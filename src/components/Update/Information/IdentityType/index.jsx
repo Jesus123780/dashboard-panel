@@ -3,7 +3,7 @@ import { useContext, useState } from 'react'
 import { PColor } from '../../../../assets/colors'
 import { IconDelete, IconDost, IconEdit } from '../../../../assets/icons/icons'
 import { Context } from '../../../../Context'
-import { GET_IDENTITY, UPDATE_IDENTITY } from '../../../../gql/IdentityType'
+import { GET_IDENTITY, UPDATE_IDENTITY } from '../../../../gql/information/IdentityType'
 import { validationSubmitHooks } from '../../../../utils'
 import InputHooks from '../../../InputHooks/InputHooks'
 import { RippleButton } from '../../../Ripple'
@@ -21,7 +21,7 @@ export const IdentityType = () => {
 
     // Mutación para subir un país
     const { data } = useQuery(GET_IDENTITY)
-    const handleRegister = async e => {
+    const handleSubmit = e => {
         e.preventDefault()
         // Declarando variables
         let errorSubmit = false
@@ -37,29 +37,22 @@ export const IdentityType = () => {
         if (errorSubmit) {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
-        // eslint-disable-next-line
-        const { tiName } = values
-        try {
-            if (!errorSubmit) {
-                const results = await createTypeIdentity({
-                    variables: {
-                        input: {
-                            tiName
+        if (!errorSubmit) {
+            createTypeIdentity({ variables: { input : { tiName: values.tiName } }, update(cache) {
+                cache.modify({
+                    fields: {
+                        typeIdentities(dataOld=[]){
+                            return cache.writeQuery({ query: GET_IDENTITY, data: dataOld })
                         }
                     }
                 })
-                if (results) setAlertBox({ message: 'Tipo de identidad subido con éxito', duration: 5000, color: 'success' })
-            }
-        } catch (error) {
-            setAlertBox({ message: `${ error }`, duration: 7000 })
-
+            } }).catch(err=> setAlertBox({ message: `${ err }`, duration: 7000 }))
         }
     }
     const [show, setShow] = useState(false)
-
     return (<>
         <Container>
-            <Form onSubmit={handleRegister}>
+            <Form onSubmit={handleSubmit}>
                 <InputHooks
                     title='Ingresa un tipo de identidad'
                     required

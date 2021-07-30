@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { BGColor } from '../../../assets/colors';
 
 export const Button = styled.button` 
     position: absolute;
@@ -20,13 +19,14 @@ export const FormProducts = styled.form`
 export const Container = styled.div`
     display: flex;
     border-radius: 4px;
-    background-color: ${ BGColor };
+    background-color: ${ ({ theme }) => theme.InvColor };
     transition:  6s ease;
     `
 export const Card = styled.div` 
     position: relative;
     width: ${ props => props.state ? '100%' : '70%' };
-    background-color: ${ ({ bgColor }) => bgColor ? bgColor : `${ BGColor }` };
+    background-color: ${ ({ theme }) => theme.InvColor };
+
 `
 export const ContainerButton = styled.div` 
     display: flex;

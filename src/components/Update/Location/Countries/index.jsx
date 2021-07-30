@@ -43,20 +43,17 @@ export const Countries = () => {
         if (errorSubmit) {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
-        // eslint-disable-next-line
-        const { cName, cCalCod } = values
         try {
             if (!errorSubmit) {
-                const results = await createCountry({
-                    variables: {
-                        input: {
-                            cName, cCalCod
+                createCountry({ variables: { input : { cName: values.cName, cCalCod: values.cCalCod } }, update(cache) {
+                    cache.modify({
+                        fields: {
+                            countries(dataOld=[]){
+                                return cache.writeQuery({ query: GET_COUNTRY, data: dataOld })
+                            }
                         }
-                    }
-                })
-                setValues({})
-                setErrors({} || [])
-                if (results) setAlertBox({ message: 'País subido con éxito', duration: 5000, color: 'success' })
+                    })
+                } }).catch(err=> setAlertBox({ message: `${ err }`, duration: 7000 }))
             }
         } catch (error) {
             setValues({})
@@ -95,7 +92,6 @@ export const Countries = () => {
                 input: {
                     cId
                 }, update(cache) {
-                    console.log(index)
                     cache.modify({
                         fields: {
                             clients() {

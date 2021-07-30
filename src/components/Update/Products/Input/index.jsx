@@ -10,6 +10,7 @@ export const InputHook = props => {
         range,
         email,
         pass,
+        type,
         passConfirm, } = props
     const [errors, setError] = useState(error)
     const [message, setMessage] = useState('El campo no debe estar vacío')
@@ -77,6 +78,7 @@ export const InputHook = props => {
             <BoxInput>
                 <Input name={name}
                     value={value}
+                    type={type}
                     onChange={validations}
                 />
                 <LabelInput >{label}</LabelInput>

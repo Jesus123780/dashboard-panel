@@ -20,12 +20,25 @@ query getOnePqr($hpqrId: ID, $thpId: ID){
 `
 export const GET_ONE_COLOR = gql`
 query getAllColor{
-  color{
+  getAllColor{
     colorId
-    Name
-    cState
-    DatCre
-    DatMod
+    colorName
+    colorState
+  }
+}
+`
+export const UPDATE = gql`
+mutation updateProduct($input: IProduct){
+  updateProduct(input: $input){
+    pId
+    cId
+    dId
+    ctId
+    ProName
+    ProPrice
+    ProImage
+    ProQuantity
+    ProDescription
   }
 }
 `

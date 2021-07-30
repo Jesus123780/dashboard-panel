@@ -8,8 +8,9 @@ import NewSelect from '../../NewSelectHooks/NewSelect'
 import { Rate } from '../../Rate';
 import { PVColor } from '../../../assets/colors';
 import { RippleButton } from '../../Ripple';
+import moment from 'moment';
 
-export const Products = ({ values, handleRegister, handleChange, color, onChangeSearch, countries, cities, departments, valuesForm, errorForm }) => {
+export const Products = ({ values, handleRegister, handleChange, onChangeSearch, countries, cities, departments, valuesForm, errorForm }) => {
     const [state, setState] = useState(false)
     const handleClick = () => {
         setState(!state)
@@ -19,27 +20,27 @@ export const Products = ({ values, handleRegister, handleChange, color, onChange
         <Container>
             <CardOne state={state}>
                 <FormProducts onSubmit={handleRegister}>
-                    <InputHook
-                        label='Nombre'
-                        value={values.PName}
-                        name='PName'
+                    <InputHook label='Nombre'
+                        value={values.ProName}
+                        name='ProName'
                         onChange={handleChange}
                         required
                         range={{ min: 0, max: 180 }} />
                     <InputHook label='Precio'
-                        value={numberFormat(values?.price)}
-                        errors={values?.price}
-                        name='price'
+                        value={numberFormat(values?.ProPrice)}
+                        errors={values?.ProPrice}
+                        name='ProPrice'
                         range={{ min: 0, max: 180 }}
                         onChange={handleChange}
                     />
                     <InputHook label='Descuento'
-                        value={numberFormat(values?.PDesc)}
-                        errors={values?.PDesc}
-                        name='PDesc'
+                        value={numberFormat(values?.ProDescuento)}
+                        errors={values?.ProDescuento}
+                        name='ProDescuento'
                         range={{ min: 0, max: 180 }}
                         onChange={handleChange}
                     />
+                    <InputHook paddingInput='' name='drBirth' type='date' error={errorForm?.drBirth} value={moment(values?.drBirth).format('YYYY-MM-DD')} onChange={handleChange} required range={{ min: 0, max: 20 }} />
                     <Content>
                         <>
                             <Label>Producto Protegido?</Label>
@@ -49,17 +50,7 @@ export const Products = ({ values, handleRegister, handleChange, color, onChange
                             <RippleButton widthButton='40%' label='Si' type='button' bgColor={PVColor} />
                         </ContainerButton>
                     </Content>
-                    <Rate rating={rating} onRating={rate => setRating(rate)} size={20} />
-                    <NewSelect
-                        name='colorId'
-                        options={color?.color}
-                        id='colorId'
-                        onChange={handleChange}
-                        error={values?.color?.colorId}
-                        optionName='Name'
-                        value={values?.colorId}
-                        title='Color' required
-                    />
+                    <Rate rating={rating} onRating={rate => setRating(rate)} size={20} values={values.rating} />
                     <InputHook label='Unidades disponibles'
                         value={values?.ProQuantity}
                         errors={values?.ProQuantity}
@@ -68,9 +59,9 @@ export const Products = ({ values, handleRegister, handleChange, color, onChange
                         onChange={handleChange}
                     />
                     <InputHook label='Garantía'
-                        value={numberFormat(values?.ProQuantity)}
-                        errors={values?.ProQuantity}
-                        name='ProQuantity'
+                        value={numberFormat(values?.ProAssurance)}
+                        errors={values?.ProAssurance}
+                        name='ProAssurance'
                         range={{ min: 0, max: 180 }}
                         onChange={handleChange}
                     />
@@ -138,12 +129,13 @@ export const Products = ({ values, handleRegister, handleChange, color, onChange
                     </div>
                     <>
                         <Label>Description:</Label>
-                        <TextareaDescription value={values?.PDescription}
-                            errors={values?.PDescription}
+                        <TextareaDescription value={values?.ProDescription}
+                            errors={values?.ProDescription}
                             onChange={handleChange}
-                            name='PDescription' >
+                            name='ProDescription' >
                         </TextareaDescription>
                     </>
+                    <button type='submit'>Subir</button>
                 </FormProducts>
             </CardOne>
             <i style={{ position: 'relative' }}>

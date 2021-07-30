@@ -7,7 +7,7 @@ import { LoadEllipsis } from '../../../LoadingButton'
 import { RippleButton } from '../../../Ripple'
 import { validationSubmitHooks } from '../../../../utils'
 import { Context } from '../../../../Context'
-import { GET_DEPARTMENT, UPDATE_DEPARTMENT } from './queries'
+import { GET_DEPARTMENT_ALL, UPDATE_DEPARTMENT } from './queries'
 import { GET_COUNTRY } from '../Countries/queries'
 import { EditForm } from './EditForm'
 import { PColor } from '../../../../assets/colors'
@@ -25,7 +25,7 @@ export const Departments = () => {
     }
     // Query para traer a todos los departamentos
     const { data: dataCountries } = useQuery(GET_COUNTRY)
-    const { data } = useQuery(GET_DEPARTMENT)
+    const { data } = useQuery(GET_DEPARTMENT_ALL)
     const handleRegister = async e => {
         e.preventDefault()
         // Declarando variables
@@ -42,19 +42,17 @@ export const Departments = () => {
         if (errorSubmit) {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
-        const { dName, cId } = values
         try {
             if (!errorSubmit) {
-                const results = await createDepartments({
-                    variables: {
-                        input: {
-                            cId, dName
+                createDepartments({ variables: { input : { dName: values.dName, cId: values.cId } }, update(cache) {
+                    cache.modify({
+                        fields: {
+                            department(dataOld=[]){
+                                return cache.writeQuery({ query: GET_DEPARTMENT_ALL, data: dataOld })
+                            }
                         }
-                    }
-                })
-                setValues({})
-                setErrors({} || [])
-                if (results) setAlertBox({ message: 'País subido con éxito', duration: 5000 })
+                    })
+                } }).catch(err=> setAlertBox({ message: `${ err }`, duration: 7000 }))
             }
         } catch (error) {
             setValues({})

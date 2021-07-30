@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const UPDATE_COUNTRIES = gql`
-mutation($input: ICountry ){
-  createCountry(input: $input ){
+mutation createCountry($input:  ICountry){
+  createCountry(input: $input){
     cId
     cName
     cCalCod

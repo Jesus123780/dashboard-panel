@@ -16,14 +16,12 @@ export const Colors = () => {
         setValues({ ...values, [e.target.name]: e.target.value })
         setErrors({ ...errors, [e.target.name]: error })
     }
-    // const [createColor, { loading }] = useMutation(UPDATE_COLOR)
     const [createColor] = useMutation(UPDATE_COLOR);
     const { data } = useQuery(GET_ALL_COLOR)
     const [show, setShow] = useState(false)
     const { setAlertBox } = useContext(Context)
 
-    // Mutación para subir un país
-    const handleRegister = async e => {
+    const handleSubmit = (e, colorId) => {
         e.preventDefault()
         // Declarando variables
         let errorSubmit = false
@@ -39,28 +37,21 @@ export const Colors = () => {
         if (errorSubmit) {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
-        // eslint-disable-next-line
-        const { colorName } = values
-        try {
-            if (!errorSubmit) {
-                const results = await createColor({
-                    variables: {
-                        input: {
-                            colorName
+        if (!errorSubmit) {
+            createColor({ variables: { input : { colorName: values.colorName, colorId } }, update(cache) {
+                cache.modify({
+                    fields: {
+                        getAllColor(dataOld=[]){
+                            return cache.writeQuery({ query: GET_ALL_COLOR, data: dataOld })
                         }
                     }
                 })
-                if (results) setAlertBox({ message: `Color ${ colorName } Subido con exito`, duration: 5000, color: 'success' })
-            }
-        } catch (error) {
-            setAlertBox({ message: `${ error }`, duration: 7000 })
-
+            } }).catch(err=> setAlertBox({ message: `${ err }`, duration: 7000 }))
         }
     }
-    // if (loading) return <i>Cargando</i>
     return (<>
         <Container>
-            <Form onSubmit={handleRegister}>
+            <Form onSubmit={handleSubmit}>
                 <InputHooks
                     name='colorName'
                     title='Ingresa un color'

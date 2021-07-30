@@ -1,10 +1,9 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
-import React, { useContext, useState } from 'react'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import React, { useState } from 'react'
 import { GET_ALL_CITIES, GET_ALL_COUNTRIES, GET_ALL_DEPARTMENTS, GET_ALL_ROAD } from '../../../gql/Location';
 import { Products } from '../../../components/Update/Products'
-import { Context } from '../../../Context'
 import { validationSubmitHooks } from '../../../utils';
-import { GET_ONE_COLOR } from './queries';
+import { GET_ONE_COLOR, UPDATE } from './queries';
 
 export const ProductsC = () => {
     const [errors, setErrors] = useState({})
@@ -17,14 +16,15 @@ export const ProductsC = () => {
     const { data: dataCountries, loading: loadCountries } = useQuery(GET_ALL_COUNTRIES)
     const { data: dataRoad, loading: loadRoad } = useQuery(GET_ALL_ROAD)
     const [getDepartments, { data: dataDepartments }] = useLazyQuery(GET_ALL_DEPARTMENTS)
+    // Subir producto
     const [getCities, { data: dataCities }] = useLazyQuery(GET_ALL_CITIES)
     const handleChangeSearch = e => {
         if (e.target.name === 'countryId') getDepartments({ variables: { cId: e.target.value } })
         else if (e.target.name === 'dId') getCities({ variables: { dId: e.target.value } })
         handleChange(e)
     }
+    const [updateProduct] = useMutation(UPDATE)
     // Contexto de las notificaciones
-    const { setAlertBox } = useContext(Context)
     const handleRegister = async e => {
         e.preventDefault()
         // Declarando variables
@@ -39,36 +39,41 @@ export const ProductsC = () => {
         }
         setErrors({ ...errorForm })
         if (errorSubmit) {
-            return setAlertBox({ message: 'Revisa que los campos estén correctos', duration: 5000, color: 'red' })
+            return alert('Por favor, verifique que los Campos estén correctos.')
         }
         const { password, ConfirmPassword } = values
         if (ConfirmPassword !== password) {
-            setAlertBox('Las contraseñas no coinciden')
+            alert('Las contraseñas no coinciden')
         }
-        // try {
-        //     if (!errorSubmit) {
-        //         const results = await register({
-        //             variables: {
-        //                 input: {
-        //                     username,
-        //                     email,
-        //                     password,
-        //                     name,
-        //                 }
-        //             }
+        try {
+            if (!errorSubmit) {
+                updateProduct({
+                    variables: {
+                        input: {
+                            password,
+                            ConfirmPassword,
+                        }
+                    }
+                }).then(res => {
+                    if (res) {
+                        setValues({})
+                    } else console.log({ message: data.signUpUser.message, duration: 30000, color: data.signUpUser.success ? 'success' : 'error' })
 
-        //         })
-        //         setValues({})
-        //         setErrors({} || [])
-        //         // eslint-disable-next-line
-        //         console.log(results)
-        //         setShowLogin(!showLogin)
-        //     }
-        // } catch (error) {
-        //     setValues({})
-        //     setErrors({})
-        //     alert(error.message)
-        // }
+                })
+                    .catch(() => {
+                        console.log({
+                            message: 'Se ha producido un error.',
+                            duration: 3000, color:'error'
+                        })
+                    })
+                    .finally(() => {
+                        console.log(false)
+                    })
+            }
+        } catch (error) {
+            // eslint-disable-next-line
+            console.log(error)
+        }
     }
     return (
         <Products
@@ -77,7 +82,7 @@ export const ProductsC = () => {
             values={values}
             errors={errors}
             color={data}
-            loading={loadCountries || loadRoad }
+            loading={loadCountries || loadRoad}
             countries={dataCountries?.countries || []}
             road={dataRoad?.road || []}
             departments={dataDepartments?.departments || []}
