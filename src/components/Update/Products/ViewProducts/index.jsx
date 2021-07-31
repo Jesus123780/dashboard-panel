@@ -55,7 +55,7 @@ export const ViewProducts = props => {
                     </Button>
                     <Info size='17px' color={'#1f4e96'}>Compra internacional</Info>
                     <Info size='15px' color={APColor}>Sin costos de importación</Info>
-                    <Info size='15px' color={'#000'}>Cantidad { PCant ? `${ PCant }` : 50 }</Info>
+                    <Info size='15px' color={'#000'}>Cantidad { PCant ? numberFormat(PCant) : 50 }</Info>
                     <RippleButton label='Comprar ahora' bgColor={PVColor} />
                 </Card>
                 <Card sticky>

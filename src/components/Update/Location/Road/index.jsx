@@ -39,7 +39,6 @@ export const TypeRoad = () => {
         if (errorSubmit) {
             setAlertBox({ message: 'Por favor, verifique que los Campos estén correctos', duration: 5000 })
         }
-        console.log(values.rName)
         try {
             if (!errorSubmit) {
                 createRoadMutation({ variables: { input : { rName: values.rName } }, update(cache) {

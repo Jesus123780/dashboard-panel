@@ -19,11 +19,11 @@ import { Offers } from './pages/Update/Offers';
 import { OficialStores } from './pages/Update/OficialStores';
 import { PopularCategories } from './pages/Update/PopularCategories';
 import { PQR } from './pages/Update/PQR';
-import { Products } from './pages/Update/Products';
 import { Chat } from './pages/Chat';
 import { Location } from './pages/Update/location';
 import { history } from './utils';
 import { Information } from './components/Update/Information';
+import { ProductsC } from './container/Update/Products';
 
 function App() {
     const [auth, setAuth] = useState(undefined)
@@ -80,10 +80,10 @@ function App() {
                                                     <Route exact path='/update/offers' component={Offers} />
                                                     <Route exact path='/update/oficialstores' component={OficialStores} />
                                                     <Route exact path='/update/popularCategories' component={PopularCategories} />
-                                                    <Route exact path='/update/products' component={Products} />
                                                     <Route exact path='/update/PQR' component={PQR} />
                                                     <Route exact path='/update/location' component={Location} />
                                                     <Route exact path='/update/information' component={Information} />
+                                                    <Route exact path='/update/products' component={ProductsC} />
                                                     {/* Delete Sección */}
                                                     {/* <Route exact path='/update/category' component={Categories} />
                                                     <Route exact path='/update/kit' component={Kit} />

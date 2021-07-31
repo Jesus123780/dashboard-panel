@@ -28,17 +28,31 @@ query getAllColor{
 }
 `
 export const UPDATE = gql`
-mutation updateProduct($input: IProduct){
-  updateProduct(input: $input){
+mutation updateProducts($input: InputProduct){
+  updateProducts(input: $input){
     pId
-    cId
-    dId
-    ctId
-    ProName
+    sizeId #Talla
+    colorId #Color
+    cId  #Country
+    dId  #Department
+    ctId  #Cuidad
+    pName
     ProPrice
-    ProImage
-    ProQuantity
-    ProDescription
+    ProDescuento
+	  ProUniDisponibles
+	  ProDescription
+	  ProProtegido
+	  ProAssurance
+	  ProStar
+	  ProImage
+	  ProWidth
+	  ProHeight
+	  ProLength
+	  ProWeight
+	  ProQuantity
+	  ProOutstanding
+	  ProDelivery
+	  ProVoltaje
   }
 }
 `

@@ -118,7 +118,7 @@ export const SideBar = () => {
                             </Options>
                             <Options label='Información' active={active === 9} handleClick={() => handleClick(9)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
                                 <LinkOption to='/update/information'>
-                                    <span>Update Location</span>
+                                    <span>Update Information</span>
                                 </LinkOption>
                             </Options>
                             <TextField

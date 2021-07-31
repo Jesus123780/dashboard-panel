@@ -379,7 +379,6 @@ export const validationSubmitHooks = elements => {
  * @return {Object} devuelve un objeto con los datos filtrados
  */
 export const filterKeyObject = (data, filters, dataFilter) => {
-    console.log(dataFilter)
     let values = {}, valuesFilter = {}
     for (const elem in data) {
         let coincidence = false
