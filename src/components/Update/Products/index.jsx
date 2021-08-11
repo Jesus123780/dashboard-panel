@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { InputHook } from './Input';
 import { ViewProducts } from './ViewProducts';
 import { IconArrowRight } from '../../../assets/icons/icons';
@@ -6,6 +6,10 @@ import { Container, FormProducts, Card, Button, CardOne, TextareaDescription, La
 import { Rate } from '../../Rate';
 import NewSelect from '../../NewSelectHooks/NewSelect'
 import { numberFormat } from '../../../utils';
+import { PVColor } from '../../../assets/colors';
+import { RippleButton } from '../../Ripple';
+import { Context } from '../../../Context';
+import { FeaturesProducts } from './FeaturesProduct';
 // import { Rate } from '../../Rate';
 // import { PVColor } from '../../../assets/colors';
 // import { RippleButton } from '../../Ripple';
@@ -15,6 +19,10 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
     const [state, setState] = useState(false)
     const handleClick = () => {
         setState(!state)
+    }
+    const { modal, setModal } = useContext(Context);
+    const handleClickModal = () => {
+        setModal(!modal)
     }
     return (<>
         <Container>
@@ -144,7 +152,9 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
                             name='ProDescription' >
                         </TextareaDescription>
                     </>
-                    <button type='submit'>Subir</button>
+                    <RippleButton type="button" onClick={handleClickModal} widthButton='100%' margin='auto' bgColor={PVColor}> <Label>Características principales</Label></RippleButton>
+                    <FeaturesProducts setModal={setModal} modal={modal}/>
+                    {/* <button type='submit'>Subir</button> */}
                 </FormProducts>
             </CardOne>
             <i style={{ position: 'relative' }}>

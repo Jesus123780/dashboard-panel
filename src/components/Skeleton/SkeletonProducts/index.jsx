@@ -13,7 +13,7 @@ export const Skeleton = () => {
     )
 }
 const Container = styled.div`
-    z-index: 9999999;
+    z-index: 999;
     .wrapper {
   width: auto;
   margin: 10px auto;
