@@ -24,6 +24,7 @@ import { Location } from './pages/Update/location';
 import { history } from './utils';
 import { Information } from './components/Update/Information';
 import { ProductsC } from './container/Update/Products';
+import { ContextMenu } from './components/positionMap';
 
 function App() {
     const [auth, setAuth] = useState(undefined)
@@ -96,6 +97,7 @@ function App() {
 
                                                     {/* Chat */}
                                                     <Route exact path='/chat' component={Chat} />
+                                                    <Route exact path='/position' component={ContextMenu} />
                                                     <Route component={NotFound} />
                                                     <Redirect to="/" />
                                                 </Switch>

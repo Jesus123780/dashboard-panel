@@ -3,19 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
-import { URL_BASE_GRAPHQL } from './api';
+import { ApolloProvider } from '@apollo/client'
 import Context from './Context'
 // Componentes
 import { Maintenance } from './components/Maintenance'
-// Apollo config
-const client = new ApolloClient({
-    uri: URL_BASE_GRAPHQL,
-    cache: new InMemoryCache(),
-    headers: {
-        authorization: localStorage.getItem('token') || '',
-    }
-})
+import { client } from './apollo/client';
+
 const production = true
 //eslint-disable-next-line
 console.log('%c WARNING :', 'color:red;font-size:28px;');

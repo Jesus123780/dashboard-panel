@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { IconArrowBottom } from '../../assets/icons/icons'
 import { Container, DropdownItem } from './styled'
 
-export const DropdownMenu = ({ options= [], show, position }) => {
+export const DropdownMenu = ({ options, show, position, onClickOutside = () => undefined }) => {
+    useEffect(() => {
+        show && document.body.addEventListener('click', () => onClickOutside())
+        return () => {
+            document.body.removeEventListener('click', () => {})
+        }
+    }, [show])
 
     if (!show) return <></>
     return <Container position={position}>

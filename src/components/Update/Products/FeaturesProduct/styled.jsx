@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-// import { BGColor } from '../../../../assets/colors'
+import React from 'react'
 
 export const ContainerModal = styled.div`
 display: flex;
@@ -33,16 +33,16 @@ display: grid;
   grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
 grid-gap: 10px;
 opacity: 0;
-top: 50%;
 position: absolute;
 transition: 500ms ease;
 overflow-y: auto;
-background-color: ${ ({ theme })=> theme.InvColor };
-
+background-color: ${ ({ theme }) => theme.InvColor };
+max-height: 700px;
 padding: 50px;
 ${ ({ modal }) => modal
         ? css`  
-        top: 80px;
+        top: -50px;
+        bottom: 0;
         transform: translateY(95px);
         border-radius: 4px;
         opacity: 1;
@@ -62,22 +62,41 @@ ${ ({ modal }) => modal
 `
 export const Container = styled.div``
 export const ContentList = styled.div`
-    margin: 2px 0px;
-    border: 1px solid #f2f2f2;
-    box-shadow: 0px 1px 4px rgb(0 0 0 / 5%);
-    border-radius: 4px;
+    position: relative;
     display: flex;
-`
+    flex-direction: space-between;
+    border-radius: 8px;
+    border: 1px solid #e9e9e9;
+    width: 100%;
+    min-height: 40px;
+    padding: 15px;
+    background: transparent;
+    overflow: hidden;
+    text-decoration: none;
+    height: auto;
+    opacity: 1;
+    cursor: pointer;
+    margin: 10px;
+    &:hover{
+      box-shadow: 0px 4px 10px rgb(0 0 0 / 5%), 0px 4px 16px rgb(0 0 0 / 8%);
+      border-color: transparent;
+    }
+    ${ ({ show }) => show
+    && css`
+        box-shadow: 0px 4px 10px rgb(0 0 0 / 5%), 0px 4px 16px rgb(0 0 0 / 8%);
+        border-color: transparent;
+        
+        
+        ` }
+        `
 export const TextList = styled.h3`
     font-size: 14px !important;
     font-family: PFont-Regular;
-`
+    `
 export const Card = styled.form`
-  display: grid;
   height: min-content;
-  /* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); */
   border: 1px solid #dcdcdc;
-`
+  `
 export const ContentModal = styled.div`
     transition: opacity 150ms ease-in-out;
     ${ ({ modal }) => modal
@@ -95,11 +114,26 @@ export const ContentModal = styled.div`
     min-height: 100%;
     z-index: 10000;
     background-color: rgba(0,0,0,0.322);
-          `
+    `
         : css`
             
-        margin: 0;
-        opacity: 0;
-        z-index: -99999099;
-          ` }
+            margin: 0;
+            opacity: 0;
+            z-index: -99999099;
+            ` }
+            `
+export const ContentTooltip = styled.div`
+
 `
+export const Options = ({ icon, name }) => {
+
+    return (
+        <React.Fragment>
+            <div>
+                {icon}
+            </div>
+            <ContentTooltip title={name}>
+            </ContentTooltip>
+        </React.Fragment>
+    )
+}

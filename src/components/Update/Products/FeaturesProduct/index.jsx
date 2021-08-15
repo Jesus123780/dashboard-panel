@@ -8,7 +8,8 @@ import { SpinnerColorJust } from '../../../Loading'
 import NewSelect from '../../../NewSelectHooks/NewSelect'
 import { RippleButton } from '../../../Ripple'
 import { CREATE_FEATURES, CREATE_TYPE_FEATURES, GET_ALL_FEATURES_ON_PARENT, GET_TYPE_FEATURES } from './queries'
-import { AwesomeModal, ContentModal, Card, ContentList, TextList } from './styled'
+import { AwesomeModal, ContentModal, Card, ContentList, TextList, Options } from './styled'
+import { icons } from './codeCat'
 
 export const FeaturesProducts = props => {
     const { modal, setModal } = props;
@@ -131,9 +132,9 @@ export const FeaturesProducts = props => {
                     <Card>
                         <span>Lista categoría características</span>
                         <div>
-                            {data ? data?.typeFeatures?.map(types => (<div key={types.thpId}>
+                            {data ? data?.typeFeatures?.map(types => (<ContentList key={types.thpId}>
                                 <span>{types.thpName}</span>
-                            </div>)) : <span>No hay resultados</span>}
+                            </ContentList>)) : <span>No hay resultados</span>}
                         </div>
                     </Card>
                     <Card>
@@ -153,9 +154,9 @@ export const FeaturesProducts = props => {
                     <Card>
                         <div>
                             {datafatures?.features?.map(x => (<ContentList key={x.fId}>
-                                <TextList>{x.typeFeature?.thpIcon}</TextList>
+                                {/* eslint-disable-next-line */}
+                                <Options icon={icons.find(j => j.cCalCod == x.typeFeature?.thpIcon)?.icon} name={icons.find(j => j.cCalCod == x.typeFeature?.thpIcon)?.cCalCod}></Options>
                                 <TextList title={x.typeFeature.thpName}>{x?.hpqrQuestion}</TextList >
-
                             </ContentList>))}
                         </div>
                     </Card>
