@@ -5,10 +5,12 @@ import { Products } from '../../../components/Update/Products'
 import { GET_ONE_COLOR, UPDATE } from './queries';
 import { Context } from '../../../Context';
 import { GET_ALL_SIZE } from '../../../gql/information/Size/size';
+import useLocalStorage from '../../../components/hooks/useLocalSorage';
 
 export const ProductsC = () => {
     const [errors, setErrors] = useState({})
     const [values, setValues] = useState({})
+    const [name, setName] = useLocalStorage();
     const { data } = useQuery(GET_ONE_COLOR)
     const { setAlertBox } = useContext(Context)
     const handleChange = (e, error) => {
@@ -40,7 +42,6 @@ export const ProductsC = () => {
         const ProOutstanding = parseInt(Destacado);
         const ProDelivery = parseInt(IstFree);
         const {
-            pName,
             ProPrice,
             ProDescuento,
             ProUniDisponibles,
@@ -58,6 +59,7 @@ export const ProductsC = () => {
             ctId,
         } = values
         const cId = countryId
+        const pName = name
         try {
             const results = await updateProducts({
                 variables: {
@@ -90,10 +92,10 @@ export const ProductsC = () => {
 
             })
             // eslint-disable-next-line
-                setAlertBox({ message: `${results}`, duration: 7000 })
+            setAlertBox({ message: `${results}`, duration: 7000 })
         } catch (error) {
             // eslint-disable-next-line
-            setAlertBox({ message: `${ error.message}`, duration: 7000 })
+            setAlertBox({ message: `${error.message}`, duration: 7000 })
         }
     }
     return (
@@ -114,6 +116,9 @@ export const ProductsC = () => {
             setRating={setRating}
             handleChange={handleChange}
             onChangeSearch={handleChangeSearch}
+            name={name}
+            setName={setName}
+
         />
     )
 }

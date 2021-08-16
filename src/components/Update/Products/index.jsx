@@ -15,7 +15,7 @@ import { FeaturesProducts } from './FeaturesProduct';
 // import { RippleButton } from '../../Ripple';
 // import moment from 'moment';
 
-export const Products = ({ values, handleRegister, handleChange, countries, setRating, rating, color, size, onChangeSearch, departments, cities }) => {
+export const Products = ({ values, handleRegister, handleChange, countries, setRating, rating, color, size, onChangeSearch, departments, cities, setName, name }) => {
     const [state, setState] = useState(false)
     const handleClick = () => {
         setState(!state)
@@ -28,12 +28,15 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
         <Container>
             <CardOne state={state}>
                 <FormProducts onSubmit={handleRegister}>
-                    <InputHook label='pName'
-                        value={values.pName}
+                    <InputHook label='Nombre del producto'
+                        type="text"
+                        placeholder="Enter your name"
+                        value={name}
                         name='pName'
                         required
-                        onChange={handleChange}
-                        range={{ min: 0, max: 180 }} />
+                        onChange={e => setName(e.target.value)}
+                        range={{ min: 0, max: 180 }}
+                    />
                     <InputHook label='ProPrice'
                         value={numberFormat(values.ProPrice)}
                         name='ProPrice'
@@ -129,7 +132,7 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
                             onChange={onChangeSearch}
                             optionName='cName'
                             value={values?.countryId}
-                            title='País'/>
+                            title='País' />
                         <NewSelect
                             name='dId'
                             options={departments}
@@ -153,8 +156,8 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
                         </TextareaDescription>
                     </>
                     <RippleButton type="button" onClick={handleClickModal} widthButton='100%' margin='auto' bgColor={PVColor}> <Label>Características principales</Label></RippleButton>
-                    <FeaturesProducts setModal={setModal} modal={modal}/>
-                    {/* <button type='submit'>Subir</button> */}
+                    <FeaturesProducts setModal={setModal} modal={modal} />
+                    <button type='submit'>Subir</button>
                 </FormProducts>
             </CardOne>
             <i style={{ position: 'relative' }}>

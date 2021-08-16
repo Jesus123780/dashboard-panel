@@ -58,8 +58,10 @@ export const ContainerBurger = styled.div`
 export const SideBarLeft = styled.aside`
     flex-direction: column;
     transition: all .3s ease-out;
+    transition: 1s ease;
     top: 0;
     width: 100%; 
+
     @media( min-width: 1200px ){
         ${ ({ collapsed })=> collapsed &&css`
             /* width: 0pc;  */

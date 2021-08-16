@@ -6,6 +6,7 @@ export const Container = styled.div`
     width: 90%;
     grid-gap: 19px 12px;     */
     height: 100%;
+    width: 100%;
 `
 export const Card = styled.div`
 @media (min-width: 992px){

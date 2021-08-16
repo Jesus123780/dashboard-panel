@@ -8,6 +8,11 @@ export const HeaderContent = styled.header`
     box-shadow: inset 0 -1px 0 #dcdcdc;
     z-index: 9997;
     padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    transition: all 0.4s ease;
     @media only screen and (min-width: 960px){
         display: flex;
     }
@@ -36,23 +41,4 @@ export const Text = styled.i`
     @media only screen and (min-width: 960px){
         padding: 0 20px 0 30px;
     }
-`
-
-export const TargetUser = styled.div`
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    border-bottom: 1px solid;
-    @media only screen and (min-width: 960px){
-        padding: 0 20px 0 30px;
-    }
-`
-export const ContentInput = styled.div`
-    @media only screen and (min-width: 1248px){
-        max-width: 420px;
-    }
-    @media only screen and (min-width: 960px) {
-    max-width: 320px;
-    position: relative;
-}
 `

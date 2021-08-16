@@ -1,41 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 // import LogoImage from '../../assets/'
 import { PColor } from '../../assets/colors'
 // import InputHooksSearcher from '../InputHooksSearcher/InputHooks'
 import { IconLogo } from '../../assets/icons/icons'
 import { CartShop } from '../CartShop'
-import { HeaderContent, Content/* , ContentInput, TargetUser */ } from './styled'
-// import styled from 'styled-components'
+import useScrollHook, { useScrollColor, useScrollY } from '../hooks/useScroll'
+import { HeaderContent, Content } from './styled'
 
 export const Header = ({ keyTheme, handleTheme, auth, error }) => {
-    const [scrollNav, setScrollNav] = useState(false)
-    const changeNav = () => {
-        if (window.scrollY >= 1) {
-            setScrollNav(true)
-        } else {
-            setScrollNav(false)
-        }
-    }
-    useEffect(() => {
-        window.addEventListener('scroll', changeNav)
-    }, [])
-
-    const [offsetY, setOffsetY] = useState(0);
-    const handleScroll = () => setOffsetY(window.pageYOffset);
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     if (error) return <>Error</>
-    // eslint-disable-next-line
-    // console.log(results, loading, onchange, search)
+    const style = useScrollHook();
+    const { offsetY } = useScrollY();
+    const { scrollNav } = useScrollColor();
     return (
         <>
             {auth &&
-                <HeaderContent scrollNav={scrollNav} >
+                <HeaderContent scrollNav={scrollNav} style={style} >
                     <Content >
                         <div style={{ transform: `translateY(${ offsetY * 0.8 }px)` }}>
                             <Link to='/'>
@@ -58,6 +40,7 @@ export const Header = ({ keyTheme, handleTheme, auth, error }) => {
                         <>
                             <CartShop keyTheme={keyTheme} handleTheme={handleTheme} />
                         </>
+
                     </Content>
                 </HeaderContent>
             }
