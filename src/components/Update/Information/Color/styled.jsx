@@ -130,3 +130,61 @@ export const Input = styled.input`
     border: 1px solid #dcdcdc;
     font-family: PFont-Light;
 `
+export const ContentModal = styled.div`
+    transition: opacity 150ms ease-in-out;
+    ${ ({ modal }) => modal
+        ? css`  
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 100%;
+    z-index: 10000;
+    background-color: rgba(0,0,0,0.322);
+    `
+        : css`
+            
+            margin: 0;
+            opacity: 0;
+            z-index: -99999099;
+            ` }
+            `
+export const AwesomeModal = styled.div`
+            width: 97%;
+            border-radius: 10px;
+            display: grid;
+            grid-gap: 10px;
+            opacity: 0;
+            position: absolute;
+            transition: 500ms ease;
+            overflow-y: auto;
+            background-color: ${ ({ theme }) => theme.InvColor };
+            max-height: 700px;
+            padding: 50px;
+            ${ ({ modal }) => modal
+        ? css`  
+                    top: -50px;
+                    bottom: 0;
+                    transform: translateY(95px);
+                    border-radius: 4px;
+                    opacity: 1;
+                    z-index: 99999909;
+                      `
+        : css`
+                        
+                    margin: 0;
+                    opacity: 0;
+                    z-index: -99999;
+                      ` }
+            &::-webkit-scrollbar {
+                width: 3px;
+                background-color: #dcdcdc;
+                border-radius: 5px;
+            }
+            `

@@ -7,7 +7,7 @@ import { ApolloProvider } from '@apollo/client'
 import Context from './Context'
 // Componentes
 import { Maintenance } from './components/Maintenance'
-import { client } from './apollo/client';
+import { apolloClient } from './apollo/client';
 
 const production = true
 //eslint-disable-next-line
@@ -17,7 +17,7 @@ console.log('%c CONSOLA SOLO PARA DESARROLLADORES', 'color:red;font-size:12px;')
 ReactDOM.render(
     <Context.Provider>
         <React.StrictMode>
-            <ApolloProvider client={client}>
+            <ApolloProvider client={apolloClient}>
                 {!production ? ReactDOM.createPortal(<Maintenance />,
                     document.querySelector('#portal')
                 ) : <App />}

@@ -1,13 +1,22 @@
-import { useMutation, useQuery } from '@apollo/client'
 import { useContext, useState } from 'react'
+import ReactDOM from 'react-dom'
+import { useMutation, useQuery } from '@apollo/client'
 import { PColor } from '../../../../assets/colors'
-import { IconDelete, IconDost, IconEdit } from '../../../../assets/icons/icons'
 import { Context } from '../../../../Context'
+import { IconDelete, IconDost, IconEdit } from '../../../../assets/icons/icons'
 import { GET_ALL_COLOR, UPDATE_COLOR } from '../../../../gql/information/Color'
 import { validationSubmitHooks } from '../../../../utils'
 import InputHooks from '../../../InputHooks/InputHooks'
 import { RippleButton } from '../../../Ripple'
-import { Container, Form, ContainerTask, OptionsFunction, Button, ListTask, ContainerList } from './styled'
+import { Container,
+    Form,
+    ContainerTask,
+    OptionsFunction,
+    Button, ListTask,
+    ContainerList,
+    ContentModal,
+    AwesomeModal
+} from './styled'
 
 export const Colors = () => {
     const [values, setValues] = useState({})
@@ -49,6 +58,8 @@ export const Colors = () => {
             } }).catch(err=> setAlertBox({ message: `${ err }`, duration: 7000 }))
         }
     }
+    const { modal, setModal } = useContext(Context);
+
     return (<>
         <Container>
             <Form onSubmit={handleSubmit}>
@@ -79,6 +90,14 @@ export const Colors = () => {
 
             </ContainerList>
         </Container>
+        {ReactDOM.createPortal(<>
+            <ContentModal onClick={e => e.stopPropagation()} modal={modal} onClick={() => setModal(!modal)}>
+                <AwesomeModal onClick={e => e.stopPropagation()} modal={modal}>
+                    Hola
+                </AwesomeModal>
+            </ContentModal>
+        </>, document.getElementById('root')
+        )}
     </>
     )
 }

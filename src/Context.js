@@ -8,7 +8,7 @@ const Provider = ({ children }) => {
     // Accion para abrir y cerrar parte lateral
     const [collapsed, setCollapsed] = useState(false);
     // Accion para abrir y cerrar el modal de productos
-    const [modal, setModal] = useState(false)
+    const [modal, setShowModal] = useState(false)
     // Efecto para el Toast
     useEffect(() => {
         !!error?.message &&
@@ -17,8 +17,9 @@ const Provider = ({ children }) => {
     const value = {
         error,
         setAlertBox: err => setError(err),
+        setModal: err => setShowModal(err === modal ? false : err),
         collapsed, setCollapsed,
-        modal, setModal
+        modal
 
     }
     return <Context.Provider value={value}>{children}</Context.Provider>

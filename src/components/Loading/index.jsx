@@ -25,13 +25,13 @@ export const SpinnerColor = () => {
 }
 export const SpinnerColorJust = () => {
     return (
-        <>
-            <div>
-                <svg className="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <Container>
+            <LsRipple>
+                <svg className="spinner" width="50px" height="50px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
                     <circle className="path" fill="none" stroke-width="6" strokeLinecap="round" cx="33" cy="33" r="30"></circle>
                 </svg>
-            </div>
-        </>
+            </LsRipple>
+        </Container>
     )
 }
 
@@ -62,7 +62,7 @@ const Container = styled.div`
     justify-content: center;
     width: 100%;
     height: 100%;
-    background-color: #77777755;
+    background-color: #7777774e;
 `
 const LsRipple = styled.div`
     display: inline-block;
@@ -74,7 +74,7 @@ const LsRipple = styled.div`
         border: 4px solid ${ ({ theme }) => theme.BGAColor };
         opacity: 1;
         border-radius: 50%;
-        animation: ${ AnimationRipple } 1s cubic-bezier(0, 0.2, 0.8, 1)
+        animation: ${ AnimationRipple } .1s cubic-bezier(0, 0.2, 0.8, 1)
             infinite;
     }
     & div:nth-child(2) {

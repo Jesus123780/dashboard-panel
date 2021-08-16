@@ -22,15 +22,14 @@ const authLink = setContext(async (_, { headers }) => {
             ...headers,
             authorization: localStorage.getItem('token') || '',
             deviceid: await getDeviceId() || '',
-            client: 'ml.admin'
+            client: 'ml.app.investor'
         }
     }
 })
-// const { client } = useApolloClient()
-
 const errorHandler = onError(({ graphQLErrors }) => {
     const { logout } = useAuth()
-    if (graphQLErrors) {
+    localStorage.clear()
+    if (!graphQLErrors) {
         graphQLErrors?.length && graphQLErrors.forEach(err => {
             const { code } = err.extensions
             if (code === 'UNAUTHENTICATED' || code === 'FORBIDDEN') isLoggedVar({ state: false, expired: true, message: 'Ha ocurrido un problema.', code: 500 })
@@ -42,7 +41,7 @@ const errorHandler = onError(({ graphQLErrors }) => {
         })
     }
 })
-export const client = new ApolloClient({
+export const apolloClient = new ApolloClient({
     cache,
     link: from([
         errorHandler,

@@ -68,7 +68,7 @@ function App() {
                             <Route>
                                 <ContextLayout.Consumer>
                                     {
-                                        ({ error }) => <LayoutMain error={error}>
+                                        ({ error }) => <LayoutMain error={error} error={error}>
                                             <Suspense fallback={<Loading />} >
                                                 <Switch>
                                                     <Route exact path='/' component={Books} />

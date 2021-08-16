@@ -1,4 +1,4 @@
-import React, { useContext/* , useEffect */ } from 'react'
+import React, { useContext } from 'react'
 import { Aside } from '../header'
 import { Container } from './styled'
 import { AlertBox } from '../AlertBox'
@@ -12,11 +12,8 @@ export const LayoutMain = ({ children, error }) => {
 
     const { setAlertBox } = useContext(Context)
     const Theme = localStorage.getItem('theme')
-    if (!mountedComponent) setAlertBox({ message: '', duration: 20000, color: 'red' })
+    if (!mountedComponent) setAlertBox({ message: 'sdfasd', duration: 20000, color: 'red' })
 
-    // useEffect(() => {
-    //     setAlertBox({ message: 'Hola mundo', duration: 5000, color: 'red' })
-    // }, [])
     return (
         <>
             { undefined === undefined && <button
