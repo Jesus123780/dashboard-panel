@@ -17,6 +17,12 @@ query getUser($id: ID, $username: String, $name: String){
   description
   avatar
   siteWeb
+  uPhoNum
+  upLat
+  upLon
+  password
+  createAt
+  uDatMod
 }
 }
 `

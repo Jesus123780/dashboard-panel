@@ -158,6 +158,7 @@ export const BoxTitleNavBar = styled.div`
     @media( max-width: 1200px ){
         display: flex;
         padding: 10px;
+        margin-top: calc(70px + 5px);
         border-radius: 0px; 
     }
 `

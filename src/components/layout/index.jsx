@@ -38,6 +38,8 @@ export const LayoutMain = ({ children, error }) => {
     )
 }
 const Main = styled.div`
-    margin-top: calc(70px + 5px);
+    @media( min-width: 1200px ){
+        margin-top: calc(70px + 5px);
+    }
     background-color: ${ ({ theme }) => theme.InvColor };
 `

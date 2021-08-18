@@ -30,6 +30,7 @@ export const UserProfileC = () => {
 
         }
     }
+
     return (
         <UserProfile
             params={params}
@@ -37,6 +38,8 @@ export const UserProfileC = () => {
             data={data}
             handleFileChange={handleFileChange}
             loading={loading}
+            values
+            handleChangePass
         />
     )
 }
