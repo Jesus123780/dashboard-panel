@@ -39,42 +39,41 @@ export const SideBar = () => {
     }, []);
 
     return (
-        <>
-            <SideBarLeft collapsed={collapsed} >
-                <BoxSideBar>
-                    <Content>
-                        <BoxTitleNavBar title='Esc para abrir menu' toggle={collapsed} collapsed={collapsed} >
-                            <ButtonMenu onClick={toggle}>
-                                <ContainerBurger >
-                                    <div className="BurgerMenu__container" role="button" onClick={() => { setStatus(status === 'open' ? 'close' : 'open') }} >
-                                        <span className={status}></span>
-                                        <span className={status}></span>
-                                        <span className={status}></span>
-                                    </div>
-                                </ContainerBurger>
-                            </ButtonMenu>
-                        </BoxTitleNavBar>
-                        <ContainerOptions>
-                            <Options label='Banner' active={active === 1} handleClick={() => handleClick(1)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconSearch size='25px' color={PColor} />}>
-                                <LinkOption to='/banner/home'>
-                                    <span>Banner Imágenes</span>
-                                </LinkOption>
-                            </Options>
-                            <Options label='Mi panel' active={active === 3} handleClick={() => handleClick(3)} icon={<IconArrowBottom size='10px' color={PColor} />} iconTwo={<IconShopping size='25px' color={PColor} />}>
-                                <LinkOption to='/update/products'>
-                                    <span>Publicar productos</span>
-                                </LinkOption>
-                                <LinkOption to='/'>
-                                    <span>Compartir productos</span>
-                                </LinkOption>
-                                <LinkOption to='/update/offers'>
-                                    <span>Ofertas de productos</span>
-                                </LinkOption>
-                                <LinkOption to='/chat'>
-                                    <span>Chat</span>
-                                </LinkOption>
-                            </Options>
-                            {/* <Options label='Categorías' active={active === 4} handleClick={() => handleClick(4)} icon={<IconArrowBottom size='15px' color={PLColor} />} iconTwo={<IconCategories size='40px' color={PLColor} />}>
+        <SideBarLeft collapsed={collapsed}>
+            <BoxSideBar>
+                <Content>
+                    <BoxTitleNavBar title='Esc para abrir menu' toggle={collapsed} collapsed={collapsed} >
+                        <ButtonMenu onClick={toggle}>
+                            <ContainerBurger >
+                                <div className="BurgerMenu__container" role="button" onClick={() => { setStatus(status === 'open' ? 'close' : 'open') }} >
+                                    <span className={status}></span>
+                                    <span className={status}></span>
+                                    <span className={status}></span>
+                                </div>
+                            </ContainerBurger>
+                        </ButtonMenu>
+                    </BoxTitleNavBar>
+                    <ContainerOptions>
+                        <Options label='Banner' active={active === 1} handleClick={() => handleClick(1)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconSearch size='25px' color={PColor} />}>
+                            <LinkOption to='/banner/home'>
+                                <span>Banner Imágenes</span>
+                            </LinkOption>
+                        </Options>
+                        <Options label='Mi panel' active={active === 3} handleClick={() => handleClick(3)} icon={<IconArrowBottom size='10px' color={PColor} />} iconTwo={<IconShopping size='25px' color={PColor} />}>
+                            <LinkOption to='/update/products'>
+                                <span>Publicar productos</span>
+                            </LinkOption>
+                            <LinkOption to='/'>
+                                <span>Compartir productos</span>
+                            </LinkOption>
+                            <LinkOption to='/update/offers'>
+                                <span>Ofertas de productos</span>
+                            </LinkOption>
+                            <LinkOption to='/chat'>
+                                <span>Chat</span>
+                            </LinkOption>
+                        </Options>
+                        {/* <Options label='Categorías' active={active === 4} handleClick={() => handleClick(4)} icon={<IconArrowBottom size='15px' color={PLColor} />} iconTwo={<IconCategories size='40px' color={PLColor} />}>
                                 <LinkOption to='/'>
                                     <span>Organizar productos</span>
                                 </LinkOption>
@@ -88,7 +87,7 @@ export const SideBar = () => {
                                     <span>Registrar categorías populares</span>
                                 </LinkOption>
                             </Options> */}
-                            {/* <Options label='Aliados / Marcas  / Tiendas Oficiales' active={active === 5} handleClick={() => handleClick(5)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconSearch size='25px' color={PLColor} />}>
+                        {/* <Options label='Aliados / Marcas  / Tiendas Oficiales' active={active === 5} handleClick={() => handleClick(5)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconSearch size='25px' color={PLColor} />}>
                                 <LinkOption to='/update/oficialstores'>
                                     <span>Subir Tiendas Aliadas</span>
                                 </LinkOption>
@@ -98,43 +97,42 @@ export const SideBar = () => {
                             <span>Banner Imágenes</span>
                             </LinkOption>
                         </Options> */}
-                            <Options label='PQR' active={active === 6} handleClick={() => handleClick(6)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconSearch size='25px' color={PLColor} />}>
-                                <LinkOption to='/update/PQR'>
-                                    <span>Preguntas Frecuentes</span>
-                                </LinkOption>
-                            </Options>
-                            <Options label='Productos' active={active === 7} handleClick={() => handleClick(7)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconSearch size='25px' color={PLColor} />}>
-                                <LinkOption to='/update/products'>
-                                    <span>Publicar products</span>
-                                </LinkOption>
-                                <LinkOption to='/delete/products'>
-                                    <span>Publicar products</span>
-                                </LinkOption>
-                            </Options>
-                            <Options label='Locations' active={active === 8} handleClick={() => handleClick(8)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
-                                <LinkOption to='/update/location'>
-                                    <span>Update Location</span>
-                                </LinkOption>
-                            </Options>
-                            <Options label='Información' active={active === 9} handleClick={() => handleClick(9)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
-                                <LinkOption to='/update/information'>
-                                    <span>Update Information</span>
-                                </LinkOption>
-                            </Options>
-                            <TextField
-                                id='date'
-                                title='Date'
-                                type='date'
-                                defaultValue='2021-05-24'
-                                onChange={handleChange}
-                                value={values?.date}
-                            />
-                            <p>{time}</p>
-                        </ContainerOptions>
-                    </Content>
-                </BoxSideBar>
-            </SideBarLeft>
-        </>
+                        <Options label='PQR' active={active === 6} handleClick={() => handleClick(6)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconSearch size='25px' color={PLColor} />}>
+                            <LinkOption to='/update/PQR'>
+                                <span>Preguntas Frecuentes</span>
+                            </LinkOption>
+                        </Options>
+                        <Options label='Productos' active={active === 7} handleClick={() => handleClick(7)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconShopping size='25px' color={PColor} />}>
+                            <LinkOption to='/update/products'>
+                                <span>Publicar products</span>
+                            </LinkOption>
+                            <LinkOption to='/delete/products'>
+                                <span>Publicar products</span>
+                            </LinkOption>
+                        </Options>
+                        <Options label='Locations' active={active === 8} handleClick={() => handleClick(8)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
+                            <LinkOption to='/update/location'>
+                                <span>Update Location</span>
+                            </LinkOption>
+                        </Options>
+                        <Options label='Información' active={active === 9} handleClick={() => handleClick(9)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
+                            <LinkOption to='/update/information'>
+                                <span>Update Information</span>
+                            </LinkOption>
+                        </Options>
+                        <TextField
+                            id='date'
+                            title='Date'
+                            type='date'
+                            defaultValue='2021-05-24'
+                            onChange={handleChange}
+                            value={values?.date}
+                        />
+                        <p>{time}</p>
+                    </ContainerOptions>
+                </Content>
+            </BoxSideBar>
+        </SideBarLeft>
     )
 }
 const TextField = styled.input`

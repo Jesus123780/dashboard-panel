@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const GET_ALL_PRODUCTS = gql`
+export const GET_ALL_PQR = gql`
 query getOnePqr($hpqrId: ID, $thpId: ID){
   getOnePqr(hpqrId: $hpqrId, thpId: $thpId ){
     hpqrId
@@ -53,6 +53,19 @@ mutation updateProducts($input: InputProduct){
 	  ProOutstanding
 	  ProDelivery
 	  ProVoltaje
+  }
+}
+`
+
+export const GET_ALL_PRODUCTS = gql`
+query productsAll {
+  productsAll{
+ 		pId
+  	sizeId
+    colorId
+    cId
+    tpId
+    pName
   }
 }
 `

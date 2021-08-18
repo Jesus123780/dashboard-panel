@@ -5,7 +5,7 @@ import { cache, isLoggedVar } from '../apollo/cache';
 import { setContext } from '@apollo/client/link/context'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { onError } from '@apollo/client/link/error'
-import useAuth from '../components/hooks/useAuth';
+// import useAuth from '../components/hooks/useAuth';
 
 const httpLink = createHttpLink({ uri: URL_BASE_GRAPHQL })
 
@@ -27,14 +27,12 @@ const authLink = setContext(async (_, { headers }) => {
     }
 })
 const errorHandler = onError(({ graphQLErrors }) => {
-    const { logout } = useAuth()
     localStorage.clear()
     if (!graphQLErrors) {
         graphQLErrors?.length && graphQLErrors.forEach(err => {
             const { code } = err.extensions
             if (code === 'UNAUTHENTICATED' || code === 'FORBIDDEN') isLoggedVar({ state: false, expired: true, message: 'Ha ocurrido un problema.', code: 500 })
             else if (code === 403) {
-                logout()
                 localStorage.clear()
                 isLoggedVar({ state: false, expired: true, message: 'La sesión ha expirado.', code })
             } else isLoggedVar({ ...isLoggedVar(), message: err.message, code })

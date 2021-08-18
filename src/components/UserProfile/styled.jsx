@@ -18,9 +18,8 @@ export const Container = styled.div`
   height: 100vh;
   padding: 30px;
   width: 100%;
-  color: ${ ({ theme })=> theme.PColor };
-    @media only screen and (min-width: 960px){
-    }
+  ${ ({ bg }) => bg && css`background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 100 100"  height="200px" width="100px"><text  x="5" y="60%" font-size="4rem" font-weight="600" font-family="PFont-Regular" fill="red" opacity="0.1"> ${ bg } </text></svg>');` }
+  background-repeat: repeat;
 `
 export const Circular = styled.div`
   height: 100px;

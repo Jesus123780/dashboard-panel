@@ -38,6 +38,6 @@ export const LayoutMain = ({ children, error }) => {
     )
 }
 const Main = styled.div`
-    overflow-y: auto;
+    margin-top: calc(70px + 5px);
     background-color: ${ ({ theme }) => theme.InvColor };
 `

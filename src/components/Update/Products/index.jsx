@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { InputHook } from './Input';
 import { ViewProducts } from './ViewProducts';
 import { IconArrowRight } from '../../../assets/icons/icons';
-import { Container, FormProducts, Card, Button, CardOne, TextareaDescription, Label } from './styled';
+import { Container, FormProducts, Card, Button, CardOne, Label } from './styled';
 import { Rate } from '../../Rate';
 import NewSelect from '../../NewSelectHooks/NewSelect'
 import { numberFormat } from '../../../utils';
@@ -10,10 +10,7 @@ import { PVColor } from '../../../assets/colors';
 import { RippleButton } from '../../Ripple';
 import { Context } from '../../../Context';
 import { FeaturesProducts } from './FeaturesProduct';
-// import { Rate } from '../../Rate';
-// import { PVColor } from '../../../assets/colors';
-// import { RippleButton } from '../../Ripple';
-// import moment from 'moment';
+import { TextAreaHooks } from '../../TextTareaHook';
 
 export const Products = ({ values, handleRegister, handleChange, countries, setRating, rating, color, size, onChangeSearch, departments, cities, setName, name }) => {
     const [state, setState] = useState(false)
@@ -149,11 +146,14 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
                             optionName='cName'
                             value={values?.ctId}
                             title='Ciudad' />
-                        <Label>Description:</Label>
-                        <TextareaDescription value={values?.ProDescription}
+                        <TextAreaHooks
+                            title='Description'
+                            value={values.ProDescription}
+                            name='ProDescription'
                             onChange={handleChange}
-                            name='ProDescription' >
-                        </TextareaDescription>
+                            range={{ min: 0, max: 7000 }}
+                            showRange
+                        />
                     </>
                     <RippleButton type="button" onClick={handleClickModal} widthButton='100%' margin='auto' bgColor={PVColor}> <Label>Características principales</Label></RippleButton>
                     <FeaturesProducts setModal={setModal} modal={modal} />
@@ -165,7 +165,7 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
             </i>
             <Card state={state} bgColor='#ededed'>
                 <ViewProducts
-                    valuesP={values.pName}
+                    valuesP={name}
                     Country={countries}
                     price={values?.ProPrice}
                     desc={values?.ProDescuento}

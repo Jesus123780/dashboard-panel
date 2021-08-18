@@ -29,9 +29,8 @@ export const UserProfile = ({ params, data, loading, error, handleFileChange }) 
         const Title = data ? data?.getUser?.name : auth.uUsername
         document.title = `${ Title } |  Ifood`
     }, [data])
-
     return (
-        <Container>
+        <Container bg={auth.uUsername} style={{ backgroundas: `${ <svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='200px'><text x='15' y='27%' fill='white' font-size='4rem' font-weight='600' opacity='0.1' font-family='Roobert,Helvetica Neue,Helvetica,Arial,sans-serif'>jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao </text><text x='5' y='60%' fill='white' font-size='4rem' font-weight='600' opacity='0.1' font-family='Roobert,Helvetica Neue,Helvetica,Arial,sans-serif'>inao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuv</text><text x='0' y='93%' fill='white' font-size='4rem' font-weight='600' opacity='0.1' font-family='Roobert,Helvetica Neue,Helvetica,Arial,sans-serif'>sjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesu</text></svg> }` }} >
             {loading && 'cargando'}
             <Circular onClick={() => data?.getUser.username === auth.uUsername && setModal(!modal)}>
             </Circular>

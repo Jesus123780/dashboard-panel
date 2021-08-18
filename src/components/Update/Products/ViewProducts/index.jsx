@@ -20,12 +20,17 @@ import {
 } from './styled'
 import { Rate } from '../../../Rate'
 import { IconLocation } from '../../../../assets/icons/icons'
+import { useGetProducts } from '../../../hooks/useGetProducts'
 
 export const ViewProducts = props => {
     const { valuesP, discount, price, desc, PCant, PDescription, start, setRating, assurance } = props
-    const onchangeFile =() => {
+    const onchangeFile = () => {
     }
+    const [finalData, { loading }] = useGetProducts()
+    // eslint-disable-next-line
+    console.log(finalData)
     return (<>
+        {loading && <div>Cargando</div>}
         <Container>
             <Card width='70%'>
                 <InputFilesProductos onChange={onchangeFile} />
@@ -48,14 +53,14 @@ export const ViewProducts = props => {
                         <Rate size={18} rating={start} onRating={rate => setRating(rate)} />
                         <Info color='#000' margin='0'>{36}</Info> <Info margin='0 10px'> Opiniones </Info>
                     </ContentRate>
-                    <Price> $ {price ? numberFormat(price) :'Precio del producto'}</Price>
-                    <Discount discount={discount} > $ {desc ? numberFormat(desc) :'1.000.000'}</Discount>
+                    <Price> $ {price ? numberFormat(price) : 'Precio del producto'}</Price>
+                    <Discount discount={discount} > $ {desc ? numberFormat(desc) : '1.000.000'}</Discount>
                     <Button>
                         <Info>Ver los medios de pago</Info>
                     </Button>
                     <Info size='17px' color={'#1f4e96'}>Compra internacional</Info>
                     <Info size='15px' color={APColor}>Sin costos de importación</Info>
-                    <Info size='15px' color={'#000'}>Cantidad { PCant ? numberFormat(PCant) : 50 }</Info>
+                    <Info size='15px' color={'#000'}>Cantidad {PCant ? numberFormat(PCant) : 50}</Info>
                     <RippleButton label='Comprar ahora' bgColor={PVColor} />
                 </Card>
                 <Card sticky>
@@ -69,8 +74,7 @@ export const ViewProducts = props => {
                         </Location>
                     </Location>
                     <BoxComponent>
-                        <i>Garantía del vendedor: {assurance ? assurance : `${ 20 }` }</i>
-
+                        <i>Garantía del vendedor: {assurance ? assurance : `${ 20 }`}</i>
                     </BoxComponent>
                 </Card>
             </StickyWrapper>

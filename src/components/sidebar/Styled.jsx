@@ -59,9 +59,8 @@ export const SideBarLeft = styled.aside`
     flex-direction: column;
     transition: all .3s ease-out;
     transition: 1s ease;
-    top: 0;
     width: 100%; 
-
+    position: relative;
     @media( min-width: 1200px ){
         ${ ({ collapsed })=> collapsed &&css`
             /* width: 0pc;  */
@@ -70,7 +69,8 @@ export const SideBarLeft = styled.aside`
     }
 `
 export const ContainerOptions = styled.div`
-
+    position: sticky;
+    top: 0;
     @media( max-width: 1200px ){
         display: none;
     }
@@ -79,14 +79,13 @@ export const ButtonMenu = styled.button`
     background-color: transparent;
 `
 export const Content = styled.div`
-    position: -webkit-sticky;
     position: sticky;
+    top: 100px;
     @media( max-width: 1200px ){
         width: 100%;
     }
 `
 export const BoxSideBar = styled.aside`
-    top: 0;
     height: 100%;
     box-shadow: 0 0px 40px rgb(0 0 0 / 5%);
     background-color: ${ ({ theme })=> theme.InvTColor };
