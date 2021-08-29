@@ -34,6 +34,12 @@ export const HeaderC = props => {
             setResults([])
         }
     }, [data])
+    const [time, changeTime] = useState(new Date().toLocaleTimeString());
+    useEffect(function () {
+        setInterval(() => {
+            changeTime(new Date().toLocaleTimeString());
+        }, 1000);
+    }, []);
     return (
         <Header
             keyTheme={keyTheme}
@@ -45,6 +51,7 @@ export const HeaderC = props => {
             error={error}
             search={search}
             auth={auth}
+            time={time}
         />
     )
 }

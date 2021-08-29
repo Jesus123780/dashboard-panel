@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { PColor } from '../../assets/colors';
 
 export const HeaderContent = styled.header`
     flex-direction: column;
@@ -40,5 +41,20 @@ export const Text = styled.i`
     flex-direction: column;
     @media only screen and (min-width: 960px){
         padding: 0 20px 0 30px;
+    }
+`
+
+export const Time = styled.time`
+    font-family: PFont-Regular;
+    color: ${ PColor };
+    text-align: center;
+    @media only screen and (min-width: 960px){
+    }
+`
+
+export const Timer = styled.div`
+    width: 300px;
+    min-width: 300px;
+    @media only screen and (min-width: 960px){
     }
 `

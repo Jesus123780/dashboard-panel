@@ -31,12 +31,6 @@ export const SideBar = () => {
         setValues({ ...values, [e.target.name]: e.target.value })
         setErrors({ ...errors, [e.target.name]: error })
     }
-    const [time, changeTime] = useState(new Date().toLocaleTimeString());
-    useEffect(function () {
-        setInterval(() => {
-            changeTime(new Date().toLocaleTimeString());
-        }, 1000);
-    }, []);
 
     return (
         <SideBarLeft collapsed={collapsed}>
@@ -128,7 +122,6 @@ export const SideBar = () => {
                             onChange={handleChange}
                             value={values?.date}
                         />
-                        <p>{time}</p>
                     </ContainerOptions>
                 </Content>
             </BoxSideBar>

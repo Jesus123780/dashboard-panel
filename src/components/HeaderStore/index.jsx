@@ -6,14 +6,30 @@ import { PColor } from '../../assets/colors'
 import { IconLogo } from '../../assets/icons/icons'
 import { CartShop } from '../CartShop'
 import useScrollHook, { useScrollColor/* , useScrollY */ } from '../hooks/useScroll'
-import { HeaderContent, Content } from './styled'
+import { HeaderContent, Content, Time, Timer } from './styled'
 
-export const Header = ({ keyTheme, handleTheme, auth, error }) => {
+export const Header = ({ keyTheme, handleTheme, auth, error, time }) => {
 
     if (error) return <>Error</>
     const style = useScrollHook();
     // const { offsetY } = useScrollY();
     const { scrollNav } = useScrollColor();
+    const customTime = new Date();
+    const customHours = customTime.getHours();
+    let displayMessage;
+    const customColor = {
+        color: ''
+    };
+    if (customHours < 12) {
+        displayMessage = `Good Morning ${ auth?.auth?.Uname }`;
+        customColor.color = 'red';
+    } else if (customHours >= 12 && customHours < 18) {
+        displayMessage = `Good Afternoon ${ auth?.auth?.Uname }`;
+        customColor.color = 'green';
+    } else {
+        displayMessage = `Good Night ${ auth?.auth?.Uname }`;
+        customColor.color = '#090c10';
+    }
     return (
         <>
             {auth &&
@@ -39,6 +55,16 @@ export const Header = ({ keyTheme, handleTheme, auth, error }) => {
                         </div>
                         <>
                             <CartShop keyTheme={keyTheme} handleTheme={handleTheme} />
+                        </>
+                        <>
+                            <Time>
+                                <Timer>
+                                    {time}
+                                </Timer>
+                                <Timer style={customColor}>
+                                    {displayMessage}
+                                </Timer>
+                            </Time>
                         </>
 
                     </Content>

@@ -15,7 +15,13 @@ export const useTheme = () => {
         mode === 'light' ? setMode(lightTheme, 'light') : setMode(darkTheme, mode)
         setKeyTheme(mode)
     }
-
+    const [time, changeTime] = useState(new Date().toLocaleTimeString());
+    useEffect(function () {
+        setInterval(() => {
+            changeTime(new Date().toLocaleTimeString());
+        }, 1000);
+        if (time > 10) setMode(darkTheme)
+    }, []);
     useEffect(() => {
         const localTheme = window.localStorage.getItem('theme')
         localTheme ? handleTheme(localTheme) : handleTheme('light')
