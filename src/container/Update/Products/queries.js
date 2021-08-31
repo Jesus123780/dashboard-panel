@@ -56,16 +56,39 @@ mutation updateProducts($input: InputProduct){
   }
 }
 `
-
+export const DELETE_ONE_PRODUCT = gql`
+mutation deleteProducts($input: IDeleteProduct){
+    pId
+    pState
+}
+`
 export const GET_ALL_PRODUCTS = gql`
 query productsAll {
   productsAll{
- 		pId
-  	sizeId
-    colorId
-    cId
-    tpId
+    pId
+    sizeId #Talla
+    colorId #Color
+    cId  #Country
+    dId  #Department
+    ctId  #Cuidad
     pName
+    ProPrice
+    ProDescuento
+	  ProUniDisponibles
+	  ProDescription
+	  ProProtegido
+	  ProAssurance
+	  ProStar
+	  ProImage
+	  ProWidth
+	  ProHeight
+	  ProLength
+	  ProWeight
+	  ProQuantity
+	  ProOutstanding
+	  ProDelivery
+	  ProVoltaje
+    pState
   }
 }
 `

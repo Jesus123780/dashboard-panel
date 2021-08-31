@@ -54,12 +54,13 @@ export const FloatingBox = styled.div`
     }
 `
 export const FloatingBoxTwo = styled(FloatingBox)`
-    
     margin: 0 0 0 30px;
-    left: -240px;
+    left: -220px;
+    max-width: 250px;
+    min-width: 250px;
+    width: 250px;
     overflow: hidden;
     box-shadow: -1px 2px 8px 2px #dcdcdc;
-    border-radius: 5px;
 
     @media only screen and (min-width: 960px){
     }

@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { BGColor } from '../../assets/colors';
+import { BGColor, PColor } from '../../../assets/colors';
 
-export const ButtonHook = ({ children, border, padding, position, margin, top, right, left, width, display, color, justify, HoverEfect, Ripple, lineHeight, textAlign, cursor, weight, fontsize, shadow, onClick, radius, alignItems }) => {
+export const ButtonHook = ({ children, border, padding, position, margin, top, right, left, width, display, justify, HoverEfect, Ripple, lineHeight, textAlign, cursor, weight, fontsize, shadow, onClick, radius, bgColor, alignItems }) => {
     const [state, setState] = useState('');
     const [rippleStyle, setRippleStyle] = useState({});
     let timerId;
@@ -32,7 +32,7 @@ export const ButtonHook = ({ children, border, padding, position, margin, top, r
         }, 230)
     }
     return (
-        <Container border={border} color={color} padding={padding} position={position} margin={margin} right={right} top={top} left={left} width={width} justify={justify} HoverEfect={HoverEfect} onClick={onClick} lineHeight={lineHeight} textAlign={textAlign} display={display} shadow={shadow} weight={weight} cursor={cursor} fontsize={fontsize} radius={radius} alignItems={alignItems} >
+        <Container border={border} padding={padding} position={position} margin={margin} right={right} top={top} left={left} width={width} justify={justify} HoverEfect={HoverEfect} onClick={onClick} lineHeight={lineHeight} textAlign={textAlign} display={display} shadow={shadow} weight={weight} cursor={cursor} fontsize={fontsize} bgColor={bgColor} radius={radius} alignItems={alignItems} >
 
             <button ref={button} onClick={onClick} className="MaterialRippleButton__container" onMouseDown={onMouseDown}>
                 {Ripple && <span ref={ripple} style={rippleStyle} className={`ripple ${ state }`}></span>}
@@ -50,6 +50,7 @@ export const ButtonHook = ({ children, border, padding, position, margin, top, r
 const Container = styled.div`
   .MaterialRippleButton__container{
     color: ${ ({ color }) => color ? color : `${ BGColor }` };
+    background-color: ${ ({ bgColor }) => bgColor ? bgColor : `${ PColor }` };
     border: ${ ({ border }) => border ? border : 'none' };
     ${ ({ radius }) => radius && css`border-radius: ${ radius };` }
     ${ ({ padding }) => padding && css`padding: ${ padding };` }
@@ -100,7 +101,7 @@ const Container = styled.div`
       transition-property: all;
       transition-duration: 0.6s;
       transition-timing-function: ease;
-      background: rgb(250, 244, 244);
+      background: rgb(255, 15, 15);
   
     & > svg {
         height: -webkit-fill-available;
@@ -112,13 +113,11 @@ const Container = styled.div`
     &  rect {
         fill: none;
         stroke: rgb(232, 0, 0);
-        /* eslint-disable-next-line */
         stroke-width: 3;
         stroke-dasharray: 600, 600;
         transition: all 0.35s linear;
     }
     & :hover rect {
-        /* eslint-disable-next-line */
         stroke-width: 5;
         stroke-dasharray: 30, 310;
         stroke-dashoffset: 48;

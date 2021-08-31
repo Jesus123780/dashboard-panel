@@ -36,11 +36,9 @@ export const Content = styled.div`
 `
 
 export const Text = styled.i`
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
+    font-size: 11px;
+    font-family: PFont-Light;
     @media only screen and (min-width: 960px){
-        padding: 0 20px 0 30px;
     }
 `
 
@@ -55,6 +53,30 @@ export const Time = styled.time`
 export const Timer = styled.div`
     width: 300px;
     min-width: 300px;
+    position: relative;
     @media only screen and (min-width: 960px){
+    }
+`
+export const AdicionalComponent = styled.div`
+position: relative;
+    @media only screen and (min-width: 960px){
+    }
+`
+export const UseSize = styled.div`
+    position: absolute;
+    right: 0;
+    bottom: -45px;
+    width: 60px;
+    max-width: 60px;
+    background-color: ${ ({ theme }) => theme.InvColor };
+    border-radius: 50%;
+    height: 60px;
+    align-items: center;
+    display: grid;
+    box-shadow: 0px 0px 6px 0px #16101026;
+    justify-content: center;
+    align-content: center;
+    @media only screen and (max-width: 960px){
+        display: none;
     }
 `

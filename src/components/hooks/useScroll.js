@@ -31,7 +31,7 @@ export function useScrollRotate() {
 export const useScrollColor = () => {
     const [scrollNav, setScrollNav] = useState(false)
     const changeNav = () => {
-        if (window.scrollY >= 1) {
+        if (window?.scrollY >= 1) {
             setScrollNav(true)
         } else {
             setScrollNav(false)

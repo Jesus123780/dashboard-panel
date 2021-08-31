@@ -236,7 +236,7 @@ export const InputText = styled.input`
     outline: none;
 `
 NewSelect.propTypes = {
-    options: PropTypes.array.isRequired,
+    options: PropTypes.array,
     disabled: PropTypes.bool,
     id: (PropTypes.string || PropTypes.number).isRequired,
     idD: (PropTypes.string || PropTypes.number),

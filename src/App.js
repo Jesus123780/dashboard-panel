@@ -86,7 +86,7 @@ function App() {
                                                     <Route exact path='/update/PQR' component={PQR} />
                                                     <Route exact path='/update/location' component={Location} />
                                                     <Route exact path='/update/information' component={Information} />
-                                                    <Route exact path='/update/products' component={ProductsC} />
+                                                    <Route exact path='/update/products' component={ auth && ProductsC} />
                                                     {/* Delete Sección */}
                                                     {/* <Route exact path='/update/category' component={Categories} />
                                                     <Route exact path='/update/kit' component={Kit} />

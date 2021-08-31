@@ -35,16 +35,15 @@ function withClearCache(Component) {
                 .then(meta => {
                     const latestVersionDate = meta.buildDate
                     const currentVersionDate = packageJson.buildDate
-
                     const shouldForceRefresh = buildDateGreaterThan(latestVersionDate, currentVersionDate)
                     if (shouldForceRefresh) {
                         setIsLatestBuildDate(false)
                         refreshCacheAndReload()
-                    } setIsLatestBuildDate(true)
+                    }
+                    setIsLatestBuildDate(true)
                 })
                 .catch(() => {
                     // eslint-disable-next-line
-                        console.log('Err:', 'meta.json no read')
                     setIsLatestBuildDate(true)
                 })
         }

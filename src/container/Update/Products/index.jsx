@@ -2,21 +2,25 @@ import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import React, { useContext, useState } from 'react'
 import { GET_ALL_CITIES, GET_ALL_COUNTRIES, GET_ALL_DEPARTMENTS, GET_ALL_ROAD } from '../../../gql/Location';
 import { Products } from '../../../components/Update/Products'
-import { GET_ONE_COLOR, UPDATE } from './queries';
+import { GET_ALL_PRODUCTS, GET_ONE_COLOR, UPDATE } from './queries';
 import { Context } from '../../../Context';
 import { GET_ALL_SIZE } from '../../../gql/information/Size/size';
 import useLocalStorage from '../../../components/hooks/useLocalSorage';
+import { useGetProducts } from '../../../components/hooks/useGetProducts';
 
 export const ProductsC = () => {
     const [errors, setErrors] = useState({})
     const [values, setValues] = useState({})
     const [name, setName] = useLocalStorage();
+    const [finalData, { loading: getProductLoading }] = useGetProducts()
+
     const { data } = useQuery(GET_ONE_COLOR)
     const { setAlertBox } = useContext(Context)
     const handleChange = (e, error) => {
         setValues({ ...values, [e.target.name]: e.target.value })
         setErrors({ ...errors, [e.target.name]: error })
     }
+    // Get all info Ubicación
     const { data: dataCountries, loading: loadCountries } = useQuery(GET_ALL_COUNTRIES)
     const { data: dataRoad, loading: loadRoad } = useQuery(GET_ALL_ROAD)
     const [getDepartments, { data: dataDepartments }] = useLazyQuery(GET_ALL_DEPARTMENTS)
@@ -30,6 +34,7 @@ export const ProductsC = () => {
     }
     const [rating, setRating] = useState(0);
     const [updateProducts] = useMutation(UPDATE)
+    // const [deleteProducts] = useMutation(DELETE_ONE_PRODUCT)
     // Contexto de las notificaciones
     const handleRegister = async e => {
         e.preventDefault()
@@ -61,7 +66,7 @@ export const ProductsC = () => {
         const cId = countryId
         const pName = name
         try {
-            const results = await updateProducts({
+            updateProducts({
                 variables: {
                     input: {
                         pName,
@@ -88,15 +93,43 @@ export const ProductsC = () => {
                         dId,
                         ctId,
                     }
+                }, update(cache) {
+                    cache.modify({
+                        fields: {
+                            productsAll(dataOld = []) {
+                                return cache.writeQuery({ query: GET_ALL_PRODUCTS, data: dataOld })
+                            }
+                        }
+                    })
+                    setAlertBox({ message: `El producto ${ pName } subido con éxito`, color: 'success', duration: 7000 })
                 }
-
-            })
-            // eslint-disable-next-line
-            setAlertBox({ message: `${results}`, duration: 7000 })
-        } catch (error) {
-            // eslint-disable-next-line
-            setAlertBox({ message: `${error.message}`, duration: 7000 })
+            }).catch(err => setAlertBox({ message: `${ err }`, duration: 7000 }))
         }
+        catch (error) {
+            setAlertBox({ message: `${ error.message }`, duration: 7000 })
+        }
+    }
+    const handleDelete = pId => {
+        const value = finalData?.productsAll?.filter(x => (x.pId === pId))
+        const pState = value[0].pState
+        updateProducts({
+            variables: {
+                input: {
+                    pId,
+                    pState
+                }
+            }, update(cache) {
+                cache.modify({
+                    fields: {
+                        productsAll(dataOld = []) {
+                            return cache.writeQuery({ query: GET_ALL_PRODUCTS, data: dataOld })
+                        }
+                    }
+                })
+                setAlertBox({ message: `El producto ${ value[0].pName } ha sido eliminado`, color: 'error', duration: 7000 })
+            }
+        }).catch(err => setAlertBox({ message: `${ err }`, duration: 7000 }))
+
     }
     return (
         <Products
@@ -105,7 +138,7 @@ export const ProductsC = () => {
             values={values}
             errors={errors}
             color={data?.getAllColor}
-            loading={loadCountries || loadRoad}
+            loading={loadCountries || loadRoad || getProductLoading}
             countries={dataCountries?.countries || []}
             road={dataRoad?.road || []}
             departments={dataDepartments?.departments || []}
@@ -118,7 +151,8 @@ export const ProductsC = () => {
             onChangeSearch={handleChangeSearch}
             name={name}
             setName={setName}
-
+            handleDelete={handleDelete}
+            getAllProduct={finalData?.productsAll}
         />
     )
 }

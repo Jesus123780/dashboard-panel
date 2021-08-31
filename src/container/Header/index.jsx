@@ -2,11 +2,13 @@ import { useQuery } from '@apollo/client'
 import React, { useEffect, useState } from 'react'
 import { Header } from '../../components/HeaderStore'
 import useAuth from '../../components/hooks/useAuth'
+import useWindowSize from '../../components/hooks/useWindowSize'
 import { SEARCH_USER } from './queries'
 export const HeaderC = props => {
     // Función cambiar el modo nocturno
     const { keyTheme, handleTheme } = props
     // Función para buscar Usuario
+    const size = useWindowSize();
     const [search, setSearch] = useState(null)
     const [results, setResults] = useState([])
     const onchange = e => {
@@ -52,6 +54,7 @@ export const HeaderC = props => {
             search={search}
             auth={auth}
             time={time}
+            size={size}
         />
     )
 }

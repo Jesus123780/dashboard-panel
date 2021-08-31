@@ -1,18 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import LogoImage from '../../assets/'
 import { PColor } from '../../assets/colors'
-// import InputHooksSearcher from '../InputHooksSearcher/InputHooks'
+import InputHooksSearcher from '../InputHooksSearcher/InputHooks'
 import { IconLogo } from '../../assets/icons/icons'
 import { CartShop } from '../CartShop'
-import useScrollHook, { useScrollColor/* , useScrollY */ } from '../hooks/useScroll'
-import { HeaderContent, Content, Time, Timer } from './styled'
+import useScrollHook, { useScrollColor, useScrollY } from '../hooks/useScroll'
+import { HeaderContent, Content, Time, Timer, UseSize, AdicionalComponent, Text } from './styled'
+import { LoadEllipsis } from '../LoadingButton'
 
-export const Header = ({ keyTheme, handleTheme, auth, error, time }) => {
-
+export const Header = ({ keyTheme, handleTheme, auth, error, time, size, loading, results, search }) => {
     if (error) return <>Error</>
     const style = useScrollHook();
-    // const { offsetY } = useScrollY();
+    const { offsetY } = useScrollY();
     const { scrollNav } = useScrollColor();
     const customTime = new Date();
     const customHours = customTime.getHours();
@@ -35,28 +34,24 @@ export const Header = ({ keyTheme, handleTheme, auth, error, time }) => {
             {auth &&
                 <HeaderContent scrollNav={scrollNav} style={style} >
                     <Content >
-                        <div /* style={{ transform: `translateY(${ offsetY * 0.8 }px)` }} */>
+                        <div style={{ transform: `translateX(${ offsetY * 0.8 }px)` }} >
                             <Link to='/'>
                                 <IconLogo size='80px' color={PColor} />
                             </Link>
                         </div>
                         <div>
-                            {/* <ContentInput>
-                                <InputHooksSearcher title='Busca tus productos' name='search' value={search} onChange={onchange} type='text' range={{ min: 0, max: 20 }} />
-                                {loading && <span>Cargando</span>}
-                                <ContainerResults>
-                                    {results?.map((x, i) => <div key={1+ i}>
-                                        <TargetUser>
-                                            <span>{x?.username}</span>
-                                        </TargetUser>
-                                    </div>)}
-                                </ContainerResults>
-                            </ContentInput> */}
+                            <InputHooksSearcher title='Busca tus productos' name='search' value={search} onChange={onchange} type='text' range={{ min: 0, max: 20 }} />
+                            {loading && <LoadEllipsis />}
+                            {results?.map((x, i) => <div key={1+ i}>
+                                <TargetUser>
+                                    <span>{x?.username}</span>
+                                </TargetUser>
+                            </div>)}
                         </div>
                         <>
                             <CartShop keyTheme={keyTheme} handleTheme={handleTheme} />
                         </>
-                        <>
+                        <AdicionalComponent>
                             <Time>
                                 <Timer>
                                     {time}
@@ -65,14 +60,14 @@ export const Header = ({ keyTheme, handleTheme, auth, error, time }) => {
                                     {displayMessage}
                                 </Timer>
                             </Time>
-                        </>
-
+                            <UseSize>
+                                <Text>W:{size.width}px</Text>
+                                <Text>H:{size.height}px</Text>
+                            </UseSize>
+                        </AdicionalComponent>
                     </Content>
                 </HeaderContent>
             }
         </>
     )
 }
-// const ContainerResults = styled.div `
-// position: absolute;
-// `

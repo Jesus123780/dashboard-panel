@@ -898,3 +898,13 @@ export const numberFormatM = param => {
 export const history = createBrowserHistory({
     basename: '/',
 });
+/*Método para eliminar el primer carácter */
+const str = '*plátano_'
+const newStr = str.slice(1, -1)
+// eslint-disable-next-line
+console.log(newStr) // plátano
+/*Método para eliminar el primer carácter */
+const string = '*plátano_'
+const newString = string.substring(1, str.length - 1)
+// eslint-disable-next-line
+console.log(newString)

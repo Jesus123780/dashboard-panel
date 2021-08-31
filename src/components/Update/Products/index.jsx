@@ -1,18 +1,37 @@
 import { useContext, useState } from 'react';
 import { InputHook } from './Input';
 import { ViewProducts } from './ViewProducts';
-import { IconArrowRight } from '../../../assets/icons/icons';
-import { Container, FormProducts, Card, Button, CardOne, Label } from './styled';
+import { IconArrowRight, IconBodega, IconDelete, IconEdit, IconLove } from '../../../assets/icons/icons';
 import { Rate } from '../../Rate';
 import NewSelect from '../../NewSelectHooks/NewSelect'
 import { numberFormat } from '../../../utils';
-import { PVColor } from '../../../assets/colors';
+import { PColor, PVColor } from '../../../assets/colors';
 import { RippleButton } from '../../Ripple';
 import { Context } from '../../../Context';
 import { FeaturesProducts } from './FeaturesProduct';
 import { TextAreaHooks } from '../../TextTareaHook';
+import { Loading } from '../../Loading';
+import {
+    Container,
+    FormProducts,
+    Card,
+    Button,
+    CardOne,
+    Label,
+    ContainerCardProduct,
+    CardProduct,
+    Img,
+    ContentImg,
+    Title,
+    Text,
+    ContentInfo,
+    ContentIconFav,
+    ButtonCard,
+    ActionName,
+} from './styled';
+import { Skeleton } from '../../Skeleton/SkeletonCard';
 
-export const Products = ({ values, handleRegister, handleChange, countries, setRating, rating, color, size, onChangeSearch, departments, cities, setName, name }) => {
+export const Products = ({ values, handleRegister, handleChange, countries, setRating, rating, color, size, onChangeSearch, departments, cities, setName, name, getAllProduct, loading, handleDelete }) => {
     const [state, setState] = useState(false)
     const handleClick = () => {
         setState(!state)
@@ -21,7 +40,8 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
     const handleClickModal = () => {
         setModal(!modal)
     }
-    return (<>
+    return (<div>
+        {loading && <Loading />}
         <Container>
             <CardOne state={state}>
                 <FormProducts onSubmit={handleRegister}>
@@ -157,7 +177,7 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
                     </>
                     <RippleButton type="button" onClick={handleClickModal} widthButton='100%' margin='auto' bgColor={PVColor}> <Label>Características principales</Label></RippleButton>
                     <FeaturesProducts setModal={setModal} modal={modal} />
-                    <button type='submit'>Subir</button>
+                    <RippleButton widthButton='100%' margin='20px auto' type='submit'>Subir</RippleButton>
                 </FormProducts>
             </CardOne>
             <i style={{ position: 'relative' }}>
@@ -175,6 +195,52 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
                     setRating={setRating} />
             </Card>
         </Container>
-    </>
+        <ContainerCardProduct>
+            {!getAllProduct?.length ? <SkeletonP /> : getAllProduct?.map(product => (
+                <CardProduct key={product.pId} >
+                    <ButtonCard onClick={() => handleDelete(product.pId)}>
+                        <IconDelete size={20} color={PColor} />
+                        <ActionName >
+                            Eliminarais
+                        </ActionName>
+                    </ButtonCard>
+                    <ButtonCard delay='.1s' top={'80px'}>
+                        <IconEdit size={20} color={PColor} />
+                        <ActionName>
+                            Editar
+                        </ActionName>
+                    </ButtonCard>
+                    <ButtonCard delay='.2s' top={'140px'}>
+                        <IconBodega size={20} color={PColor} />
+                        <ActionName>
+                            Archivar
+                        </ActionName>
+                    </ButtonCard>
+                    <ContentImg>
+                        {product.ProImage ? <i>Cargando</i> : <Img src={product.ProImage} alt={product.ProImage} />}
+                    </ContentImg>
+                    <ContentInfo>
+                        <ContentIconFav>
+                            <IconLove color={PVColor} size={20} />
+                        </ContentIconFav>
+                        <Title>{product.pName}</Title>
+                        <Text>{product.ProPrice}</Text>
+                        <Rate rating={product.ProStar} onRating={() => setRating(product.ProStar)} size={20} value={product.ProStar} />
+                    </ContentInfo>
+                </CardProduct>
+            ))}
+        </ContainerCardProduct>
+    </div>
     )
+}
+const SkeletonP = () => {
+    return <>
+        <>
+            {[1, 2, 3, 4].map(x => (
+                <CardProduct key={x.id}>
+                    <Skeleton />
+                </CardProduct>
+            ))}
+        </>
+    </>
 }

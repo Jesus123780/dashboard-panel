@@ -20,17 +20,12 @@ import {
 } from './styled'
 import { Rate } from '../../../Rate'
 import { IconLocation } from '../../../../assets/icons/icons'
-import { useGetProducts } from '../../../hooks/useGetProducts'
 
 export const ViewProducts = props => {
     const { valuesP, discount, price, desc, PCant, PDescription, start, setRating, assurance } = props
     const onchangeFile = () => {
     }
-    const [finalData, { loading }] = useGetProducts()
-    // eslint-disable-next-line
-    console.log(finalData)
     return (<>
-        {loading && <div>Cargando</div>}
         <Container>
             <Card width='70%'>
                 <InputFilesProductos onChange={onchangeFile} />
