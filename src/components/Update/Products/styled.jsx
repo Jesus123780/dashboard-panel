@@ -51,18 +51,33 @@ export const ContainerCardProduct = styled.div`
     display: flex;
     max-width: 1366px !important;
     margin: auto;
-    margin-top: 50px;
+    margin: 50px 0px;
     display: grid;
     overflow: hidden;
     gap: 5px;
     grid-template-columns: 24% repeat(auto-fill, 24%) 24%;
+    @media only screen and (max-width: 960px){
+        grid-template-columns: 33% repeat(auto-fill, 33%) 33%;
+    }
+    @media only screen and (max-width: 760px){
+        grid-template-columns: 50% repeat(auto-fill, 50%) 50%;
+    }
+
 `
-export const ActionName = styled.div`
+export const ContentProducts = styled.div` 
+    max-width: 1366px !important;
+    margin: auto;
+    margin-top: 50px;
+    @media only screen and (max-width: 960px){
+    }
+`
+export const ActionName = styled.span`
     position: absolute;
     height: 20px;
     width: 100px;
     right: 35px;
     opacity: 0;
+    font-family: PFont-Light;
     transition: .1s ease-in-out;
     z-index: -900;
 `
@@ -106,8 +121,27 @@ export const CardProduct = styled.div`
     &:hover  ${ ButtonCard } {
         right: 15px;
     }
+   &#space {
+        padding: 30px;
+        justify-content: space-between;
+    }
 `
-
+export const CardInput = styled.div`
+    margin-bottom: 10px;
+    display:flex;
+    align-items: center;
+`
+export const CardCheckBox = styled.input`
+    height: 20px;
+    width: 20px;
+    &#cat {
+        opacity: 1;
+    }
+`
+export const CardRadioLabel = styled.label`
+    margin-left: 8px;
+    color: ${ ({ theme }) => theme.SFSColor };
+`
 export const ContentImg = styled.div` 
     width: 100%;
     height: 70%;
@@ -128,15 +162,22 @@ export const ContentInfo = styled.div`
     flex-direction: column;
     padding: 24px 16px;
     position: relative;
+    ${ props=> props.direction &&css`
+    padding: 0;
+    flex-direction: row;
+    display: flex;
+
+    ` }
 `
 export const Title = styled.h2` 
-    font-size: 17px;
+    font-size: 14px;
     font-family: PFont-Light;
     line-height: 1.18;
     word-break: break-word;
 `
 export const ContentIconFav = styled.div` 
-position: absolute;
+    position: absolute;
+    cursor: pointer;
     top: -30px;
     box-shadow: 0px 0px 6px 0px #16101028;
     right: 20px;
@@ -151,11 +192,31 @@ position: absolute;
     background-color: ${ BGColor };
 `
 export const Text = styled.h3` 
-    font-size: 15px;
+    font-size: ${ ({ size })=> size ? size : '15px' };
     width: 100%;
     margin: 5px 0px;
+    font-weight: 400;
     font-family: PFont-Light;
     word-break: break-word;
+`
+export const ReadMore = styled.button`
+    align-items: center;
+    cursor: pointer;
+    color: ${ ({ theme }) => theme.BGAColor };
+    justify-content: center;
+    align-self: center;
+    display: flex;
+    border: none;
+    outline: none;
+    user-select: none;
+    margin: 30px 0px;
+    background-color: #09e5ab;
+    padding: 5px 5px;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+    text-align: center;
+    width: 200px;
 `
 
 export const CardOne = styled(Card)` 

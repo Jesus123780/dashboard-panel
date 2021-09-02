@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 import { IconArrowBottom, IconCancel as IconWarning } from '../../assets/icons/icons'
-import { BGColor, PColor, SFColor, SFVColor } from '../../assets/colors'
+import { BGColor, PColor, PVColor, SFColor, SFVColor } from '../../assets/colors'
 
 // eslint-disable-next-line
 export default function NewSelect ({ options, disabled, id, idD, name, onChange, optionName, value, width, search, title, padding, margin, minWidth, error, required, accessor, fullName }) {
@@ -72,10 +72,10 @@ export default function NewSelect ({ options, disabled, id, idD, name, onChange,
     return (
         <BoxSelect width={width} padding={padding} margin={margin} ref={v => !!v && changeRef(v)} id={idD}>
             <FixedBox onClick={() => setSelect(false)} active={select} />
-            <CustomButtonS error={error} type='button' height={!val ? '37px' : ''} color={val ? SFColor : '#757575'} onClick={handleClick} minWidth={minWidth} disabled={disabled}>
+            <CustomButtonS error={error} type='button' height={!val ? '50px' : ''} color={val ? SFColor : '#757575'} onClick={handleClick} minWidth={minWidth} disabled={disabled}>
                 <SpanText>{renderVal(val)}</SpanText>
                 <IconSel>
-                    <IconArrowBottom size='10px' color={error ? BGColor : SFVColor} />
+                    <IconArrowBottom size='13px' color={error ? BGColor : SFVColor} />
                 </IconSel>
             </CustomButtonS>
             <LabelInput error={error} value={value}>{title}</LabelInput>
@@ -97,8 +97,8 @@ export default function NewSelect ({ options, disabled, id, idD, name, onChange,
                         }
                     </div>
                 </BoxOptions>}
+            <IconWarning size={20} color={PColor} style={{ position: 'absolute', right: 5, bottom: '10px', opacity: 0, top: '30%', pointerEvents: 'none' }} />
             <input type='hidden' name={name} value={value || ''} id={id} data-required={required} />
-            <IconWarning size={20} color={PColor} style={{ position: 'absolute', right: 5, bottom: 10, opacity: 0, pointerEvents: 'none' }} />
         </BoxSelect>
     )
 }
@@ -159,7 +159,7 @@ const LabelInput = styled.label`
     text-align: left;
     font-size: ${ ({ value }) => value ? '17px' : '16px' };
     top: ${ ({ value }) => value ? '-5px' : '18px' };
-    left: 35px;
+    left: 40px;
     color: ${ ({ value, error }) => value ? SFColor : (error ? BGColor : SFVColor) };
     transition: .3s;
     pointer-events: none;
@@ -180,22 +180,21 @@ const CustomButtonS = styled.button`
     outline: 0;
     border: ${ ({ option }) => option ? 'none' : `1px solid ${ SFVColor }` };
     border-radius: 5px;
-    padding: 9px;
-    padding-left: 37px;
+    padding: 17px ;
     text-align: left;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     height: 100%;
     font-family: PFont-Light;
-    font-size: ${ ({ size }) => size || '13px' };
+    font-size: ${ ({ size }) => size || '14px' };
     color: ${ ({ color }) => color || SFColor };
     width: ${ ({ width }) => width || '100%' };
     ${ ({ height }) => !!height && css`height: ${ height };` }
     &:hover {
+        background-color: ${ PVColor };
         cursor: ${ ({ disabled }) => disabled ? 'no-drop' : 'pointer' };
-        ${ ({ hover }) => hover && css`background-color: ${ PColor };` }
-        ${ ({ hover }) => hover && css`color: ${ BGColor };` }
+        ${ ({ hover }) => hover && css`color: ${ PVColor };` }
     }
     &:hover ~ ${ Tooltip } { display: block; }
     &:focus { border: 1px solid ${ PColor }; }
@@ -203,23 +202,24 @@ const CustomButtonS = styled.button`
 const IconSel = styled.div`
     position: absolute;
     right: -5px;
-    top: 20%;
+    top: 30%;
     pointer-events: none;
 `
 const BoxOptions = styled.div`
     position: absolute;
-    left: 5px;
-    bottom: ${ ({ bottom }) => bottom ? '100%' : 'none' };
-    top: ${ ({ top }) => top ? '80%' : 'none' };
-    width: 100.5%;
+    left: 0px;
+    bottom: ${ ({ bottom }) => bottom ? '100%' : '0' };
+    top: ${ ({ top }) => top ? '80%' : '65px' };
+    width: 100%;
     min-width: ${ props => props.fullName ? 'min-content' : 'auto' };
     background-color: ${ BGColor };
-    border: 1px solid ${ SFVColor };
     z-index: 100;
+
 `
 const SpanText = styled.label`
-    font-size: 12px;
+    font-size: 14px;
     color: ${ SFColor };
+    padding-left: 15px;
 `
 const TextNotResult = styled.span`
     font-size: 10px;

@@ -100,7 +100,7 @@ AwesomeModal.propTypes = {
     onConfirm: PropTypes.func,
 
     hideOnConfirm: PropTypes.func,
-    closeIcon: PropTypes.func,
+    closeIcon: PropTypes.bool,
     borderRadius: PropTypes.func,
     onHide: PropTypes.func,
 }

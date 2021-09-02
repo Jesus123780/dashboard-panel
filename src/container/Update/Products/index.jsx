@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types'
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { GET_ALL_CITIES, GET_ALL_COUNTRIES, GET_ALL_DEPARTMENTS, GET_ALL_ROAD } from '../../../gql/Location';
 import { Products } from '../../../components/Update/Products'
 import { GET_ALL_PRODUCTS, GET_ONE_COLOR, UPDATE } from './queries';
@@ -7,34 +8,78 @@ import { Context } from '../../../Context';
 import { GET_ALL_SIZE } from '../../../gql/information/Size/size';
 import useLocalStorage from '../../../components/hooks/useLocalSorage';
 import { useGetProducts } from '../../../components/hooks/useGetProducts';
+import { GET_ALL_FEATURES_ON_PARENT } from '../../../components/Update/Products/FeaturesProduct/queries';
+import { useGetAreas } from '../../../components/hooks/useGetArea';
+import { useCategories } from '../../../components/hooks/useCategories';
 
 export const ProductsC = () => {
+    // ------------ ESTADOS ------------
     const [errors, setErrors] = useState({})
     const [values, setValues] = useState({})
-    const [name, setName] = useLocalStorage();
-    const [finalData, { loading: getProductLoading }] = useGetProducts()
-
-    const { data } = useQuery(GET_ONE_COLOR)
+    const [features, setFeatures] = useState({})
+    const [names, setName] = useLocalStorage();
+    // Estado para las estrellas del producto
+    const [rating, setRating] = useState(0);
     const { setAlertBox } = useContext(Context)
-    const handleChange = (e, error) => {
-        setValues({ ...values, [e.target.name]: e.target.value })
-        setErrors({ ...errors, [e.target.name]: error })
-    }
+    // Filtrar product
+    const [dataProducto, setData] = useState([])
+    const [showMore, setShowMore] = useState(100)
+    const [search, setSearch] = useState('')
+    /* Filtro  */
+    const [searchFilter, setSearchFilter] = useState({ gender: [], desc: [], speciality:[] })
+    const [filter, setFilter] = useState({ gender: [], desc: [], speciality:[] })
+    //-----------QUERIES ------------
+    const [updateProducts] = useMutation(UPDATE)
+    const [finalData, { loading: getProductLoading }] = useGetProducts()
+    // LLama a todas las areas
+    const { data: datafatures } = useQuery(GET_ALL_FEATURES_ON_PARENT)
+    const { data } = useQuery(GET_ONE_COLOR)
+    const { data: size } = useQuery(GET_ALL_SIZE)
+    const [finalDataAreas, { loading: loadingAreas }] = useGetAreas()
+    // Lógica para registrar productos a una categoría
+    const [finalDataCategories] = useCategories()
     // Get all info Ubicación
     const { data: dataCountries, loading: loadCountries } = useQuery(GET_ALL_COUNTRIES)
     const { data: dataRoad, loading: loadRoad } = useQuery(GET_ALL_ROAD)
     const [getDepartments, { data: dataDepartments }] = useLazyQuery(GET_ALL_DEPARTMENTS)
-    const { data: size } = useQuery(GET_ALL_SIZE)
     // Subir producto
     const [getCities, { data: dataCities }] = useLazyQuery(GET_ALL_CITIES)
+    // llama a los productos y espera una accion
+    const [productsAll, { data: dataProduct }] = useLazyQuery(GET_ALL_PRODUCTS, {
+        fetchPolicy: 'network-only',
+        variables:
+        {
+            search,
+            gender: searchFilter?.gender,
+            desc: searchFilter?.desc,
+            categories: searchFilter?.speciality,
+        }
+    })
+    // ------------ HANDLES ------------
+    const handleChange = (e, error) => {
+        setValues({ ...values, [e.target.name]: e.target.value })
+        setErrors({ ...errors, [e.target.name]: error })
+    }
     const handleChangeSearch = e => {
         if (e.target.name === 'countryId') getDepartments({ variables: { cId: e.target.value } })
         else if (e.target.name === 'dId') getCities({ variables: { dId: e.target.value } })
         handleChange(e)
     }
-    const [rating, setRating] = useState(0);
-    const [updateProducts] = useMutation(UPDATE)
-    // const [deleteProducts] = useMutation(DELETE_ONE_PRODUCT)
+
+    // Añade mas de una característica por id
+    const handleAddFeature = fId => {
+        const value = datafatures?.features?.filter(x => (x.fId === fId))
+        setFeatures(value)
+        // setFeatures(value[0]?.fId)
+        if (value.length) {
+            try {
+                setAlertBox({ message: `${ `${ value[0]?.typeFeature?.thpName } ${ value[0]?.hpqrQuestion }` }`, color: 'success', duration: 7000 })
+            } catch (err) {
+                setAlertBox({ message: `${ err }`, color: 'error', duration: 7000 })
+            }
+        }
+
+    }
     // Contexto de las notificaciones
     const handleRegister = async e => {
         e.preventDefault()
@@ -64,7 +109,8 @@ export const ProductsC = () => {
             ctId,
         } = values
         const cId = countryId
-        const pName = name
+        const pName = names
+        const fId = features[0]?.fId
         try {
             updateProducts({
                 variables: {
@@ -92,6 +138,7 @@ export const ProductsC = () => {
                         cId,
                         dId,
                         ctId,
+                        fId,
                     }
                 }, update(cache) {
                     cache.modify({
@@ -109,9 +156,33 @@ export const ProductsC = () => {
             setAlertBox({ message: `${ error.message }`, duration: 7000 })
         }
     }
+    const handleChangeFilter = e => {
+        setSearch(e.target.value)
+    }
+    const handleChangeClick = e => {
+        const { name, value, checked } = e.target
+        !checked ? setFilter(s => ({ ...s, [name]: s[name].filter(f => f !== value) })) : setFilter({ ...filter, [name]: [...filter[name], value] })
+    }
+    const onClickSearch = () => {
+        setSearchFilter({ ...filter })
+    }
+    useEffect(() => {
+        dataProduct?.productsAll && setData([...dataProduct?.productsAll])
+    }, [dataProduct, searchFilter])
+    useEffect(() => {
+        productsAll({ variables: { max: showMore } })
+    }, [searchFilter, showMore])
+    /* Fin del filtro */
+    // Inicio de filtro de descuento y o precio
+    // const [filterPrice, setFilterPrice] = useState(0)
+    const onChangeRange = () => {
+        // const { value } = e.target
+        // setFilterPrice(s => ({ ...s, [name]: s[name].filter(f => f !== value) }))
+    }
+    // ----------- HANDLE PARA ELIMINAR-----------
     const handleDelete = pId => {
         const value = finalData?.productsAll?.filter(x => (x.pId === pId))
-        const pState = value[0].pState
+        const pState = value[0]?.pState
         updateProducts({
             variables: {
                 input: {
@@ -129,10 +200,18 @@ export const ProductsC = () => {
                 setAlertBox({ message: `El producto ${ value[0].pName } ha sido eliminado`, color: 'error', duration: 7000 })
             }
         }).catch(err => setAlertBox({ message: `${ err }`, duration: 7000 }))
-
     }
+
     return (
         <Products
+            features={features}
+            names={names}
+            search={search}
+            dataCategories={finalDataCategories?.CategoryProductsAll}
+            onClickSearch={onClickSearch}
+            handleAddFeature={handleAddFeature}
+            datafatures={datafatures?.features}
+            data={dataProducto}
             handleChange={handleChange}
             handleRegister={handleRegister}
             values={values}
@@ -149,10 +228,23 @@ export const ProductsC = () => {
             setRating={setRating}
             handleChange={handleChange}
             onChangeSearch={handleChangeSearch}
-            name={name}
+            handleChangeFilter={handleChangeFilter}
             setName={setName}
+            // Datos de filtro
             handleDelete={handleDelete}
-            getAllProduct={finalData?.productsAll}
+            setShowMore={setShowMore}
+            // Datos del areas
+            loadingAreas={loadingAreas}
+            finalDataAreas={finalDataAreas?.getAreas}
+            //   Filtro de check
+            handleChangeClick={handleChangeClick}
+            onChangeRange={onChangeRange}
+
         />
     )
+}
+ProductsC.propTypes = {
+    handleChangeClick: PropTypes.func,
+    filterState: PropTypes.object,
+    handleChange: PropTypes.func
 }

@@ -25,10 +25,7 @@ export const SliderItem = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  width: 100%;
   height: 200px;
-  min-width: 100%;
-  max-width: 100%;
   justify-content: center;
   background-color: ${ BGColor };
 
@@ -117,7 +114,6 @@ export const Control = styled.button`
         opacity: 59%;
         background-color:#b4b4b4;
     }
-  ${ props => !props.display ? css`display: block;` : css`display: none;` };
 
 `;
 

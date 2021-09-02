@@ -1,22 +1,47 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import { IconArrowLeft, IconArrowRight } from '../../../../assets/icons/icons'
 import { PColor } from '../../../../assets/colors';
 import { SliderItem, SliderContainer, SliderWrapper, Navigation, NavigationItem, ControlLeft, ControlRight, ContentList } from './styled';
 
-export const CustomSlider = props => {
+export const SliderAreas = props => {
     const {
-        state,
-        dispatch,
         duration,
         autoPlayTime,
         modal,
-        datafatures,
+        finalDataAreas,
         handleAddFeature } = props
     const div = useRef();
-    const [activeArrow, setActiveArrow] = useState({})
+    function reducer(state, action) {
+        switch (action?.type) {
+        case 'NEXT':
+            return {
+                ...state,
+                currentIndex: state?.currentIndex + (1 % finalDataAreas?.length),
+
+            };
+        case 'PREV':
+            return {
+                ...state,
+                currentIndex: state?.currentIndex - (1 % finalDataAreas?.length)
+            };
+        case 'GOTO':
+            return {
+                ...state,
+                currentIndex: action?.index
+            };
+        case 'RESET':
+            return { ...state, currentIndex: 0, currentPosition: 0, };
+
+        default:
+            return { state };
+        }
+    }
+    const [state, dispatch] = useReducer(reducer, {
+        currentIndex: 0,
+    })
     useEffect(() => {
         const timer = setTimeout(() => {
-            if (state?.currentIndex < datafatures?.length - 1) {
+            if (state?.currentIndex < finalDataAreas?.length - 1) {
                 dispatch({ type: 'NEXT' });
             } else {
                 dispatch({ type: 'RESET' });
@@ -27,7 +52,7 @@ export const CustomSlider = props => {
     return (
         <>
 
-            <SliderContainer modal={modal} onMouseOut={() => setActiveArrow(true)} onMouseOver={() => setActiveArrow(false)}>
+            <SliderContainer modal={modal} >
                 <SliderWrapper
                     // 500ms
                     style={{
@@ -35,11 +60,11 @@ export const CustomSlider = props => {
                         transition: `transform ${ duration } ease 0s`,
                     }}
                 >
-                    {datafatures && datafatures?.map((i, index) => {
+                    {finalDataAreas && finalDataAreas?.map((i, index) => {
                         return (
                             <Slide
                                 div={div}
-                                key={i.fId}
+                                key={i.aId}
                                 index={index}
                                 item={i}
                                 dispatch={dispatch}
@@ -49,18 +74,18 @@ export const CustomSlider = props => {
                     })}
                 </SliderWrapper>
                 <Navigation>
-                    {datafatures && datafatures.map((i, index) => {
+                    {finalDataAreas && finalDataAreas.map((i, index) => {
                         return (
                             <NavigationItem
                                 active={index === state?.currentIndex}
-                                onClick={() => dispatch({ type: 'GOTO', index })} key={`nav${ i.fId }`} >
+                                onClick={() => dispatch({ type: 'GOTO', index })} key={`nav${ i.aId }`} >
                             </NavigationItem>
                         );
                     })}
                 </Navigation>
                 <div>
-                    <ControlLeft display={activeArrow} onClick={() => state?.currentIndex > 1 && dispatch({ type: 'PREV' })}><IconArrowLeft color={PColor} size={'20px'} /></ControlLeft>
-                    <ControlRight display={activeArrow} onClick={() => state?.currentIndex < datafatures?.length - 1 ? dispatch({ type: 'NEXT' }) : dispatch({ type: 'RESET' })}><IconArrowRight color={PColor} size={'20px'} /></ControlRight>
+                    <ControlLeft onClick={() => state?.currentIndex > 1 && dispatch({ type: 'PREV' })}><IconArrowLeft color={PColor} size={'20px'} /></ControlLeft>
+                    <ControlRight onClick={() => state?.currentIndex < finalDataAreas?.length - 1 ? dispatch({ type: 'NEXT' }) : dispatch({ type: 'RESET' })}><IconArrowRight color={PColor} size={'20px'} /></ControlRight>
                 </div>
             </SliderContainer>
         </>
@@ -69,13 +94,10 @@ export const CustomSlider = props => {
 
 const Slide = ({ item, div, handleAddFeature }) => {
     return (
-        <>
-            <SliderItem ref={div} onClick={() => handleAddFeature(item.fId)}>
-                <ContentList>
-                    <i>{item.typeFeature.thpName} </i> &nbsp;
-                    <i>{item.hpqrQuestion}</i>
-                </ContentList>
-            </SliderItem>
-        </>
+        <SliderItem ref={div} onClick={() => handleAddFeature(item.fId)}>
+            <ContentList>
+                <i>{item.aName} </i> &nbsp;
+            </ContentList>
+        </SliderItem>
     );
 };

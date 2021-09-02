@@ -13,7 +13,6 @@ import { decodeToken, getToken, removeToken } from './utils'
 import { UserProfile } from './pages/UserProfile';
 import { LayoutMain } from './components/layout'
 import { Banner } from './pages/Update/Banner';
-import { Categories } from './pages/Update/Categories';
 import { Kit } from './pages/Update/Kit';
 import { Offers } from './pages/Update/Offers';
 import { OficialStores } from './pages/Update/OficialStores';
@@ -27,6 +26,8 @@ import { ProductsC } from './container/Update/Products';
 import { ContextMenu } from './components/positionMap';
 import { FloatMenu } from './components/MenuFloat';
 import { Drag } from './components/drag';
+import { ProductsBack } from './pages/backend';
+import { Categories } from './pages/Categories';
 
 function App() {
     const [auth, setAuth] = useState(undefined)
@@ -102,6 +103,8 @@ function App() {
                                                     <Route exact path='/position' component={ContextMenu} />
                                                     <Route exact path='/drag' component={Drag} />
                                                     <Route exact path='/menu' component={FloatMenu} />
+                                                    {/* Logistica */}
+                                                    <Route exact path='/logistica' component={ProductsBack} />
                                                     <Route component={NotFound} />
                                                     <Redirect to="/" />
                                                 </Switch>

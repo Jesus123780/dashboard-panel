@@ -22,7 +22,7 @@ import { Rate } from '../../../Rate'
 import { IconLocation } from '../../../../assets/icons/icons'
 
 export const ViewProducts = props => {
-    const { valuesP, discount, price, desc, PCant, PDescription, start, setRating, assurance } = props
+    const { valuesP, discount, price, desc, PCant, PDescription, start, setRating, assurance, features } = props
     const onchangeFile = () => {
     }
     return (<>
@@ -34,8 +34,8 @@ export const ViewProducts = props => {
                 <Table>
                     <tbody>
                         <tr>
-                            <th className="andes-table">Nombre de usuario</th>
-                            <td><span>fsfsdfsf</span></td>
+                            <th className="andes-table">{ features[0]?.typeFeature?.thpName }</th>
+                            <td><span> { features[0]?.hpqrQuestion }</span></td>
                         </tr>
                     </tbody>
                 </Table>

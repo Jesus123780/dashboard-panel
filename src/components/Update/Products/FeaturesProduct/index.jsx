@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import React, { useContext, useEffect, useState } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useContext, useState } from 'react'
 import { Context } from '../../../../Context'
 import { updateCache, validationSubmitHooks } from '../../../../utils'
 import InputHooks from '../../../InputHooks/InputHooks'
@@ -8,11 +7,10 @@ import { SpinnerColorJust } from '../../../Loading'
 import NewSelect from '../../../NewSelectHooks/NewSelect'
 import { RippleButton } from '../../../Ripple'
 import { CREATE_FEATURES, CREATE_TYPE_FEATURES, GET_ALL_FEATURES_ON_PARENT, GET_TYPE_FEATURES } from './queries'
-import { AwesomeModal, ContentModal, Card, ContentList, TextList, Options } from './styled'
+import { Card, ContentList, TextList, Options } from './styled'
 import { icons } from './codeCat'
 
-export const FeaturesProducts = props => {
-    const { modal, setModal } = props;
+export const FeaturesProducts = () => {
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
     const { setAlertBox } = useContext(Context)
@@ -24,16 +22,6 @@ export const FeaturesProducts = props => {
         setValues({ ...values, [e.target.name]: e.target.value })
         setErrors({ ...errors, [e.target.name]: error })
     }
-    useEffect(() => {
-        if (modal) window.addEventListener('keydown', e => e.code === 'Escape' && setModal())
-        if (modal) {
-            document.body.style.overflow = 'hidden'
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-        } else {
-            document.body.style.overflow = 'auto'
-        }
-        return () => modal && window.removeEventListener('keydown', () => { })
-    }, [modal])
     // eslint-disable-next-line
     const handleRegister = async e => {
         e.preventDefault()
@@ -104,66 +92,59 @@ export const FeaturesProducts = props => {
         }
     }
     return (<>
-        {ReactDOM.createPortal(<>
-            <ContentModal onClick={e => e.stopPropagation()} modal={modal} onClick={() => setModal(!modal)}>
-                <AwesomeModal onClick={e => e.stopPropagation()} modal={modal}>
-                    {err && <span>Ocurrió un error</span>}
-                    <Card>
-                        <span>Categoría Características</span>
-                        <InputHooks name="thpName"
-                            value={values?.thpName}
-                            errors={values?.thpName}
-                            onChange={handleChange}
-                            title="Nombre Categoría"
-                            required
-                            range={{ min: 0, max: 180 }}
-                        />
-                        <InputHooks name="thpIcon"
-                            value={values?.thpIcon}
-                            errors={values?.thpIcon}
-                            onChange={handleChange}
-                            title="Icono"
-                            required
-                            range={{ min: 0, max: 1000 }}
-                        />
-                        {loadingUpdate || loading && <SpinnerColorJust />}
-                        <RippleButton type="submit" onClick={handleRegister}>Subir</RippleButton>
-                    </Card>
-                    <Card>
-                        <span>Lista categoría características</span>
-                        <div>
-                            {data ? data?.typeFeatures?.map(types => (<ContentList key={types.thpId}>
-                                <span>{types.thpName}</span>
-                            </ContentList>)) : <span>No hay resultados</span>}
-                        </div>
-                    </Card>
-                    <Card>
-                        <NewSelect search disabled={!data?.typeFeatures} options={data?.typeFeatures?.filter(x => x?.thpName === x?.thpName) || []} id='thpId' name='thpId' value={values?.thpId || ''} optionName='thpName' title='Categoría Pregunta' onChange={handleChange} margin='10px' />
-                        <InputHooks
-                            title='Opción respuesta'
-                            required
-                            type="text"
-                            errors={values?.hpqrQuestion}
-                            value={values?.hpqrQuestion}
-                            onChange={handleChange}
-                            name='hpqrQuestion'
-                        />
-                        {loadingUpdateFeature && <SpinnerColorJust />}
-                        <RippleButton type="submit" onClick={handleRegisterFeatures}>Subir Características</RippleButton>
-                    </Card>
-                    <Card>
-                        <div>
-                            {datafatures?.features?.map(x => (<ContentList key={x.fId}>
-                                {/* eslint-disable-next-line */}
-                                <Options icon={icons.find(j => j.cCalCod == x.typeFeature?.thpIcon)?.icon} name={icons.find(j => j.cCalCod == x.typeFeature?.thpIcon)?.cCalCod}></Options>
-                                <TextList title={x.typeFeature.thpName}>{x?.hpqrQuestion}</TextList >
-                            </ContentList>))}
-                        </div>
-                    </Card>
-                </AwesomeModal>
-            </ContentModal>
-        </>, document.getElementById('root')
-        )}
+        {err && <span>Ocurrió un error</span>}
+        <Card>
+            <span>Categoría Características</span>
+            <InputHooks name="thpName"
+                value={values?.thpName}
+                errors={values?.thpName}
+                onChange={handleChange}
+                title="Nombre Categoría"
+                required
+                range={{ min: 0, max: 180 }}
+            />
+            <InputHooks name="thpIcon"
+                value={values?.thpIcon}
+                errors={values?.thpIcon}
+                onChange={handleChange}
+                title="Icono"
+                required
+                range={{ min: 0, max: 1000 }}
+            />
+            {loadingUpdate || loading && <SpinnerColorJust />}
+            <RippleButton widthButton='100%' type="submit" onClick={handleRegister}>Subir</RippleButton>
+        </Card>
+        <Card>
+            <span>Lista categoría características</span>
+            <div>
+                {data ? data?.typeFeatures?.map(types => (<ContentList key={types.thpId}>
+                    <span>{types.thpName}</span>
+                </ContentList>)) : <span>No hay resultados</span>}
+            </div>
+        </Card>
+        <Card>
+            <NewSelect search disabled={!data?.typeFeatures} options={data?.typeFeatures?.filter(x => x?.thpName === x?.thpName) || []} id='thpId' name='thpId' value={values?.thpId || ''} optionName='thpName' title='Categoría Pregunta' onChange={handleChange} margin='10px' />
+            <InputHooks
+                title='Opción respuesta'
+                required
+                type="text"
+                errors={values?.hpqrQuestion}
+                value={values?.hpqrQuestion}
+                onChange={handleChange}
+                name='hpqrQuestion'
+            />
+            {loadingUpdateFeature && <SpinnerColorJust />}
+            <RippleButton widthButton='100%' type="submit" onClick={handleRegisterFeatures}>Subir Características</RippleButton>
+        </Card>
+        <Card>
+            <div>
+                {datafatures?.features?.map(x => (<ContentList key={x.fId}>
+                    {/* eslint-disable-next-line */}
+                    <Options icon={icons.find(j => j.cCalCod == x.typeFeature?.thpIcon)?.icon} name={icons.find(j => j.cCalCod == x.typeFeature?.thpIcon)?.cCalCod}></Options>
+                    <TextList title={x.typeFeature.thpName}>{x?.hpqrQuestion}</TextList >
+                </ContentList>))}
+            </div>
+        </Card>
 
     </>)
 }

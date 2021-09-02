@@ -54,8 +54,8 @@ export const Discount = styled.span`
     width: fit-content;
     font-family: PFont-Light;
     color: rgba(0,0,0,.8);
-${ props => !props.discount &&css`
-&::after{
+    ${ props => props.discount &&css`
+    &::after{
     position: absolute;
     display: block;
     top: 43%;

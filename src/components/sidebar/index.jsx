@@ -104,12 +104,17 @@ export const SideBar = () => {
                                 <span>Publicar products</span>
                             </LinkOption>
                         </Options>
-                        <Options label='Locations' active={active === 8} handleClick={() => handleClick(8)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
+                        <Options label='Categorías' active={active === 8} handleClick={() => handleClick(8)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconShopping size='25px' color={PColor} />}>
+                            <LinkOption to='/update/category'>
+                                <span>Publicar Categorías</span>
+                            </LinkOption>
+                        </Options>
+                        <Options label='Locations' active={active === 9} handleClick={() => handleClick(9)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
                             <LinkOption to='/update/location'>
                                 <span>Update Location</span>
                             </LinkOption>
                         </Options>
-                        <Options label='Información' active={active === 9} handleClick={() => handleClick(9)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
+                        <Options label='Información' active={active === 10} handleClick={() => handleClick(10)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
                             <LinkOption to='/update/information'>
                                 <span>Update Information</span>
                             </LinkOption>

@@ -1,16 +1,16 @@
-import { useContext, useState } from 'react';
+import ReactDOM from 'react-dom'
+import { useState } from 'react';
 import { InputHook } from './Input';
 import { ViewProducts } from './ViewProducts';
-import { IconArrowRight, IconBodega, IconDelete, IconEdit, IconLove } from '../../../assets/icons/icons';
+import { IconArrowRight, IconDelete, IconEdit, IconLove } from '../../../assets/icons/icons';
 import { Rate } from '../../Rate';
 import NewSelect from '../../NewSelectHooks/NewSelect'
 import { numberFormat } from '../../../utils';
-import { PColor, PVColor } from '../../../assets/colors';
+import { APColor, PColor, PVColor, SEGColor } from '../../../assets/colors';
 import { RippleButton } from '../../Ripple';
-import { Context } from '../../../Context';
 import { FeaturesProducts } from './FeaturesProduct';
 import { TextAreaHooks } from '../../TextTareaHook';
-import { Loading } from '../../Loading';
+// import { Loading } from '../../Loading';
 import {
     Container,
     FormProducts,
@@ -28,27 +28,78 @@ import {
     ContentIconFav,
     ButtonCard,
     ActionName,
+    ReadMore,
+    ContentProducts,
+    CardInput,
+    CardCheckBox,
+    CardRadioLabel
 } from './styled';
 import { Skeleton } from '../../Skeleton/SkeletonCard';
+import { AwesomeModal } from '../../AwesomeModal';
+import { CustomSlider } from './CustomSlider';
+import { ReactTable } from '../../common/ReactTable';
+import { SliderAreas } from './SliderAreas';
+import { Discount } from './ViewProducts/styled';
+import { SliderCategory } from './SliderCategories';
+import { LoadingBabel } from '../../Loading/LoadingBabel';
 
-export const Products = ({ values, handleRegister, handleChange, countries, setRating, rating, color, size, onChangeSearch, departments, cities, setName, name, getAllProduct, loading, handleDelete }) => {
-    const [state, setState] = useState(false)
+export const Products = ({ datafatures,
+    finalDataAreas,
+    features,
+    handleAddFeature,
+    dispatch,
+    search,
+    state,
+    handleChangeFilter,
+    data,
+    setShowMore,
+    values,
+    handleRegister,
+    handleChange,
+    countries,
+    setRating,
+    rating,
+    color,
+    size,
+    onChangeSearch,
+    departments,
+    cities,
+    setName,
+    names,
+    loading,
+    handleDelete,
+    // filtro
+    handleChangeClick,
+    onClickSearch,
+    dataCategories,
+}) => {
+    const [stateCard, setState] = useState(false)
     const handleClick = () => {
-        setState(!state)
+        setState(!stateCard)
     }
-    const { modal, setModal } = useContext(Context);
-    const handleClickModal = () => {
-        setModal(!modal)
+    const [modal, setModal] = useState(0)
+    const handleClickModal = index => {
+        setModal(index === modal ? true : index)
     }
+    const columns = [
+        { name: 'Nombres y Apellidos' },
+        { name: 'CC', accessor: 'user.userprofile.up_ideNum' },
+        { name: 'Monto solicitado', accessor: 'mr_retire', render: () => `$ ${ numberFormat(423432) }` },
+        { name: 'Monto solicitado', accessor: 'mr_retire', render: () => `$ ${ numberFormat(423432) }` },
+        { name: 'Medio de pago', accessor: 'userbankentity.typebank.tb_name' },
+        { name: 'Tipo de cuenta', accessor: 'userbankentity.accounttype.at_name' },
+        { name: 'N° de cuenta', accessor: 'userbankentity.ube_accNum' },
+    ]
+    const count = 100
     return (<div>
-        {loading && <Loading />}
+        {loading && <LoadingBabel />}
         <Container>
-            <CardOne state={state}>
+            <CardOne state={stateCard}>
                 <FormProducts onSubmit={handleRegister}>
                     <InputHook label='Nombre del producto'
                         type="text"
                         placeholder="Enter your name"
-                        value={name}
+                        value={names}
                         name='pName'
                         required
                         onChange={e => setName(e.target.value)}
@@ -159,7 +210,7 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
                             value={values?.dId}
                             title='Departamento' />
                         <NewSelect
-                            name='ctId'
+                            name='ctI d'
                             options={cities}
                             id='ctId'
                             onChange={handleChange}
@@ -174,17 +225,42 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
                             range={{ min: 0, max: 7000 }}
                             showRange
                         />
+                        <div>
+                            <Text>Agregar Características principales</Text>
+                            {ReactDOM.createPortal(<>
+                                <AwesomeModal
+                                    show={modal}
+                                    title={'Selecciona una característica para el producto'}
+                                    backdrop
+                                    onCancel={() => setModal(false)}
+                                    onHide={() => setModal(false)}
+                                    btnConfirm={false}
+                                    header={false}
+                                    footer={false}
+                                    padding='20px'
+                                    size='large'
+                                >
+                                    <div>
+                                        {modal === 1 ? <CustomSlider handleAddFeature={handleAddFeature} autoPlayTime={4000} state={state} dispatch={dispatch} duration={'500ms'} datafatures={datafatures} /> :
+                                            <FeaturesProducts />
+                                        }
+                                    </div>
+                                </AwesomeModal>
+                            </>, document.getElementById('root')
+                            )}
+                        </div>
                     </>
-                    <RippleButton type="button" onClick={handleClickModal} widthButton='100%' margin='auto' bgColor={PVColor}> <Label>Características principales</Label></RippleButton>
-                    <FeaturesProducts setModal={setModal} modal={modal} />
-                    <RippleButton widthButton='100%' margin='20px auto' type='submit'>Subir</RippleButton>
+                    <RippleButton type="button" margin='20px auto' onClick={() => handleClickModal(1)} widthButton='100%' bgColor={SEGColor}> <Label>Características principales</Label></RippleButton>
+                    <RippleButton type="button" margin='20px auto' onClick={() => handleClickModal(2)} widthButton='100%' bgColor={PVColor}> <Label>Registrar Características principales</Label></RippleButton>
+                    <RippleButton widthButton='100%' margin='20px auto' type='submit' bgColor={APColor}>Subir</RippleButton>
                 </FormProducts>
             </CardOne>
             <i style={{ position: 'relative' }}>
                 <Button onClick={handleClick}><IconArrowRight color='blue' size='20px' /></Button>
             </i>
-            <Card state={state} bgColor='#ededed'>
+            <Card state={stateCard} bgColor='#ededed'>
                 <ViewProducts
+                    features={features}
                     valuesP={name}
                     Country={countries}
                     price={values?.ProPrice}
@@ -195,45 +271,106 @@ export const Products = ({ values, handleRegister, handleChange, countries, setR
                     setRating={setRating} />
             </Card>
         </Container>
-        <ContainerCardProduct>
-            {!getAllProduct?.length ? <SkeletonP /> : getAllProduct?.map(product => (
-                <CardProduct key={product.pId} >
-                    <ButtonCard onClick={() => handleDelete(product.pId)}>
-                        <IconDelete size={20} color={PColor} />
-                        <ActionName >
-                            Eliminarais
-                        </ActionName>
-                    </ButtonCard>
-                    <ButtonCard delay='.1s' top={'80px'}>
-                        <IconEdit size={20} color={PColor} />
-                        <ActionName>
-                            Editar
-                        </ActionName>
-                    </ButtonCard>
-                    <ButtonCard delay='.2s' top={'140px'}>
-                        <IconBodega size={20} color={PColor} />
-                        <ActionName>
-                            Archivar
-                        </ActionName>
-                    </ButtonCard>
-                    <ContentImg>
-                        {product.ProImage ? <i>Cargando</i> : <Img src={product.ProImage} alt={product.ProImage} />}
-                    </ContentImg>
-                    <ContentInfo>
-                        <ContentIconFav>
-                            <IconLove color={PVColor} size={20} />
-                        </ContentIconFav>
-                        <Title>{product.pName}</Title>
-                        <Text>{product.ProPrice}</Text>
-                        <Rate rating={product.ProStar} onRating={() => setRating(product.ProStar)} size={20} value={product.ProStar} />
-                    </ContentInfo>
+        <ContentProducts>
+            <Text size='30px'>Filtrar productos</Text>
+            <ContainerCardProduct>
+                <CardProduct>
+                    <InputHook label='Busca tus productos' name='search' value={search} onChange={handleChangeFilter} type='text' range={{ min: 0, max: 20 }} />
+                    <i>Filtro de precio</i>
+                    <InputHook
+                        type='range'
+                        label={`${ data[0]?.ProPrice }`}
+                        // value={data[0]?.ProPrice}
+                        name='price'
+                        maxLength={data[0]?.ProPrice}
+                        minLength={data[0]?.ProPrice}
+                        onChange={handleChange}
+                        range={{ min: 0, max: 180 }}
+                    />
                 </CardProduct>
-            ))}
-        </ContainerCardProduct>
+                <CardProduct id='space'>
+                    <Text size='20px'>Filtrar productos</Text>
+                    <div>
+                        <CardInput onChange={handleChangeClick}>
+                            <CardCheckBox name='gender' value="1" type="checkbox" id="checkboxF" />
+                            <CardRadioLabel htmlFor='checkboxF'>Envío gratis</CardRadioLabel>
+                        </CardInput>
+                        <CardInput onChange={handleChangeClick}>
+                            <CardCheckBox name='desc' value="1" type="checkbox" id="checkboxF" />
+                            <CardRadioLabel htmlFor='checkboxF'>Ofertas</CardRadioLabel>
+                        </CardInput>
+                    </div>
+                    <RippleButton onClick={()=> onClickSearch()} bgColor={PVColor}>Buscar</RippleButton>
+                </CardProduct>
+                <CardProduct>
+                    <SliderCategory duration={'500ms'} dataCategories={dataCategories} handleChangeClick={handleChangeClick} />
+                    <RippleButton margin='5px 30px 30px 30px' onClick={()=> onClickSearch()} bgColor={PVColor}>Buscar</RippleButton>
+                </CardProduct>
+            </ContainerCardProduct>
+            {/* Slider para filtrar productos */}
+            {/* Slider para filtrar productos */}
+            <Text size='30px'>Lista de productos registrados</Text>
+            <SliderAreas autoPlayTime={4000} duration={'500ms'} finalDataAreas={finalDataAreas} />
+            <ContainerCardProduct>
+                {!data?.length ? <SkeletonP /> : data?.map(product => (
+                    <CardProduct key={product.pId} >
+                        <ButtonCard onClick={() => handleDelete(product.pId)}>
+                            <IconDelete size={20} color={PColor} />
+                            <ActionName >
+                                Eliminar
+                            </ActionName>
+                        </ButtonCard>
+                        <ButtonCard delay='.1s' top={'80px'}>
+                            <IconEdit size={20} color={PColor} />
+                            <ActionName>
+                                Editar
+                            </ActionName>
+                        </ButtonCard>
+                        <ContentImg>
+                            {product.ProImage ? <i>Cargando</i> : <Img src={product.ProImage} alt={product.ProImage} />}
+                        </ContentImg>
+                        <ContentInfo>
+                            <ContentIconFav>
+                                <IconLove color={PVColor} size={20} />
+                            </ContentIconFav>
+                            {product.ProDescuento && <Discount discount={product.ProDescuento} > {numberFormat(product.ProDescuento)}</Discount>}
+                            <Title>{product.pName}</Title>
+                            <Text>{numberFormat(product.ProPrice)}</Text>
+                            <ContentInfo direction>
+                                <Rate rating={product.ProStar} onRating={() => setRating(product.ProStar)} size={20} value={product.ProStar} />
+                                {product.ProDelivery === 1 && <span>Gratis</span>}
+                            </ContentInfo>
+                        </ContentInfo>
+                    </CardProduct>
+                ))}
+            </ContainerCardProduct>
+            <ReadMore onClick={() => setShowMore(s => s + 5)}>'Cargar Más' </ReadMore>
+            <ReactTable
+                data={data}
+                collapse
+                nowrap
+                columns={columns}
+                // selectable
+                loading={loading}
+                isDisabled={x => x.register}
+                orderable
+                collapse
+                resizable
+                nowrap
+                serverSideRender
+                searchable={true}
+                serverSideRender
+                isDisabled={x => x.register}
+                length={count}
+                loading={loading}
+                // onFetch={(page, length, search) => fetchData(length * (page - 1), length, search)}
+                caption={<h2>Historial de transacciones</h2>}
+            />
+        </ContentProducts>
     </div>
     )
 }
-const SkeletonP = () => {
+export const SkeletonP = () => {
     return <>
         <>
             {[1, 2, 3, 4].map(x => (

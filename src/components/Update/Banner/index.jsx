@@ -9,6 +9,8 @@ import { TextAnimation } from '../../animations/TextAnimation';
 // import TextHook from '../../hooks/useAnimationText';
 import { AnimatedText } from '../../animations/MouseHover';
 import { usePosition } from '../../hooks/usePosition';
+import styled from 'styled-components';
+import { useRef, useState } from 'react';
 
 export const Banner = ({ watch, settings }) => {
     const { state, increase, decrease, reset, changeState } = useCounter(0)
@@ -29,12 +31,25 @@ export const Banner = ({ watch, settings }) => {
             <br />
         </>
     ) : null;
+    const fileInputRef = useRef(null)
+    const [images, setImages] = useState([])
+    const [previewImg, setPreviewImg] = useState(false)
+    console.log(images)
+    const onFileInputChange = event => {
+        const { files } = event.target
+        setImages([files])
+        setPreviewImg([URL.createObjectURL(files[0])])
+    }
+    const onTargetClick = e => {
+        e.preventDefault()
+        fileInputRef.current.click()
+    }
     return (
         <Container>
             <LocationName />
             <TextAnimation />
             {/* <TextHook /> */}
-            <AnimatedText textColor="#cd122d" overlayColor="#fdc52c">
+            <AnimatedText textColor="#000000" overlayColor="#fdc52c">
                 React
             </AnimatedText>
             <>
@@ -81,6 +96,47 @@ export const Banner = ({ watch, settings }) => {
             >
                 {isHovered ? '😁' : '☹️'}
             </div>
+            <ContainerUpload>
+                <InputFile
+                    accept=".jpg, .png"
+                    onChange={onFileInputChange}
+                    ref={fileInputRef}
+                    id='iFile' type='file'
+                />
+                <ButtonStatus type='button' onClick={onTargetClick}>Subir</ButtonStatus>
+                <Img src={previewImg} />
+                <br />
+            </ContainerUpload>
         </Container>
     )
 }
+export const InputFile = styled.input`
+    display: none;
+`
+export const ContainerUpload = styled.div`
+    width: 80%;
+    padding: 10px;
+    margin: auto 0;
+`
+export const ButtonStatus = styled.button`
+    background-color:#20c0f3;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-family: PFont-Regular;
+    color: #fff;
+    margin-bottom: 10px;
+    padding:10px 15px;
+    font-weight: 600;
+    font-size: ${ ({ fSize }) => fSize ? fSize : '13px' };
+    min-width: 120px;
+    width: 150px;
+    border-radius: 50px;
+`
+export const Img = styled.img`
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 4px;
+    margin-right: 20px;
+`

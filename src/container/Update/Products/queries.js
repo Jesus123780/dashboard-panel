@@ -36,6 +36,7 @@ mutation updateProducts($input: InputProduct){
     cId  #Country
     dId  #Department
     ctId  #Cuidad
+    fId  #Características
     pName
     ProPrice
     ProDescuento
@@ -44,6 +45,7 @@ mutation updateProducts($input: InputProduct){
 	  ProProtegido
 	  ProAssurance
 	  ProStar
+	  pState
 	  ProImage
 	  ProWidth
 	  ProHeight
@@ -63,14 +65,15 @@ mutation deleteProducts($input: IDeleteProduct){
 }
 `
 export const GET_ALL_PRODUCTS = gql`
-query productsAll {
-  productsAll{
+query productsAll($search: String, $min: Int, $max: Int, $gender: [String], $desc: [String], $categories: [ID], ) {
+  productsAll(search: $search, min: $min, max: $max, gender: $gender, desc: $desc, categories: $categories,) {
     pId
     sizeId #Talla
     colorId #Color
     cId  #Country
     dId  #Department
     ctId  #Cuidad
+    fId  #Características
     pName
     ProPrice
     ProDescuento
@@ -79,6 +82,7 @@ query productsAll {
 	  ProProtegido
 	  ProAssurance
 	  ProStar
+    sTateLogistic
 	  ProImage
 	  ProWidth
 	  ProHeight
@@ -89,6 +93,26 @@ query productsAll {
 	  ProDelivery
 	  ProVoltaje
     pState
+    feat {
+      fId
+      thpId
+      hpqrQuestion
+    }
+    area {
+      aId
+      aName
+    }
+    
   }
 }
+`
+// QUERY -- Busca a todos los usuarios
+export const SEARCH_PRODUCTS = gql`
+query searchProduct($searchProduct: String, $min: Int, $max: Int){
+  searchProduct(searchProduct:  $search, min: $min, max: $max){
+    pName
+    ProPrice
+    ProDescription
+  }
+}  		
 `
