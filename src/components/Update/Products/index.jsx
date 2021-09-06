@@ -308,7 +308,6 @@ export const Products = ({ datafatures,
                 </CardProduct>
             </ContainerCardProduct>
             {/* Slider para filtrar productos */}
-            {/* Slider para filtrar productos */}
             <Text size='30px'>Lista de productos registrados</Text>
             <SliderAreas autoPlayTime={4000} duration={'500ms'} finalDataAreas={finalDataAreas} />
             <ContainerCardProduct>

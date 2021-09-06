@@ -11,6 +11,7 @@ import { AnimatedText } from '../../animations/MouseHover';
 import { usePosition } from '../../hooks/usePosition';
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
+import Square from '../../common/square';
 
 export const Banner = ({ watch, settings }) => {
     const { state, increase, decrease, reset, changeState } = useCounter(0)
@@ -107,6 +108,7 @@ export const Banner = ({ watch, settings }) => {
                 <Img src={previewImg} />
                 <br />
             </ContainerUpload>
+            <Square />
         </Container>
     )
 }

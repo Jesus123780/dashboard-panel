@@ -159,12 +159,15 @@ export const ProductsC = () => {
     const handleChangeFilter = e => {
         setSearch(e.target.value)
     }
+    const onClickSearch = () => {
+        setSearchFilter({ ...filter })
+    }
     const handleChangeClick = e => {
         const { name, value, checked } = e.target
         !checked ? setFilter(s => ({ ...s, [name]: s[name].filter(f => f !== value) })) : setFilter({ ...filter, [name]: [...filter[name], value] })
-    }
-    const onClickSearch = () => {
-        setSearchFilter({ ...filter })
+        if (value) {
+            setSearchFilter({ ...filter })
+        }
     }
     useEffect(() => {
         dataProduct?.productsAll && setData([...dataProduct?.productsAll])

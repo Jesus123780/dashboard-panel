@@ -27,6 +27,7 @@ export const ContainerCardProduct = styled.div`
     @media only screen and (max-width: 760px){
         grid-template-columns: 50% repeat(auto-fill, 50%) 50%;
     }
+    &:first-child {}
 `
 export const ActionName = styled.div`
     position: absolute;
