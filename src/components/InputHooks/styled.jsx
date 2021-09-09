@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { BGColor } from '../../assets/colors'
 
 export const BoxInput = styled.div`
     position: relative;
@@ -16,13 +17,14 @@ export const Tooltip = styled.div`
 `
 export const LabelInput = styled.span`
     position: absolute;
-    font-size: ${ ({ value, type }) => (value || type === 'date') ? '16px' : '20px' };
-    top: ${ ({ value, type }) => (value || type === 'date') ? '0px' : '22px' };
-    left: ${ ({ left }) => left ? left : '17px' };
+    font-size: ${ ({ value, type }) => (value || type === 'date') ? '16px' : '13px' };
+    top: ${ ({ value, type }) => (value || type === 'date') ? '0px' : '16px' };
+    left: ${ ({ left }) => left ? left : '20px' };
     color: ${ ({ value, labelColor, error, theme }) => value ? (labelColor ? labelColor : '#272323') : (error ? '#fff' : theme.SFColor) };
     transition: .3s;
     background-color: transparent;
     pointer-events: none;
+    font-family: PFont-Light;
     font-weight: ${ ({ value }) => value ? 600 : 400 };
 `
 export const InputV = styled.input`
@@ -38,10 +40,11 @@ export const InputV = styled.input`
     ${ ({ margin }) => !!margin && css`margin: ${ margin };` }
     ${ ({ minWidth }) => minWidth && css`min-width: ${ minWidth };` }
     &:focus ~ ${ LabelInput } {
-        top: -10px;
-        font-size: 20px;
+        top: -2px;
+        font-size: 16px;
         color: #CCC;
-        padding: 0px 5px ;
+        padding: 0px 5px;
+        background-color: ${ BGColor }
     }
     &:focus { border: 1px solid '#35a8df'; }
     &:disabled { cursor: no-drop; }

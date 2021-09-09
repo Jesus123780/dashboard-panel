@@ -62,7 +62,7 @@ export const CartShop = ({ keyTheme, handleTheme }) => {
                     </Button>
                     <FloatingBoxTwo show={show === 2}>
                         <Option>
-                            <Enlace to={`/user/${ auth.uUsername }/admin`}>
+                            <Enlace to={`/u/${ auth.uUsername }`}>
                                 <Avatar />
                                 <BoxUser>
                                     <span>{auth?.Uname}</span>

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { BGColor } from '../../../assets/colors';
+import { BGColor, PColor } from '../../../assets/colors';
 
 export const Button = styled.button` 
     position: absolute;
@@ -62,6 +62,13 @@ export const ContainerCardProduct = styled.div`
     @media only screen and (max-width: 760px){
         grid-template-columns: 50% repeat(auto-fill, 50%) 50%;
     }
+    ${ props => props.grid && css`
+    width: 100%;
+    grid-template-columns: 100% repeat(auto-fill, 100%) 100%; 
+      @media only screen and (max-width: 760px){
+        grid-template-columns: 50% repeat(auto-fill, 50%) 50%;
+    }
+    ` }
 
 `
 export const ContentProducts = styled.div` 
@@ -105,6 +112,10 @@ export const ButtonCard = styled.button`
         opacity: 1;
         z-index: 900;
     }
+    ${ props => props.grid && css`
+        top: ${ ({ top }) => top ? top : '80px' };
+        `
+}
 `
 export const CardProduct = styled.div` 
     flex: 0 1 auto;
@@ -121,10 +132,15 @@ export const CardProduct = styled.div`
     &:hover  ${ ButtonCard } {
         right: 15px;
     }
-   &#space {
+    &#space {
         padding: 30px;
         justify-content: space-between;
     }
+    ${ props => props.grid && css`
+    height: min-content;
+    flex-direction: row;
+
+` }
 `
 export const CardInput = styled.div`
     margin-bottom: 10px;
@@ -150,12 +166,21 @@ export const ContentImg = styled.div`
     object-fit: cover;
     cursor: pointer;
     border-radius: 8px 8px 0px 0px;
-    background-color: #ededed;
+    /* background-color: #ededed; */
+    border-bottom: 1px solid #eaeaea;
+    ${ props => props.grid && css`
+    border-bottom: none;
+    width: max-content;
+
+` }
 `
 export const Img = styled.img` 
-    width: 100%;
     height: 100%;
-    object-fit: cover;
+    min-height: 284px;
+    max-height: 284px;
+    width: 100%;
+    object-fit: contain;
+    display: block;
 `
 export const ContentInfo = styled.div` 
     width: 100%;
@@ -190,6 +215,11 @@ export const ContentIconFav = styled.div`
     display: grid;
     justify-content: center;
     background-color: ${ BGColor };
+    ${ props => props.grid && css`
+        top: 20px;
+
+` }
+
 `
 export const Text = styled.h3` 
     font-size: ${ ({ size })=> size ? size : '15px' };
@@ -199,6 +229,51 @@ export const Text = styled.h3`
     font-family: PFont-Light;
     word-break: break-word;
 `
+export const ContainerFilter = styled.div` 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+`
+export const ItemFilter = styled.button` 
+    display: flex;
+    margin-left: 5px;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    background: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 20px;
+    padding: 7px 14px;
+    color: #717171;
+    font-size: 0.875rem;
+    cursor: pointer;
+    min-width: 5.375rem;
+    font-family: PFont-Light;
+`
+export const ContainerBurger = styled.div`
+    .BurgerMenu__container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;    
+    span {
+      background-color: ${ PColor };
+      width: 30px;
+      height: 2px;
+      margin: 4px;
+      border-radius: 1px;
+      transition: all .3s ease-out;
+    }
+    .open:nth-child(1) {
+      transform: rotate(45deg) translateY(4px) translateX(6px);
+
+    }
+    .open:nth-child(2) {
+      opacity: 0;
+    }
+    .open:nth-child(3) {
+      transform: rotate(-45deg) translateY(-7px) translateX(9px);
+    }
+}`
 export const ReadMore = styled.button`
     align-items: center;
     cursor: pointer;

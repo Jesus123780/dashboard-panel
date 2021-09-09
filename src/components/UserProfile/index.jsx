@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
 import { AwesomeModal } from '../AwesomeModal'
 import { InputFile } from '../MultiInputs/inputs'
-import { Text, Container, Circular, ContentOptions, LefPart, BoxInput, Input, LabelInput, Paragraph, Anchor, TextArea } from './styled'
 import { useScrollY } from '../hooks/useScroll'
 import InputHooks from '../InputHooks/InputHooks'
+import { Text, Container, Circular, ContentOptions, LefPart, BoxInput, Input, LabelInput, Paragraph, Anchor, TextArea, HeroBanner, Img } from './styled'
+import phone from '../../assets/img/phone.png'
+
 export const UserProfile = ({ params, data, loading, error, handleFileChange, values, handleChangePass, errors }) => {
     if (error) return <h1>Usuario no existe</h1>
     const [modal, setModal] = useState(false)
@@ -18,7 +20,10 @@ export const UserProfile = ({ params, data, loading, error, handleFileChange, va
         }
     }, [data])
     const { offsetY } = useScrollY();
-    return (
+    return (<>
+        <HeroBanner>
+            <Img style={{ transform: `translateY(${ offsetY * 0.8 }px)` }} src={phone} alt={'phone'} />
+        </HeroBanner>
         <Container bg={auth.uUsername} >
             {loading && 'cargando'}
             <LefPart style={{ transform: `translateX(${ offsetY / 3 }px)` }}>
@@ -27,14 +32,12 @@ export const UserProfile = ({ params, data, loading, error, handleFileChange, va
                 <BoxInput>
                     <Input name="Uname"
                         value={data?.getUser?.username}
-                    // onChange={}
                     />
                     <LabelInput >{'Nombre de usuario'}</LabelInput>
                 </BoxInput>
                 <BoxInput>
                     <Input name="Uname"
                         value={data?.getUser?.email}
-                    // onChange={}
                     />
                     <LabelInput >{'Nombre de usuario'}</LabelInput>
                 </BoxInput>
@@ -105,5 +108,5 @@ export const UserProfile = ({ params, data, loading, error, handleFileChange, va
                 </ContentOptions>
             </AwesomeModal>
         </Container>
-    )
+    </>)
 }

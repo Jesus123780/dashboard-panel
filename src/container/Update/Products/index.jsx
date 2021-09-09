@@ -11,12 +11,15 @@ import { useGetProducts } from '../../../components/hooks/useGetProducts';
 import { GET_ALL_FEATURES_ON_PARENT } from '../../../components/Update/Products/FeaturesProduct/queries';
 import { useGetAreas } from '../../../components/hooks/useGetArea';
 import { useCategories } from '../../../components/hooks/useCategories';
+import { useCounter } from '../../../components/hooks/useState';
 
 export const ProductsC = () => {
     // ------------ ESTADOS ------------
     const [errors, setErrors] = useState({})
     const [values, setValues] = useState({})
     const [features, setFeatures] = useState({})
+    const { state, changeState } = useCounter(localStorage.getItem('grid'))
+
     const [names, setName] = useLocalStorage();
     // Estado para las estrellas del producto
     const [rating, setRating] = useState(0);
@@ -80,11 +83,23 @@ export const ProductsC = () => {
         }
 
     }
+    const setLocalStorage = grid => {
+        try {
+            window.localStorage.setItem('grid', grid)
+            changeState()
+        }
+        catch (err) {
+            setAlertBox({ message: `${ err }`, color: 'error', duration: 7000 })
+        }
+    }
+
     // Contexto de las notificaciones
     const handleRegister = async e => {
         e.preventDefault()
         const ProStar = rating
-        const ProImage = 'https://http2.mlstatic.com/D_NQ_NP_806765-MLC46669921180_072021-O.webp'
+        // const ProImage = 'https://http2.mlstatic.com/D_NQ_NP_641421-MCO45347822761_032021-F.webp'
+        // const ProImage = 'https://http2.mlstatic.com/D_NQ_NP_799377-MCO46546476746_062021-W.webp'
+        const ProImage = 'https://http2.mlstatic.com/D_NQ_NP_621798-MLA45543191295_042021-W.webp'
         const { Width, Height, Cantidad, Destacado, IstFree } = values
         const ProWidth = parseInt(Width);
         const ProHeight = parseInt(Height);
@@ -156,18 +171,25 @@ export const ProductsC = () => {
             setAlertBox({ message: `${ error.message }`, duration: 7000 })
         }
     }
+    // function calcDesc(pri, des) {
+    //     const impDesc = (pri * des)/100;
+    //     const intPorcentaje = Math.round(impDesc);
+    //     console.log(intPorcentaje)
+    // }
+    // calcDesc()
     const handleChangeFilter = e => {
         setSearch(e.target.value)
     }
     const onClickSearch = () => {
         setSearchFilter({ ...filter })
     }
+    const onClickClear = () => {
+        setSearchFilter({ })
+    }
     const handleChangeClick = e => {
         const { name, value, checked } = e.target
         !checked ? setFilter(s => ({ ...s, [name]: s[name].filter(f => f !== value) })) : setFilter({ ...filter, [name]: [...filter[name], value] })
-        if (value) {
-            setSearchFilter({ ...filter })
-        }
+        setSearchFilter({ ...filter })
     }
     useEffect(() => {
         dataProduct?.productsAll && setData([...dataProduct?.productsAll])
@@ -204,7 +226,10 @@ export const ProductsC = () => {
             }
         }).catch(err => setAlertBox({ message: `${ err }`, duration: 7000 }))
     }
-
+    const des = values.ProDescuento
+    const pri = values.ProPrice
+    const impDesc = values.ProPricepDesc = (des * pri)/100;
+    const intPorcentaje = Math.round(impDesc);
     return (
         <Products
             features={features}
@@ -242,6 +267,12 @@ export const ProductsC = () => {
             //   Filtro de check
             handleChangeClick={handleChangeClick}
             onChangeRange={onChangeRange}
+            // Limpiar
+            onClickClear={onClickClear}
+            state={state}
+            changeState={changeState}
+            setLocalStorage={setLocalStorage}
+            intPorcentaje={intPorcentaje}
 
         />
     )

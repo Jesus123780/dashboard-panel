@@ -22,7 +22,7 @@ import { Rate } from '../../../Rate'
 import { IconLocation } from '../../../../assets/icons/icons'
 
 export const ViewProducts = props => {
-    const { valuesP, discount, price, desc, PCant, PDescription, start, setRating, assurance, features } = props
+    const { valuesP, discount, price, PCant, PDescription, start, setRating, assurance, features, intPorcentaje } = props
     const onchangeFile = () => {
     }
     return (<>
@@ -49,7 +49,9 @@ export const ViewProducts = props => {
                         <Info color='#000' margin='0'>{36}</Info> <Info margin='0 10px'> Opiniones </Info>
                     </ContentRate>
                     <Price> $ {price ? numberFormat(price) : 'Precio del producto'}</Price>
-                    <Discount discount={discount} > $ {desc ? numberFormat(desc) : '1.000.000'}</Discount>
+                    <Discount discount={discount} > {/* $ {desc ? numberFormat(desc) : '1.000.000'}, */} El descuento del producto es: {intPorcentaje}% off</Discount>
+                    <Discount discount={discount} > Antes: {price} ahora: {price - intPorcentaje}</Discount>
+                    <Discount discount={discount} >Total: {price - intPorcentaje} </Discount>
                     <Button>
                         <Info>Ver los medios de pago</Info>
                     </Button>

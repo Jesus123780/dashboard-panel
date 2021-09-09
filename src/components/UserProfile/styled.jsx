@@ -15,14 +15,14 @@ export const Text = styled.div`
   
 `
 export const Container = styled.div`
-  font-family: PFont-Regular;
-  height: 100vh;
-  position: relative;
-  padding: 30px;
-  width: 100%;
-  display: flex;
-  background-position: center 25px;
-  ${ ({ bg }) => bg && css`background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 100 100"  height="200px"><text x="5" y="60%" font-size="4rem" font-weight="800" font-family="Roobert,Helvetica Neue,Helvetica,Arial,sans-serif" fill="red" opacity="0.1"> ${ bg } </text></svg>');` }
+    font-family: PFont-Regular;
+    height: 100vh;
+    position: relative;
+    padding: 30px;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    ${ ({ bg }) => bg && css`background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 350 90"  height="200px"><text x="0" y="60%" font-size="3rem" font-weight="800" font-family="Roobert,Helvetica Neue,Helvetica,Arial,sans-serif" fill="red" opacity="0.1"> ${ bg } </text></svg>');` }
 `
 export const Circular = styled.div`
   height: 100px;
@@ -130,6 +130,18 @@ export const TextArea = styled.textarea`
     background-color: #dcdcdc;
     border-radius: 5px;
     }
+`
+export const HeroBanner = styled.div`
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    background-color: red;
+`
+export const Img = styled.img`
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+
 `
 export const Anchor = styled.a`
     padding: 20px 10px;

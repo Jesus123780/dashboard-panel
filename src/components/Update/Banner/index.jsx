@@ -35,6 +35,7 @@ export const Banner = ({ watch, settings }) => {
     const fileInputRef = useRef(null)
     const [images, setImages] = useState([])
     const [previewImg, setPreviewImg] = useState(false)
+    // eslint-disable-next-line
     console.log(images)
     const onFileInputChange = event => {
         const { files } = event.target

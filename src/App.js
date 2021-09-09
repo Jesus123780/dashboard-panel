@@ -11,7 +11,6 @@ import { NotFound } from './components/NotFound';
 import AutoContext from './AutoContext'
 import { decodeToken, getToken, removeToken } from './utils'
 import { UserProfile } from './pages/UserProfile';
-import { LayoutMain } from './components/layout'
 import { Banner } from './pages/Update/Banner';
 import { Kit } from './pages/Update/Kit';
 import { Offers } from './pages/Update/Offers';
@@ -28,6 +27,8 @@ import { FloatMenu } from './components/MenuFloat';
 import { Drag } from './components/drag';
 import { ProductsBack } from './pages/backend';
 import { Categories } from './pages/Categories';
+import { LayoutMain } from './pages/layout';
+import { Modules } from './pages/Modules';
 
 function App() {
     const [auth, setAuth] = useState(undefined)
@@ -76,7 +77,7 @@ function App() {
                                                 <Switch>
                                                     <Route exact path='/' component={Books} />
                                                     {/* Panel de usuarios */}
-                                                    <Route exact path='/user/:uUsername/admin' component={UserProfile} />
+                                                    <Route exact path='/u/:uUsername' component={UserProfile} />
                                                     <Route exact path='/banner/home' component={Banner} />
                                                     {/* Update Sección */}
                                                     <Route exact path='/update/category' component={Categories} />
@@ -85,9 +86,9 @@ function App() {
                                                     <Route exact path='/update/oficialstores' component={OficialStores} />
                                                     <Route exact path='/update/popularCategories' component={PopularCategories} />
                                                     <Route exact path='/update/PQR' component={PQR} />
+                                                    <Route exact path='/update/products' component={ auth && ProductsC} />
                                                     <Route exact path='/update/location' component={Location} />
                                                     <Route exact path='/update/information' component={Information} />
-                                                    <Route exact path='/update/products' component={ auth && ProductsC} />
                                                     {/* Delete Sección */}
                                                     {/* <Route exact path='/update/category' component={Categories} />
                                                     <Route exact path='/update/kit' component={Kit} />
@@ -105,6 +106,8 @@ function App() {
                                                     <Route exact path='/menu' component={FloatMenu} />
                                                     {/* Logistica */}
                                                     <Route exact path='/logistica' component={ProductsBack} />
+                                                    {/* Modules */}
+                                                    <Route exact path='/modules' component={Modules} />
                                                     <Route component={NotFound} />
                                                     <Redirect to="/" />
                                                 </Switch>

@@ -1,34 +1,100 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>App</title>
-        <style type="text/css">
-            html {
-                height: 100%;
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App</title>
+    <style type="text/css">
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            box-sizing: border-box;
+            justify-content: center;
+        }
+        .paragraph {
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            width: 250px;
+        }
+
+        .offline-page .offline-page__illustration {
+            padding-top: 20px;
+            max-width: 200px;
+            min-height: 204px;
+            align-self: center;
+            margin-bottom: 32px;
+        }
+
+        .offline-page__title {
+            width: 180px;
+            margin: 0 auto 19px;
+            line-height: 1.2rem;
+            font-size: 3rem;
+        }
+
+        .btn {
+            background: transparent;
+            text-decoration: none;
+            color: #ea1d2c;
+            border: none;
+            padding: 0 20px;
+            border-radius: 4px;
+            margin: 3px 0;
+            height: 50px;
+            font-weight: 500;
+            transition: 100ms;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        @media only screen and (min-width: 960px) {
+            .offline-page .offline-page__illustration {
+                min-height: 304px;
+                max-width: 300px;
+                margin-bottom: 30px;
             }
-            body {
-                height: 100%;
-                margin: 0;
-                background: #2e2e2e;
-                display: flex;
-                align-items: center;
-                text-align: center;
-                justify-content: center;
+
+            .offline-page__title {
+                margin: 0 auto 20px;
+                font-size: 1.125rem;
+                width: 250px;
             }
-            h2{
-                color: #fff;
-                font-size: 30px
+
+            .offline-page__title {
+                margin: 0 auto 20px;
+                font-size: 1.125rem;
+                width: 250px;
             }
-        
-        </style>
-    </head>
-    <body>
-        <div className="city">
-            <h2>
-                No tienes conexión a Internet
-            </h2>
-        </div>
-    </body>
+        }
+    </style>
+</head>
+
+<body>
+    <div className="offline-page">
+        <p class="offline-page__title">
+            Me parece que tu estas sin conexión
+        </p>
+        <p class="paragraph">
+            No tienes conexión a Internet
+        </p>
+        <button type="button" role="button" class="btn btn--link btn--size-m" label="Inténtalo de nuevo" theme="link"
+            color="primary" target="" rel=""><canvas height="0" width="0"
+                style="border-radius: inherit; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"></canvas><span
+                class="btn__label">Inténtalo de nuevo</span></button>
+    </div>
+</body>
+
 </html>

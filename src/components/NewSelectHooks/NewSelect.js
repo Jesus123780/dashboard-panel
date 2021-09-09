@@ -192,11 +192,11 @@ const CustomButtonS = styled.button`
     width: ${ ({ width }) => width || '100%' };
     ${ ({ height }) => !!height && css`height: ${ height };` }
     &:hover {
-        background-color: ${ PVColor };
+        background-color: ${ BGColor };
         cursor: ${ ({ disabled }) => disabled ? 'no-drop' : 'pointer' };
         ${ ({ hover }) => hover && css`color: ${ PVColor };` }
     }
-    &:hover ~ ${ Tooltip } { display: block; }
+    &:hover ~ ${ Tooltip } { display: block;  }
     &:focus { border: 1px solid ${ PColor }; }
 `
 const IconSel = styled.div`

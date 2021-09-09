@@ -54,6 +54,7 @@ export const Login = props => {
     return (
         <>
             {props.loading && <Loading />}
+
             <Content>
                 <Enlace to='/'>
                     <IconLogo size='80px' color={PColor} />

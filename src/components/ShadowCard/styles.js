@@ -4,7 +4,7 @@ import { BGColor, PLColor, PLVColor, SFAColor } from '../../assets/colors'
 // Ventana con sombra (tarjetas)
 export const ShadowCardContainer = styled.div`
     flex: 0 0 33.33333%;
-    box-shadow: ${ props => props.movilmode ? 'none' : '0px 0px 6px #00000060' };
+    box-shadow: ${ props => props.movilmode ? 'none' : '0px 0px 14px #00000017' };
     background-color: ${ BGColor };
     width: ${ ({ width }) => width ? width : '96%' };
     margin: ${ ({ margin }) => margin ? margin : ' 2% auto' };
@@ -22,8 +22,9 @@ export const ShadowCardContainer = styled.div`
     }
 `
 export const HeadCard = styled.h5`
-    margin: 4px 0 15px 0;
-    text-transform: uppercase;
+    font-family: PFont-Light;
+    font-size: 1em;
+    font-weight: 500;
 `
 export const ItemText = styled.span`
     display: flex;

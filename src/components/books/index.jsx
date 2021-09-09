@@ -6,6 +6,7 @@ import useFullscreenMode from '../hooks/useFullScreenMode';
 // import { InputTags } from '../InputTagsOne';
 import { Rate } from '../Rate';
 import { numberFormatM } from '../../utils';
+import { ShadowCard } from '../ShadowCard';
 
 export const Books = () => {
     const [visibleMenu, setVisibleMenu] = useState(false) // Visibilidad del menú
@@ -34,6 +35,9 @@ export const Books = () => {
                 <Rate rating={rating} onRating={rate => setRating(rate)} />
             </div>
             <p>{numberFormatM(11000000)}</p>
+            <ShadowCard title='Puta'>
+                Hola
+            </ShadowCard>
         </Container>
     )
 }

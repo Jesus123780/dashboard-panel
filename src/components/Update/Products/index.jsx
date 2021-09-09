@@ -32,16 +32,20 @@ import {
     ContentProducts,
     CardInput,
     CardCheckBox,
-    CardRadioLabel
+    CardRadioLabel,
+    ContainerFilter,
+    ItemFilter,
+    ContainerBurger
 } from './styled';
 import { Skeleton } from '../../Skeleton/SkeletonCard';
 import { AwesomeModal } from '../../AwesomeModal';
 import { CustomSlider } from './CustomSlider';
-import { ReactTable } from '../../common/ReactTable';
+// import { ReactTable } from '../../common/ReactTable';
 import { SliderAreas } from './SliderAreas';
 import { Discount } from './ViewProducts/styled';
 import { SliderCategory } from './SliderCategories';
 import { LoadingBabel } from '../../Loading/LoadingBabel';
+import { Range } from '../../InputRange';
 
 export const Products = ({ datafatures,
     finalDataAreas,
@@ -70,8 +74,12 @@ export const Products = ({ datafatures,
     handleDelete,
     // filtro
     handleChangeClick,
+    onClickClear,
     onClickSearch,
     dataCategories,
+    state: grid,
+    setLocalStorage,
+    intPorcentaje
 }) => {
     const [stateCard, setState] = useState(false)
     const handleClick = () => {
@@ -81,16 +89,16 @@ export const Products = ({ datafatures,
     const handleClickModal = index => {
         setModal(index === modal ? true : index)
     }
-    const columns = [
-        { name: 'Nombres y Apellidos' },
-        { name: 'CC', accessor: 'user.userprofile.up_ideNum' },
-        { name: 'Monto solicitado', accessor: 'mr_retire', render: () => `$ ${ numberFormat(423432) }` },
-        { name: 'Monto solicitado', accessor: 'mr_retire', render: () => `$ ${ numberFormat(423432) }` },
-        { name: 'Medio de pago', accessor: 'userbankentity.typebank.tb_name' },
-        { name: 'Tipo de cuenta', accessor: 'userbankentity.accounttype.at_name' },
-        { name: 'N° de cuenta', accessor: 'userbankentity.ube_accNum' },
-    ]
-    const count = 100
+    // const columns = [
+    //     { name: 'Nombres y Apellidos' },
+    //     { name: 'CC', accessor: 'user.userprofile.up_ideNum' },
+    //     { name: 'Monto solicitado', accessor: 'mr_retire', render: () => `$ ${ numberFormat(423432) }` },
+    //     { name: 'Monto solicitado', accessor: 'mr_retire', render: () => `$ ${ numberFormat(423432) }` },
+    //     { name: 'Medio de pago', accessor: 'userbankentity.typebank.tb_name' },
+    //     { name: 'Tipo de cuenta', accessor: 'userbankentity.accounttype.at_name' },
+    //     { name: 'N° de cuenta', accessor: 'userbankentity.ube_accNum' },
+    // ]
+    // const count = 100
     return (<div>
         {loading && <LoadingBabel />}
         <Container>
@@ -268,6 +276,7 @@ export const Products = ({ datafatures,
                     PCant={values?.ProUniDisponibles}
                     PDescription={values?.ProDescription}
                     start={rating}
+                    intPorcentaje={intPorcentaje}
                     setRating={setRating} />
             </Card>
         </Container>
@@ -301,6 +310,7 @@ export const Products = ({ datafatures,
                         </CardInput>
                     </div>
                     <RippleButton onClick={()=> onClickSearch()} bgColor={PVColor}>Buscar</RippleButton>
+                    <Range min={1962} max={2018} value={2018} label="Year" />
                 </CardProduct>
                 <CardProduct>
                     <SliderCategory duration={'500ms'} dataCategories={dataCategories} handleChangeClick={handleChangeClick} />
@@ -309,27 +319,47 @@ export const Products = ({ datafatures,
             </ContainerCardProduct>
             {/* Slider para filtrar productos */}
             <Text size='30px'>Lista de productos registrados</Text>
+            <ContainerFilter>
+                <ItemFilter onClick={() => setLocalStorage(grid)}>
+                    <ContainerBurger>
+                        <div className="BurgerMenu__container" role="button" >
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </ContainerBurger>
+                </ItemFilter>
+                <ItemFilter>Mejor precio</ItemFilter>
+                <ItemFilter>Mayor precio</ItemFilter>
+                <ItemFilter>Envio gratis</ItemFilter>
+                <ItemFilter>Evaluacion</ItemFilter>
+                <ItemFilter>Full envio</ItemFilter>
+                <ItemFilter>Tarifa de envio</ItemFilter>
+                <ItemFilter>Distancia mas corta</ItemFilter>
+                <ItemFilter>Ordenar</ItemFilter>
+                <ItemFilter onClick={()=> onClickClear()}>Limpio</ItemFilter>
+            </ContainerFilter>
             <SliderAreas autoPlayTime={4000} duration={'500ms'} finalDataAreas={finalDataAreas} />
-            <ContainerCardProduct>
+            <ContainerCardProduct grid={grid}>
                 {!data?.length ? <SkeletonP /> : data?.map(product => (
-                    <CardProduct key={product.pId} >
-                        <ButtonCard onClick={() => handleDelete(product.pId)}>
+                    <CardProduct grid={grid} key={product.pId} >
+                        <ButtonCard grid={grid} onClick={() => handleDelete(product.pId)}>
                             <IconDelete size={20} color={PColor} />
                             <ActionName >
                                 Eliminar
                             </ActionName>
                         </ButtonCard>
-                        <ButtonCard delay='.1s' top={'80px'}>
+                        <ButtonCard grid={grid} delay='.1s'top={'80px'}>
                             <IconEdit size={20} color={PColor} />
                             <ActionName>
                                 Editar
                             </ActionName>
                         </ButtonCard>
-                        <ContentImg>
-                            {product.ProImage ? <i>Cargando</i> : <Img src={product.ProImage} alt={product.ProImage} />}
+                        <ContentImg grid={grid}>
+                            {!product.ProImage ? <i>No img</i> : <Img src={product.ProImage} alt={product.ProImage} />}
                         </ContentImg>
                         <ContentInfo>
-                            <ContentIconFav>
+                            <ContentIconFav grid={grid}>
                                 <IconLove color={PVColor} size={20} />
                             </ContentIconFav>
                             {product.ProDescuento && <Discount discount={product.ProDescuento} > {numberFormat(product.ProDescuento)}</Discount>}
@@ -344,7 +374,7 @@ export const Products = ({ datafatures,
                 ))}
             </ContainerCardProduct>
             <ReadMore onClick={() => setShowMore(s => s + 5)}>'Cargar Más' </ReadMore>
-            <ReactTable
+            {/* <ReactTable
                 data={data}
                 collapse
                 nowrap
@@ -364,7 +394,7 @@ export const Products = ({ datafatures,
                 loading={loading}
                 // onFetch={(page, length, search) => fetchData(length * (page - 1), length, search)}
                 caption={<h2>Historial de transacciones</h2>}
-            />
+            /> */}
         </ContentProducts>
     </div>
     )
