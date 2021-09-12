@@ -60,8 +60,9 @@ mutation updateProducts($input: InputProduct){
 `
 export const DELETE_ONE_PRODUCT = gql`
 mutation deleteProducts($input: IDeleteProduct){
+  deleteProducts(input: $input){
     pId
-    pState
+  }
 }
 `
 export const GET_ALL_PRODUCTS = gql`

@@ -22,8 +22,32 @@ query getUser($id: ID, $username: String, $name: String){
   upLon
   password
   createAt
-  uDatMod
 }
+}
+`
+export const GET_ALL_USER = gql`
+query getAllUser($search: String){
+  getAllUser(search: $search){
+    id
+    name
+    username
+    lastName
+    email
+    email
+    siteWeb
+    description
+    uPhoNum
+    upLat
+    upLon
+    createAt
+    avatar
+    latestMessage {
+      uuid
+      content
+      from
+      to
+    }
+  }
 }
 `
 export const UPDATE_AVATAR = gql`

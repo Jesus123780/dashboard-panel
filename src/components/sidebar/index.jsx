@@ -53,6 +53,7 @@ export const SideBar = () => {
                                 <span>Banner Imágenes</span>
                             </LinkOption>
                         </Options>
+
                         <Options label='Mi panel' active={active === 3} handleClick={() => handleClick(3)} icon={<IconArrowBottom size='10px' color={PColor} />} iconTwo={<IconShopping size='25px' color={PColor} />}>
                             <LinkOption to='/update/products'>
                                 <span>Publicar productos</span>
@@ -100,9 +101,6 @@ export const SideBar = () => {
                             <LinkOption to='/update/products'>
                                 <span>Publicar products</span>
                             </LinkOption>
-                            <LinkOption to='/delete/products'>
-                                <span>Publicar products</span>
-                            </LinkOption>
                         </Options>
                         <Options label='Categorías' active={active === 8} handleClick={() => handleClick(8)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconShopping size='25px' color={PColor} />}>
                             <LinkOption to='/update/category'>
@@ -117,6 +115,11 @@ export const SideBar = () => {
                         <Options label='Información' active={active === 10} handleClick={() => handleClick(10)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconEnterLocation size='25px' color={PColor} />}>
                             <LinkOption to='/update/information'>
                                 <span>Update Information</span>
+                            </LinkOption>
+                        </Options>
+                        <Options label='Logistica' active={active === 11} handleClick={() => handleClick(11)} icon={<IconArrowBottom size='10px' color={PLColor} />} iconTwo={<IconSearch size='25px' color={PColor} />}>
+                            <LinkOption to='/logistica'>
+                                <span>Borrar Productos</span>
                             </LinkOption>
                         </Options>
                         <TextField

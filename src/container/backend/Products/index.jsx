@@ -2,7 +2,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../../Context';
 import { Products } from '../../../components/backend/products';
-import { UPDATE } from '../../Update/Products/queries';
+import { DELETE_ONE_PRODUCT } from '../../Update/Products/queries';
 import { GET_ALL_PRODUCTS_BACK } from './queries';
 
 export const ProductsC = () => {
@@ -16,7 +16,7 @@ export const ProductsC = () => {
     }
     // Estado para las estrellas del producto
     const [rating, setRating] = useState(0);
-    const [updateProducts] = useMutation(UPDATE)
+    const [deleteProducts] = useMutation(DELETE_ONE_PRODUCT)
 
     // Filtrar product
     const [search, setSearch] = useState('')
@@ -39,11 +39,10 @@ export const ProductsC = () => {
         const value = dataProduct?.productsLogis?.filter(x => (x.pId === pId))
         // const pState = value[0]?.pState
 
-        updateProducts({
+        deleteProducts({
             variables: {
                 input: {
-                    pId,
-                    pState: 1
+                    pId
                 }
             }, update(cache) {
                 cache.modify({
@@ -53,7 +52,7 @@ export const ProductsC = () => {
                         }
                     }
                 })
-                setAlertBox({ message: `El producto ${ value[0].pName } ha sido eliminado`, color: 'error', duration: 7000 })
+                setAlertBox({ message: `El producto ${ value[0].pName } ha sido eliminado permanentemente`, color: 'error', duration: 7000 })
             }
         }).catch(err => setAlertBox({ message: `${ err }`, duration: 7000 }))
     }

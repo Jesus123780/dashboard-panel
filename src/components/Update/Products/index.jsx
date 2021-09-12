@@ -46,6 +46,7 @@ import { Discount } from './ViewProducts/styled';
 import { SliderCategory } from './SliderCategories';
 import { LoadingBabel } from '../../Loading/LoadingBabel';
 import { Range } from '../../InputRange';
+import { SliderCategoryUpdate } from './SliderCategoriesUpdate';
 
 export const Products = ({ datafatures,
     finalDataAreas,
@@ -79,7 +80,8 @@ export const Products = ({ datafatures,
     dataCategories,
     state: grid,
     setLocalStorage,
-    intPorcentaje
+    intPorcentaje,
+    dataFree,
 }) => {
     const [stateCard, setState] = useState(false)
     const handleClick = () => {
@@ -233,6 +235,8 @@ export const Products = ({ datafatures,
                             range={{ min: 0, max: 7000 }}
                             showRange
                         />
+                        <Text size='30px'>Registra el producto en una categoria</Text>
+                        <SliderCategoryUpdate duration={'500ms'} dataCategories={dataCategories} handleChangeClick={handleChangeClick} />
                         <div>
                             <Text>Agregar Características principales</Text>
                             {ReactDOM.createPortal(<>
@@ -316,6 +320,10 @@ export const Products = ({ datafatures,
                     <SliderCategory duration={'500ms'} dataCategories={dataCategories} handleChangeClick={handleChangeClick} />
                     <RippleButton margin='5px 30px 30px 30px' onClick={()=> onClickSearch()} bgColor={PVColor}>Buscar</RippleButton>
                 </CardProduct>
+                <CardProduct>
+                    {dataCategories?.length}
+                    <RippleButton margin='5px 30px 30px 30px' onClick={()=> onClickSearch()} bgColor={PVColor}>Buscar</RippleButton>
+                </CardProduct>
             </ContainerCardProduct>
             {/* Slider para filtrar productos */}
             <Text size='30px'>Lista de productos registrados</Text>
@@ -341,6 +349,10 @@ export const Products = ({ datafatures,
             </ContainerFilter>
             <SliderAreas autoPlayTime={4000} duration={'500ms'} finalDataAreas={finalDataAreas} />
             <ContainerCardProduct grid={grid}>
+                <div>
+                    <ItemFilter>{data.length ? `${ data.length } Productos` : 'No hay productos'}</ItemFilter>
+                    <ItemFilter>{dataFree.length ? `${ dataFree.length } Productos con envio gratis` : 'No hay productos con envio gratis'}</ItemFilter>
+                </div>
                 {!data?.length ? <SkeletonP /> : data?.map(product => (
                     <CardProduct grid={grid} key={product.pId} >
                         <ButtonCard grid={grid} onClick={() => handleDelete(product.pId)}>

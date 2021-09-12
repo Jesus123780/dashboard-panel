@@ -230,11 +230,17 @@ export const ProductsC = () => {
     const pri = values.ProPrice
     const impDesc = values.ProPricepDesc = (des * pri)/100;
     const intPorcentaje = Math.round(impDesc);
+    // Filtramos los productos con envio gratis
+    const freeDelivery = dataProductFree => {
+        return dataProductFree.ProDelivery === 1
+    }
+    const productFree = dataProducto.filter(freeDelivery)
     return (
         <Products
             features={features}
             names={names}
             search={search}
+            dataFree={productFree}
             dataCategories={finalDataCategories?.CategoryProductsAll}
             onClickSearch={onClickSearch}
             handleAddFeature={handleAddFeature}

@@ -176,8 +176,8 @@ export const ContentImg = styled.div`
 `
 export const Img = styled.img` 
     height: 100%;
-    min-height: 284px;
-    max-height: 284px;
+    min-height: 150px;
+    max-height: 150px;
     width: 100%;
     object-fit: contain;
     display: block;

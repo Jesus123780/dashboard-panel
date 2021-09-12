@@ -29,6 +29,7 @@ import { ProductsBack } from './pages/backend';
 import { Categories } from './pages/Categories';
 import { LayoutMain } from './pages/layout';
 import { Modules } from './pages/Modules';
+import { Messages } from './pages/Messages';
 
 function App() {
     const [auth, setAuth] = useState(undefined)
@@ -100,6 +101,7 @@ function App() {
                                                     <Route exact path='/update/location' component={Location} /> */}
 
                                                     {/* Chat */}
+                                                    <Route exact path='/messages' component={Messages} />
                                                     <Route exact path='/chat' component={Chat} />
                                                     <Route exact path='/position' component={ContextMenu} />
                                                     <Route exact path='/drag' component={Drag} />

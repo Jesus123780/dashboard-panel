@@ -10,6 +10,7 @@ export const InputHook = props => {
         range,
         email,
         pass,
+        placeholder,
         type,
         passConfirm, } = props
     const [errors, setError] = useState(error)
@@ -79,6 +80,7 @@ export const InputHook = props => {
                 <Input name={name}
                     value={value}
                     type={type}
+                    placeholder={placeholder}
                     onChange={validations}
                 />
                 <LabelInput >{label}</LabelInput>
