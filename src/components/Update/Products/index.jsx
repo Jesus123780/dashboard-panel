@@ -10,7 +10,6 @@ import { APColor, PColor, PVColor, SEGColor } from '../../../assets/colors';
 import { RippleButton } from '../../Ripple';
 import { FeaturesProducts } from './FeaturesProduct';
 import { TextAreaHooks } from '../../TextTareaHook';
-// import { Loading } from '../../Loading';
 import {
     Container,
     FormProducts,
@@ -108,7 +107,7 @@ export const Products = ({ datafatures,
                 <FormProducts onSubmit={handleRegister}>
                     <InputHook label='Nombre del producto'
                         type="text"
-                        placeholder="Enter your name"
+                        placeholder="Nombre del producto"
                         value={names}
                         name='pName'
                         required
