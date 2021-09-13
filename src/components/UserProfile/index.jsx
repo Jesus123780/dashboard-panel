@@ -4,13 +4,24 @@ import { AwesomeModal } from '../AwesomeModal'
 import { InputFile } from '../MultiInputs/inputs'
 import { useScrollY } from '../hooks/useScroll'
 import InputHooks from '../InputHooks/InputHooks'
-import { Text, Container, Circular, ContentOptions, LefPart, BoxInput, Input, LabelInput, Paragraph, Anchor, TextArea, HeroBanner, Img } from './styled'
 import phone from '../../assets/img/phone.png'
+import { SvgComponentUser } from './svg'
+import { Text, Container, Circular, ContentOptions, LefPart, BoxInput, Input, LabelInput, Paragraph, Anchor, TextArea, HeroBanner, Img, SocialSection } from './styled'
+// import moment from 'moment'
 
-export const UserProfile = ({ params, data, loading, error, handleFileChange, values, handleChangePass, errors }) => {
-    if (error) return <h1>Usuario no existe</h1>
+export const UserProfile = ({ params, data, loading, error, handleFileChange, values, handleChangePass, errors, handleCopy, inputRef }) => {
     const [modal, setModal] = useState(false)
     const { auth } = useAuth()
+    if (error) {
+        return (
+            <div style={{ display: 'grid', placeContent: 'center', justifyContent: 'center', width: '100%' }}>
+                <Text size="40px">Usuario {auth.uUsername} no encontrado</Text>
+                <SvgComponentUser />
+            </div>
+        )
+    }
+    // VARIABLES GLOBALES
+    // const fechaActual = moment().format('DD-MM-YYYY')
     useEffect(() => {
         if (window.location?.pathname) {
             const Title = data ? data?.getUser?.name : auth.uUsername
@@ -23,6 +34,12 @@ export const UserProfile = ({ params, data, loading, error, handleFileChange, va
     return (<>
         <HeroBanner>
             <Img style={{ transform: `translateY(${ offsetY * 0.8 }px)` }} src={phone} alt={'phone'} />
+            <SocialSection>
+                <input ref={inputRef} value={`http://localhost:3000/u/${ data?.getUser?.name }`} />
+                <button type="button" onClick={handleCopy}>
+                        Copy
+                </button>
+            </SocialSection>
         </HeroBanner>
         <Container bg={auth.uUsername} >
             {loading && 'cargando'}

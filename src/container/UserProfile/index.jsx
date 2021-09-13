@@ -30,6 +30,13 @@ export const UserProfileC = () => {
 
         }
     }
+    const inputRef = React.useRef(null);
+
+    const handleCopy= () => {
+        inputRef.current.select();
+        document.execCommand('copy');
+        inputRef.current.blur();
+    }
 
     return (
         <UserProfile
@@ -39,7 +46,8 @@ export const UserProfileC = () => {
             handleFileChange={handleFileChange}
             loading={loading}
             values
-            handleChangePass
+            handleCopy={handleCopy}
+            inputRef={inputRef}
         />
     )
 }

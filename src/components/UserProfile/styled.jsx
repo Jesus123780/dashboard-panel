@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components';
-import { BGColor } from '../../assets/colors';
+import { BGColor, PColor } from '../../assets/colors';
 
 export const Text = styled.div`
     font-family: PFont-Regular;
-    font-size: 1.5em;
+    font-size: ${ ({ size })=> size ? size : '1.5em' };
     ${ props => props.bottom && css`
         padding: 10px ;
         border-bottom: 1px solid #00000012;
@@ -17,6 +17,7 @@ export const Text = styled.div`
 export const Container = styled.div`
     font-family: PFont-Regular;
     height: 100vh;
+    z-index: 999;
     position: relative;
     padding: 30px;
     width: 100%;
@@ -134,8 +135,20 @@ export const TextArea = styled.textarea`
 export const HeroBanner = styled.div`
     width: 100%;
     height: 350px;
-    overflow: hidden;
-    background-color: red;
+    background-color: ${ PColor };
+    position: relative;
+    z-index: 9;
+
+`
+export const SocialSection = styled.div`
+    position: absolute;
+    height: 70px;
+    width: 190px;
+    background-color: ${ BGColor };
+    box-shadow: 0px 0px 6px 0px #16101026;
+    border-radius: 5px;
+    bottom: -30px;
+    right: 3%;
 `
 export const Img = styled.img`
     object-fit: contain;

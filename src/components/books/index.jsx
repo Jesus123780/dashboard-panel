@@ -35,7 +35,7 @@ export const Books = () => {
                 <Rate rating={rating} onRating={rate => setRating(rate)} />
             </div>
             <p>{numberFormatM(11000000)}</p>
-            <ShadowCard title='Puta'>
+            <ShadowCard title='Titulo'>
                 Hola
             </ShadowCard>
         </Container>

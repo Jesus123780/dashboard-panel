@@ -22,7 +22,7 @@ import {
 export const Products = ({ data, setShowMore, handleDelete, handleChangeFilter, search, setRating, }) => {
     return (
         <Container>
-            <InputHook label='Busca tus productos' name='search' value={search} onChange={handleChangeFilter} type='text' range={{ min: 0, max: 200 }} />
+            <InputHook label='Busca los usuarios dados de baja' name='search' value={search} onChange={handleChangeFilter} type='text' range={{ min: 0, max: 200 }} />
             <ContainerCardProduct>
                 {!data?.length ? <SkeletonP /> : data?.map(product => (
                     <CardProduct key={product.pId} >
