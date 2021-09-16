@@ -30,6 +30,8 @@ import { Categories } from './pages/Categories';
 import { LayoutMain } from './pages/layout';
 import { Modules } from './pages/Modules';
 import { Messages } from './pages/Messages';
+import { ChatC } from './componentshat/Chat/Chat';
+import { SignIn } from './componentshat/Join/Join';
 
 function App() {
     const [auth, setAuth] = useState(undefined)
@@ -76,7 +78,9 @@ function App() {
                                         ({ error }) => <LayoutMain error={error} error={error}>
                                             <Suspense fallback={<Loading />} >
                                                 <Switch>
-                                                    <Route exact path='/' component={Books} />
+                                                    <Route exact path='/' component={SignIn} />
+                                                    <Route exact path='/chat' component={ChatC} />
+                                                    <Route exact path='/books' component={Books} />
                                                     {/* Panel de usuarios */}
                                                     <Route exact path='/u/:uUsername' component={UserProfile} />
                                                     <Route exact path='/banner/home' component={Banner} />
@@ -102,7 +106,7 @@ function App() {
 
                                                     {/* Chat */}
                                                     <Route exact path='/messages' component={Messages} />
-                                                    <Route exact path='/chat' component={Chat} />
+                                                    <Route exact path='/chatrandom' component={Chat} />
                                                     <Route exact path='/position' component={ContextMenu} />
                                                     <Route exact path='/drag' component={Drag} />
                                                     <Route exact path='/menu' component={FloatMenu} />

@@ -1,5 +1,5 @@
+import React, { useRef } from 'react'
 import { useQuery, useMutation } from '@apollo/client'
-import React from 'react'
 import { useParams } from 'react-router-dom'
 import { UserProfile } from '../../components/UserProfile'
 import { GET_USER } from '../../gql/LoginAut'
@@ -30,10 +30,10 @@ export const UserProfileC = () => {
 
         }
     }
-    const inputRef = React.useRef(null);
+    const inputRef = useRef(null);
 
     const handleCopy= () => {
-        inputRef.current.select();
+        inputRef?.current?.select();
         document.execCommand('copy');
         inputRef.current.blur();
     }

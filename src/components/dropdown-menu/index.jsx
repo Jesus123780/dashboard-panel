@@ -4,6 +4,7 @@ import { IconArrowBottom } from '../../assets/icons/icons'
 import { Container, DropdownItem } from './styled'
 
 export const DropdownMenu = ({ options, show, position, onClickOutside = () => undefined }) => {
+
     useEffect(() => {
         show && document.body.addEventListener('click', () => onClickOutside())
         return () => {

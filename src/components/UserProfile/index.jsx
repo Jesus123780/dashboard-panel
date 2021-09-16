@@ -6,7 +6,26 @@ import { useScrollY } from '../hooks/useScroll'
 import InputHooks from '../InputHooks/InputHooks'
 import phone from '../../assets/img/phone.png'
 import { SvgComponentUser } from './svg'
-import { Text, Container, Circular, ContentOptions, LefPart, BoxInput, Input, LabelInput, Paragraph, Anchor, TextArea, HeroBanner, Img, SocialSection } from './styled'
+import { PColor } from '../../assets/colors'
+import { IconLogo } from '../../assets/icons/icons'
+import {
+    Text,
+    Container,
+    Circular,
+    ContentOptions,
+    LefPart,
+    BoxInput,
+    Input,
+    LabelInput,
+    Paragraph,
+    Anchor,
+    TextArea,
+    HeroBanner,
+    BtnShare,
+    Img,
+    InputSocial,
+    SocialSection
+} from './styled'
 // import moment from 'moment'
 
 export const UserProfile = ({ params, data, loading, error, handleFileChange, values, handleChangePass, errors, handleCopy, inputRef }) => {
@@ -35,10 +54,18 @@ export const UserProfile = ({ params, data, loading, error, handleFileChange, va
         <HeroBanner>
             <Img style={{ transform: `translateY(${ offsetY * 0.8 }px)` }} src={phone} alt={'phone'} />
             <SocialSection>
-                <input ref={inputRef} value={`http://localhost:3000/u/${ data?.getUser?.name }`} />
-                <button type="button" onClick={handleCopy}>
-                        Copy
-                </button>
+                <BtnShare type="button" onClick={handleCopy}>
+                    <InputSocial ref={inputRef} value={`http://localhost:3000/u/${ data?.getUser?.siteWeb }`} />
+                    <IconLogo color={PColor} size='20px' />
+                </BtnShare>
+                <BtnShare type="button" onClick={handleCopy}>
+                    <InputSocial ref={inputRef} value={`http://localhost:3000/u/${ data?.getUser?.name }`} />
+                    <IconLogo color={PColor} size='20px' />
+                </BtnShare>
+                <BtnShare type="button" onClick={handleCopy}>
+                    <InputSocial ref={inputRef} value={`http://localhost:3000/u/${ data?.getUser?.name }`} />
+                    <IconLogo color={PColor} size='20px' />
+                </BtnShare>
             </SocialSection>
         </HeroBanner>
         <Container bg={auth.uUsername} >

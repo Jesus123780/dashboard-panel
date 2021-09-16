@@ -39,7 +39,7 @@ export const Header = ({ keyTheme, handleTheme, auth, error, time, size, loading
                                 <IconLogo size='80px' color={PColor} />
                             </Link>
                         </div>
-                        <div>
+                        <>
                             <InputHooksSearcher title='Busca tus productos' name='search' value={search} onChange={onchange} type='text' range={{ min: 0, max: 20 }} />
                             {loading && <LoadEllipsis />}
                             {results?.map((x, i) => <div key={1+ i}>
@@ -47,7 +47,7 @@ export const Header = ({ keyTheme, handleTheme, auth, error, time, size, loading
                                     <span>{x?.username}</span>
                                 </TargetUser>
                             </div>)}
-                        </div>
+                        </>
                         <>
                             <CartShop keyTheme={keyTheme} handleTheme={handleTheme} />
                         </>

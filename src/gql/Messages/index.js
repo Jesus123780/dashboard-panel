@@ -22,3 +22,14 @@ mutation sendMessage($to: String!, $content: String!) {
 
 }
 `
+export const NEW_MESSAGE = gql`
+  subscription newMessage {
+    newMessage {
+      uuid
+      from
+      to
+      content
+      createdAt
+    }
+  }
+`

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { PColor } from '../../assets/colors'
 import { useApolloClient } from '@apollo/client'
-import { IconLogout, IconShopping } from '../../assets/icons/icons'
+import { IconLogout, IconMessageMain, IconShopping } from '../../assets/icons/icons'
 import useAuth from '../hooks/useAuth'
 import { Setting } from './setting/index'
 import { Content, FloatingBox, Button, FloatingBoxTwo, Overline } from './styled'
@@ -42,6 +42,11 @@ export const CartShop = ({ keyTheme, handleTheme }) => {
         <>
             <Overline onClick={() => setShow(!true)} show={show} />
             {auth && <Content >
+                <Button>
+                    <Enlace to='/messages'>
+                        <IconMessageMain size='25px' color={PColor} />
+                    </Enlace>
+                </Button>
                 <Button onClick={() => handleClick(1)}>
                     <IconShopping size='25px' color={PColor} />
                 </Button>
@@ -79,7 +84,7 @@ export const CartShop = ({ keyTheme, handleTheme }) => {
                         </Option>
                         <Hr />
                         <Option Theme={Theme} >
-                            <span style={{ fontFamily:  'PFont-Light', fontSize: '14px' }}onClick={activeSettings}>Configuración y privacidad</span>
+                            <span style={{ fontFamily: 'PFont-Light', fontSize: '14px' }} onClick={activeSettings}>Configuración y privacidad</span>
                             <Setting activeLogin={activeLogin} setActive={setActive} />
                         </Option>
                         <Hr />

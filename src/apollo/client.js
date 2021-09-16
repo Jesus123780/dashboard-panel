@@ -1,10 +1,11 @@
-import { ApolloClient, createHttpLink, from } from '@apollo/client';
+import { ApolloClient, createHttpLink, from, split } from '@apollo/client';
 import { URL_BASE_GRAPHQL } from '../api';
 import { typeDefs } from '../apollo/schema';
 import { cache } from '../apollo/cache';
 import { setContext } from '@apollo/client/link/context'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
-// import useAuth from '../components/hooks/useAuth';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 const httpLink = createHttpLink({ uri: URL_BASE_GRAPHQL })
 
@@ -14,23 +15,47 @@ const getDeviceId = async () => {
     const result = await fp.get()
     return result.visitorId
 }
-
 const authLink = setContext(async (_, { headers }) => {
     return {
         headers: {
             ...headers,
             authorization: localStorage.getItem('token') || '',
             deviceid: await getDeviceId() || '',
-            client: 'ml.app.investor'
+            client: 'ifood'
         }
     }
 })
+/**
+ * Configuracion de WebSocket
+ *  @autor Jesus Juvinao
+ */
+const wsLink = new WebSocketLink({
+    uri: 'ws://localhost:4000/graphql',
+    options: {
+        reconnect: true,
+        connectionParams: {
+            Authorization: localStorage.getItem('token') || '',
+        },
+    },
+});
 
+const splitLink = split(
+    ({ query }) => {
+        const definition = getMainDefinition(query);
+        return (
+            definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
+        );
+    },
+    httpLink,
+);
 export const apolloClient = new ApolloClient({
     cache,
     link: from([
         authLink,
-        httpLink
+        httpLink,
+        wsLink,
+        splitLink
     ]),
     typeDefs
 })

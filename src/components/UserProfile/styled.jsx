@@ -149,12 +149,39 @@ export const SocialSection = styled.div`
     border-radius: 5px;
     bottom: -30px;
     right: 3%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px !important;
+    margin: auto;
+    display: flex;
 `
 export const Img = styled.img`
     object-fit: contain;
     width: 100%;
     height: 100%;
-
+`
+export const InputSocial = styled.input`
+    border: 1px solid #dcdcdc;
+    opacity: 0;
+    transition: 0.5s ease;
+    outline: none;
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+`
+export const BtnShare = styled.button`
+    outline: none;
+    cursor: pointer;
+    background-color: ${ BGColor };
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    border: 1px solid #dcdcdc;
+    &:hover  > input {
+        opacity: 1;
+    }
 `
 export const Anchor = styled.a`
     padding: 20px 10px;
